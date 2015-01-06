@@ -1,0 +1,46 @@
+[INFO ] 2014-11-28 10:21:05,859    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0006f6","key":"68f5888923e6a5829448e4bfce0006f6","value":{"rev":"1-967a00dff5e02add41819138abb3284d"}}
+[INFO ] 2014-11-28 10:21:05,872    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023c9","key":"68f5888923e6a5829448e4bfce0023c9","value":{"rev":"2-14fadb1c8dddfb1ba2c97927b318e1de"}}
+[INFO ] 2014-11-28 10:21:05,875    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023e2","key":"68f5888923e6a5829448e4bfce0023e2","value":{"rev":"1-cfa20dddac397da5bf0be2b50fb472fe"}}
+[INFO ] 2014-11-28 10:21:05,879    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce00306d","key":"68f5888923e6a5829448e4bfce00306d","value":{"rev":"1-961424b9020c0e81bcd07abbc17865d8"}}
+[INFO ] 2014-11-28 10:23:52,843    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0006f6","key":"68f5888923e6a5829448e4bfce0006f6","value":{"rev":"1-967a00dff5e02add41819138abb3284d"}}
+[INFO ] 2014-11-28 10:23:52,858    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023c9","key":"68f5888923e6a5829448e4bfce0023c9","value":{"rev":"2-14fadb1c8dddfb1ba2c97927b318e1de"}}
+[INFO ] 2014-11-28 10:23:52,860    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023e2","key":"68f5888923e6a5829448e4bfce0023e2","value":{"rev":"1-cfa20dddac397da5bf0be2b50fb472fe"}}
+[INFO ] 2014-11-28 10:23:52,862    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce00306d","key":"68f5888923e6a5829448e4bfce00306d","value":{"rev":"1-961424b9020c0e81bcd07abbc17865d8"}}
+[INFO ] 2014-11-28 11:30:46,371    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0006f6","key":"68f5888923e6a5829448e4bfce0006f6","value":{"rev":"1-967a00dff5e02add41819138abb3284d"}}
+[INFO ] 2014-11-28 11:30:46,384    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023c9","key":"68f5888923e6a5829448e4bfce0023c9","value":{"rev":"2-14fadb1c8dddfb1ba2c97927b318e1de"}}
+[INFO ] 2014-11-28 11:30:46,393    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023e2","key":"68f5888923e6a5829448e4bfce0023e2","value":{"rev":"1-cfa20dddac397da5bf0be2b50fb472fe"}}
+[INFO ] 2014-11-28 11:30:46,396    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce00306d","key":"68f5888923e6a5829448e4bfce00306d","value":{"rev":"1-961424b9020c0e81bcd07abbc17865d8"}}
+[INFO ] 2014-11-28 11:40:02,333    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0006f6","key":"68f5888923e6a5829448e4bfce0006f6","value":{"rev":"1-967a00dff5e02add41819138abb3284d"}}
+[INFO ] 2014-11-28 11:40:02,346    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023c9","key":"68f5888923e6a5829448e4bfce0023c9","value":{"rev":"3-d6a59e913158f1c3d5b48fc91e1fa97f"}}
+[INFO ] 2014-11-28 11:40:02,349    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023e2","key":"68f5888923e6a5829448e4bfce0023e2","value":{"rev":"1-cfa20dddac397da5bf0be2b50fb472fe"}}
+[INFO ] 2014-11-28 11:40:02,351    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce00306d","key":"68f5888923e6a5829448e4bfce00306d","value":{"rev":"1-961424b9020c0e81bcd07abbc17865d8"}}
+[INFO ] 2014-11-28 11:41:56,981    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0006f6","key":"68f5888923e6a5829448e4bfce0006f6","value":{"rev":"1-967a00dff5e02add41819138abb3284d"}}
+[INFO ] 2014-11-28 11:41:56,991    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023c9","key":"68f5888923e6a5829448e4bfce0023c9","value":{"rev":"3-d6a59e913158f1c3d5b48fc91e1fa97f"}}
+[INFO ] 2014-11-28 11:41:56,993    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023e2","key":"68f5888923e6a5829448e4bfce0023e2","value":{"rev":"1-cfa20dddac397da5bf0be2b50fb472fe"}}
+[INFO ] 2014-11-28 11:41:56,996    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce00306d","key":"68f5888923e6a5829448e4bfce00306d","value":{"rev":"1-961424b9020c0e81bcd07abbc17865d8"}}
+[INFO ] 2014-11-28 11:42:39,393    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0006f6","key":"68f5888923e6a5829448e4bfce0006f6","value":{"rev":"1-967a00dff5e02add41819138abb3284d"}}
+[INFO ] 2014-11-28 11:42:39,405    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023c9","key":"68f5888923e6a5829448e4bfce0023c9","value":{"rev":"3-d6a59e913158f1c3d5b48fc91e1fa97f"}}
+[INFO ] 2014-11-28 11:42:39,407    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023e2","key":"68f5888923e6a5829448e4bfce0023e2","value":{"rev":"1-cfa20dddac397da5bf0be2b50fb472fe"}}
+[INFO ] 2014-11-28 11:42:39,410    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce00306d","key":"68f5888923e6a5829448e4bfce00306d","value":{"rev":"1-961424b9020c0e81bcd07abbc17865d8"}}
+[INFO ] 2014-11-28 12:10:11,803    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0006f6","key":"68f5888923e6a5829448e4bfce0006f6","value":{"rev":"1-967a00dff5e02add41819138abb3284d"}}
+[INFO ] 2014-11-28 12:10:11,808    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023c9","key":"68f5888923e6a5829448e4bfce0023c9","value":{"rev":"3-d6a59e913158f1c3d5b48fc91e1fa97f"}}
+[INFO ] 2014-11-28 12:10:11,809    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0023e2","key":"68f5888923e6a5829448e4bfce0023e2","value":{"rev":"1-cfa20dddac397da5bf0be2b50fb472fe"}}
+[INFO ] 2014-11-28 12:10:11,810    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce00306d","key":"68f5888923e6a5829448e4bfce00306d","value":{"rev":"1-961424b9020c0e81bcd07abbc17865d8"}}
+[WARN ] 2014-11-28 15:03:13,486       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:03:38,548       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:04:42,066       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:06:33,646       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:10:46,602       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:13:18,955       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:13:57,627       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:14:21,063       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:26:26,483       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:29:01,607       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:30:23,374       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:40:38,027       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:41:47,782       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:43:02,698       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:48:57,381       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:52:00,843       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 15:52:39,872       com.fourspaces.couchdb.Database     - Error executing view - null null
+[WARN ] 2014-11-28 16:18:11,105       com.fourspaces.couchdb.Database     - Error executing view - null null

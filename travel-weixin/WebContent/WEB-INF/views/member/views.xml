@@ -1,0 +1,31 @@
+<!DOCTYPE tiles-definitions PUBLIC
+      "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+      "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+  
+<tiles-definitions>
+
+	<definition name="member/list" extends="admin_template">
+		<put-attribute name="content" value="/WEB-INF/views/member/list.jsp" />
+	</definition>
+	<definition name="member/new" extends="admin_template">
+		<put-attribute name="content" value="/WEB-INF/views/member/new.jsp" />
+	</definition>
+	<definition name="member/book" extends="admin_template">
+		<put-attribute name="content" value="/WEB-INF/views/member/book.jsp" />
+	</definition>
+	<definition name="member/score" extends="admin_template">
+		<put-attribute name="content" value="/WEB-INF/views/member/score.jsp" />
+	</definition>
+	<definition name="member/invite" extends="admin_template">
+		<put-attribute name="content" value="/WEB-INF/views/member/invite.jsp" />
+	</definition>
+	<definition name="member/invite/send" extends="custom_template">
+		<put-attribute name="content" value="/WEB-INF/views/member/sendInvite.jsp" />
+	</definition>
+	<definition name="member/driverCard" extends="admin_template">
+		<put-attribute name="content" value="/WEB-INF/views/member/driverCard.jsp" />
+	</definition>
+	<definition name="member/info" extends="custom_template">
+		<put-attribute name="content" value="/WEB-INF/views/member/info.jsp" />
+	</definition>
+</tiles-definitions>

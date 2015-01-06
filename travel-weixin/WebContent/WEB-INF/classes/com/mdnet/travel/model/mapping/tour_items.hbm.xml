@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 指定Hibernate映射文件的DTD信息 Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.mdnet.travel.core.model">
+	<class name="TourItems" table="tour_items">
+		<!-- 映射标识属性 --> 
+		<id column="id" name="id">
+			<!-- 指定使用identity主键生成策略 -->
+			<generator class="identity" />
+		</id>
+		<!-- 映射普通属性 -->
+		<property generated="never" lazy="false" name="custId" type="int">
+			<column name="cust_id" not-null="false">
+				<comment>关联到客户表（customer_table）中的id字段</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="accompany" type="int">
+			<column name="accompany" not-null="false">
+				<comment>陪同伴游向导，0：不具备此服务；1：具备此服务</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="pathPlan" type="int">
+			<column name="path_plan" not-null="false">
+				<comment>形成规划0：不具备此服务；1：具备此服务</comment>
+			</column>
+		</property>
+		
+		<property generated="never" lazy="false" name="helpBook" type="int">
+			<column name="help_book" not-null="false">
+				<comment>代订服务，0：不具备此服务；1：具备此服务</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="camera" type="int">
+			<column name="camera" not-null="false">
+				<comment>跟随摄像，0：不具备此服务；1：具备此服务</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="translate" type="int">
+			<column name="translate" not-null="false">
+				<comment>翻译，0：不具备此服务；1：具备此服务</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="drive" type="int">
+			<column name="drive" not-null="false">
+				<comment>驾车，0：不具备此服务；1：具备此服务</comment>
+			</column>
+		</property>
+		
+	</class>
+</hibernate-mapping>
