@@ -18,6 +18,15 @@ public class Constant {
 	protected String PAY_WEB = "";
 	protected String MobileHomePage;
 	protected String PCHomePage;
+	protected String customerServicePhone="";
+
+	public String getCustomerServicePhone() {
+		return customerServicePhone;
+	}
+
+	public void setCustomerServicePhone(String customerServicePhone) {
+		this.customerServicePhone = customerServicePhone;
+	}
 
 	public ISmsDAO getSMSDao() {
 		return this.smsDAO;

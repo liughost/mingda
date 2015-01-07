@@ -66,6 +66,8 @@ public class TravelerServiceImpl implements ITravelerService {
 					mobile);
 		}
 		traveler.setLoginName(username);
+		traveler.setUserName(username);
+		traveler.setPassText(pass);
 		traveler.setPassword(EncryptSpring.md5_32(pass));
 		traveler.setMobile(mobile);
 		traveler.setAuthority(role);
@@ -462,8 +464,7 @@ public class TravelerServiceImpl implements ITravelerService {
 			String hql = "from InviteCode I";
 			if (t == 0)// 全部
 				hql += "";
-			else if (t == 3)// 全部
-			{
+			else if (t == 3) {
 				hql += " where I.inviteCode='" + sText + "'";
 			} else {
 				Traveler travel = null;
@@ -499,7 +500,8 @@ public class TravelerServiceImpl implements ITravelerService {
 			}
 
 		}
-		return this.inviteCodeDAO.getList(hql+" order by id desc", page, count);
+		return this.inviteCodeDAO.getList(hql + " order by id desc", page,
+				count);
 	}
 
 	@Override
@@ -510,7 +512,7 @@ public class TravelerServiceImpl implements ITravelerService {
 		InviteCode entity = new InviteCode();
 		entity.setCodeLevel(0);
 		entity.setCodeStatus(0);
-		entity.setCodeType(0);
+		entity.setCodeType(isBind.compareTo("true") == 0 ? 1 : 0);// 1:此号码专属，0：非专属
 		entity.setDest_mobile(invitedMobile);
 		entity.setInviteCode(inviteCode);
 		entity.setMember(traveler);
@@ -520,6 +522,29 @@ public class TravelerServiceImpl implements ITravelerService {
 		entity.setScore(0);
 		entity.setUsedTime(new Date());
 		return this.inviteCodeDAO.save(entity);
+	}
+
+	@Override
+	public InviteCode getInviteCodeObj(int id) {
+
+		return this.inviteCodeDAO.get(id);
+	}
+
+	@Override
+	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+	public void updateInviteCode(InviteCode code) {
+		this.inviteCodeDAO.update(code);
+	}
+
+	@Override
+	public Traveler findtravlerByMobile(String mobile) {
+		return this.travelDAO.findUserByMobile(mobile);
+	}
+
+	@Override
+	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+	public void updateInviteSender(Traveler sender) {
+		this.travelDAO.update(sender);
 	}
 
 }

@@ -24,13 +24,15 @@ input[type="checkbox"] {
 </style>
 <div class="container" style="max-width: 960px; text-align: left;">
 	<legend>邀请码信息</legend>
-	<form class="" action="${context }/member/invite/send" method="get">
+	<form id="frmInvite" action="${context }/member/invite/send"
+		method="get">
+		<input type="hidden" name="page" id="page" value="${page }">
 		<div class="control-group">
 			<label class="control-label"></label>
 			<div class="controls">
-				<input type="text" id="invitedMobile" maxlength= "11" name="invitedMobile" value=""
-					placeholder="受邀者手机号码"> <input type="checkbox" id="isBind"
-					name="isBind">此手机专用
+				<input type="text" id="invitedMobile" maxlength="11"
+					name="invitedMobile" value="" placeholder="受邀者手机号码"> <input
+					type="checkbox" id="isBind" name="isBind">此手机专用
 				<button type="button" name="send" onclick="javascript:sendCode()"
 					class="btn btn-primary" style="margin-top: -8px;" value="0">发码</button>
 			</div>
@@ -39,19 +41,23 @@ input[type="checkbox"] {
 		<table>
 			<tr>
 				<td><select id="sType" name="sType">
-						<option value="0">全部</option>
-						<option value="1">受邀手机</option>
-						<option value="3">邀请码</option>
+						<option value="0" <c:if test="${sType==0}">selected</c:if>>全部</option>
+						<option value="3" <c:if test="${sType==1}">selected</c:if>>受邀手机</option>
+						<option value="1" <c:if test="${sType==3}">selected</c:if>>邀请码</option>
 				</select></td>
-				<td><input type="text" id="sText" value="" name="sText"></td>
-				<td><button type="submit" name="search"
-						onclick="javascript:getList()" class="btn btn-primary" value="1"
+				<td><input type="text" id="sText" value="${sText }"
+					name="sText"></td>
+				<td><button type="button" name="search"
+						onclick="javascript:codeSearch()" class="btn btn-primary" value="1"
 						style="margin-top: -8px;">搜索</button></td>
 
 			</tr>
 		</table>
 	</form>
 	<legend>邀请码历史数据</legend>
+	<button class="btn btn-primary" onclick="sendAgain()">重新发送</button>
+	<br />
+	<br />
 	<table class="table table-striped table-bordered" id="inviteCodeList">
 		<tr>
 			<th style="width: 50px;"><input type="checkbox">全选</th>
@@ -63,7 +69,8 @@ input[type="checkbox"] {
 		</tr>
 		<c:forEach var="items" items="${inviteList}">
 			<tr>
-				<td><input type="checkbox" name="sel_invite"></td>
+				<td><input type="checkbox" name="sel_invite"
+					value="${items.id}"></td>
 				<td>${items.inviteCode}</td>
 				<td>${items.dest_mobile}</td>
 				<td>${items.codeStatus}</td>
@@ -72,9 +79,43 @@ input[type="checkbox"] {
 			</tr>
 		</c:forEach>
 	</table>
+	<div class="pagination">
+		<ul id="pageZone">
 
+		</ul>
+	</div>
 </div>
 <script>
+
+showPage(0, ${fn:length(inviteList)});
+	function sendAgain() {
+		var url = "${context}/member/invite/resend";
+		debugger;
+		var objs = document.getElementsByName("sel_invite");
+		for (var i = 0; i < objs.length; i++) {
+			if (!objs[i].checked)
+				continue;
+			$.post(url, {
+				id : objs[i].value
+			}, function(result, status) {
+				//debugger;
+				if (status == 'success') {
+
+					if (result == '1') {
+
+						alert('邀请码已经成功发送。');
+
+					} else {
+						//count.innerHTML = 0;
+						alert('邀请码发送失败。');
+					}
+				} else {
+					alert('网络异常，或者未登录，请重试。');
+				}
+
+			});
+		}
+	}
 	function IsNum(s) {
 		if (s != null) {
 			var r, re;
@@ -111,5 +152,37 @@ input[type="checkbox"] {
 			}
 
 		});
+	}
+	function showPage(page, len) {
+		var pageCount = 20;
+		//debugger;
+		console.log('page:' + page);
+		var page_str = '';
+		//上一页
+		if (page > 0) {
+			page_str += '<li><a href="javascript:getList(' + (page - 1)
+					+ ');">上一页</a></li>';
+		}
+
+		//下一页
+		if (len >= pageCount) {
+			page_str += '<li><a href="javascript:getList(' + (page + 1)
+					+ ')">下一页</a></li>';
+		}
+		pageZone.innerHTML = page_str;
+	}
+	function codeSearch()
+	{
+		debugger;
+		frm = document.getElementById("frmInvite");
+		page.value = 0;
+		frm.submit();
+	}
+	function getList(p)
+	{
+		debugger;
+		frm = document.getElementById("frmInvite");
+		page.value = p;
+		frm.submit();
 	}
 </script>

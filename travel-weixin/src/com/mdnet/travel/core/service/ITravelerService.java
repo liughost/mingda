@@ -33,6 +33,7 @@ public interface ITravelerService {
 	String resetMobileByUser(ResetMobileVO mobiles, String username);
 
 	MemberInfoVO findUserByMobile(String mobile);
+	Traveler findtravlerByMobile(String mobile);
 
 	String findPassOrUser(FindPassVO findInfo);
 
@@ -77,5 +78,11 @@ public interface ITravelerService {
 
 	int saveInvite(String uname, String isBind, String invitedMobile,
 			String inviteCode, int offPrice);
+
+	InviteCode getInviteCodeObj(int id);
+
+	void updateInviteCode(InviteCode code);
+
+	void updateInviteSender(Traveler sender);
 
 }

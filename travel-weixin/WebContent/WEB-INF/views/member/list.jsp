@@ -57,7 +57,7 @@
 
 	}
 	function showPage(page, len) {
-		var pageCount = 1;
+		var pageCount = 20;
 		//debugger;
 		console.log('page:' + page);
 		var page_str = '';

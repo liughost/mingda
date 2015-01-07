@@ -110,11 +110,11 @@ public class OrderMgrServiceImpl implements IOrderMgrService {
 	public ProductDetail getProductInfo(int pid, String startDate) {
 		ProductDetail pd = new ProductDetail();
 		// 获取基本信息
-		ProductAllDetail pad = ProductAllDetail.instance().getById(String.valueOf(pid));
-		
-		//List<ProductInfo> pis = this.productDAO.find("where id=" + pid, 0);
-		if (pad != null)
-		{
+		ProductAllDetail pad = ProductAllDetail.instance().getById(
+				String.valueOf(pid));
+
+		// List<ProductInfo> pis = this.productDAO.find("where id=" + pid, 0);
+		if (pad != null) {
 			ProductInfo pi = new ProductInfo();
 			pi.setProductName(pad.getProductName());
 			pi.setId(pid);
@@ -155,7 +155,7 @@ public class OrderMgrServiceImpl implements IOrderMgrService {
 		if (oi == null) {
 			isNew = true;
 			oi = new OrderInfo();
-			SimpleDateFormat sdf = new SimpleDateFormat("yMM");
+			SimpleDateFormat sdf = new SimpleDateFormat("d");
 			String ss = UUID.randomUUID().toString();
 			int c = ss.hashCode() & 0x7FFFFFFF;
 			String hash = String.valueOf(c);

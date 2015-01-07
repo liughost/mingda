@@ -335,7 +335,7 @@ public class CustomServiceImpl implements ICustomService {
 
 	@Override
 	public ShowProductInfo[] getProductList(int type, int page) {
-		ShowProductInfo[] spis = ProductAllDetail.instance().getProductList();
+		ShowProductInfo[] spis = ProductAllDetail.instance().getProductList(type);
 		for (ShowProductInfo spi : spis) {
 			// 生成团期最小日期
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

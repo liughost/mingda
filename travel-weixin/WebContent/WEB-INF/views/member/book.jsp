@@ -39,8 +39,7 @@
 <div class="container"
 	style="max-width: 800px; background-color: #FCFDEF; padding: 15px;">
 	<legend>产品预订</legend>
-	<form class="form-horizontal" onsubmit="onSubmitBook()" method="POST"
-		action="${context }/member/">
+	<form class="form-horizontal" onsubmit="onSubmitBook()" method="POST">
 		<input type="hidden" id="orderId" value="${orderId }" /> <input
 			type="hidden" id="productID" value="${pid }" />
 
@@ -101,8 +100,7 @@
 				</label> <input type="hidden" id="adultPriceValue"> <input
 					type="hidden" id="childrenPriceValue"> <input type="hidden"
 					id="hotelSpanPriceValue"> <input type="hidden"
-					id="offPriceValue" value="0">
-					<input type="hidden"
+					id="offPriceValue" value="0"> <input type="hidden"
 					id="orderId" value="">
 
 			</div>
@@ -110,7 +108,7 @@
 
 
 		<ul class="breadcrumb">
-			<li><a href="#">订单信息</a></li>
+			<li><a href="#">订购信息</a></li>
 		</ul>
 		<div class="control-group">
 			<label class="control-label" for="inputEmail">优惠码：</label>
@@ -229,7 +227,7 @@
 			return;
 		}
 
-		var url = "${context}/member/book/save";
+		var url = "${context}/custom/book/save";
 		console.log(url);
 		$.post(url, {
 			orderId : orderId.value,
@@ -245,11 +243,10 @@
 			debugger;
 			if (status == 'success') {
 
-				if (parseInt(result) > 0){
+				if (parseInt(result) > 0) {
 					orderId.value = result;
 					alert("报名成功，订单号:" + result);
-				}
-				else
+				} else
 					alert("对不起，预订失败，请检查相关数据。");
 			} else {
 
@@ -260,7 +257,7 @@
 	}
 	function agreeValue() {
 		var aObj = document.getElementsByName("agreeShare");
-		for ( var i = 0; i < aObj.length; i++) {
+		for (var i = 0; i < aObj.length; i++) {
 			if (aObj[i].checked) {
 				if (aObj[i].value == 1)
 					return false;
@@ -330,7 +327,7 @@
 	}
 	function validateInviteCode() {
 		debugger;
-		var url = "${context}/member/inviteCodeValidate";
+		var url = "${context}/custom/inviteCodeValidate";
 		$.post(url, {
 			code : inviteCode.value
 		}, function(result, status) {
@@ -368,7 +365,7 @@
 	}
 	function fillDays(days) {
 		var body = '<tr>';
-		for ( var i = 0; i < days.length; i++) {
+		for (var i = 0; i < days.length; i++) {
 
 			if (days[i].price != 0) {
 				body += '<td class="group_date" onclick="sel_group(this, \''
@@ -397,7 +394,7 @@
 		var groupTables = '';
 		//debugger;
 		var gTmpl = groupTableTmpl.innerHTML;
-		for ( var i = 0; i < groupCanlendar.length; i++) {
+		for (var i = 0; i < groupCanlendar.length; i++) {
 			var gData = gTmpl;
 			//设置表头
 			if (i != 0)
@@ -427,8 +424,8 @@
 		childrenPriceValue.value = 0;
 		hotelSpanPrice.innerHTML = '';
 		hotelSpanPriceValue.value = 0;
-		
-		var url = "${context}/member/groupDate";
+
+		var url = "${context}/custom/groupDate";
 		console.log("call getGroupDate function.url=" + url);
 		$.post(url, {
 			id : id

@@ -27,10 +27,12 @@ import com.mdnet.travel.core.model.GroupDate;
 import com.mdnet.travel.core.model.GroupDay;
 import com.mdnet.travel.core.model.GroupMonth;
 import com.mdnet.travel.core.model.GroupWeek;
+import com.mdnet.travel.core.model.InviteCode;
 import com.mdnet.travel.core.model.PersonalCustom;
 import com.mdnet.travel.core.model.ProductType;
 import com.mdnet.travel.core.model.ReqMessage;
 import com.mdnet.travel.core.model.Tour;
+import com.mdnet.travel.core.model.Traveler;
 import com.mdnet.travel.core.model.WeixinAccount;
 import com.mdnet.travel.core.service.ICustomService;
 import com.mdnet.travel.core.service.ILeaderService;
@@ -57,6 +59,8 @@ public class CustomController extends BaseController {
 	private IOrderMgrService orderMgrService;
 	@Resource(name = ILeaderService.SERVICE_NAME)
 	private ILeaderService leaderService;
+	@Resource(name = IOrderMgrService.SERVICE_NAME)
+	protected IOrderMgrService orderService;
 
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request) {
@@ -228,7 +232,8 @@ public class CustomController extends BaseController {
 		this.mav.addObject("articleList", sb);
 
 		// 获取当月团期日历
-		List<GroupMonth> gms = customService.makeGroupCalendar(id, pad.getAheadDays());
+		List<GroupMonth> gms = customService.makeGroupCalendar(id,
+				pad.getAheadDays());
 
 		this.mav.addObject("groupCanlendars", gms);
 
@@ -586,7 +591,7 @@ public class CustomController extends BaseController {
 	public ModelAndView lines(HttpServletRequest request) {
 		this.getMav(request);
 		this.mav.addObject("menuIndex", 1);
-		ShowProductInfo[] ps = this.orderMgrService.getProductList(3, 0);
+		ShowProductInfo[] ps = this.orderMgrService.getProductList(0, 0);
 
 		this.mav.addObject("productList", ps);
 		this.mav.setViewName(this.preMobile(request) + "custom/lines");
@@ -627,7 +632,7 @@ public class CustomController extends BaseController {
 	public ModelAndView book(HttpServletRequest request) {
 		this.getMav(request);
 		this.mav.addObject("menuIndex", 4);
-		ShowProductInfo[] ps = this.customService.getProductList(3, 0);// .orderMgrService.getProductList(3,
+		ShowProductInfo[] ps = this.customService.getProductList(0, 0);// .orderMgrService.getProductList(3,
 																		// 0);
 
 		// 代码测试
@@ -679,66 +684,174 @@ public class CustomController extends BaseController {
 		return sb;
 	}
 
+	/**
+	 * 获得相关产品团期日历
+	 * 
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = { "/groupDate" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String groupDate(HttpServletRequest request,
+			@RequestParam(value = "id", required = false) String id) {
+
+		// 获取当月团期日历
+		List<GroupMonth> gms = customService.makeGroupCalendar(id, 10);
+		Gson g = new Gson();
+		return g.toJson(gms);
+	}
+
+	@RequestMapping(value = { "/inviteCodeValidate" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String inviteCodeValidate(HttpServletRequest request,
+			@RequestParam(value = "code", required = true) String code) {
+
+		List<InviteCode> codes = this.travelerService.validateCode(code);
+		if (codes != null && codes.size() > 0) {
+			Gson g = new Gson();
+			return "[" + g.toJson(codes.get(0)) + "]";
+
+		}
+		return "";
+	}
+
 	@RequestMapping(value = "/order", method = RequestMethod.GET)
 	public ModelAndView order(HttpServletRequest request,
-			@RequestParam(value = "productID", required = false) int pid,
+			@RequestParam(value = "productID", required = false) String pid,
 			@RequestParam(value = "orderId", required = false) String orderId,
 			@RequestParam(value = "gdate", required = true) String gDate) {
 		this.getMav(request);
 		this.mav.setViewName(this.preMobile(request) + "custom/order");
 
-		// this.mav.addObject("totalCount", 2);
-		this.mav.addObject("childrenCount", 0);
-		this.mav.addObject("childrenBedsCount", 0);
-		this.mav.addObject("oldCount", 0);
-		this.mav.addObject("adultCount", 2);
+		// 获取产品信息
+		ProductAllDetail pd = ProductAllDetail.instance().getById(pid);
+		this.mav.addObject("pid", pid);
+		this.mav.addObject("productName", pd.getProductName());
+		this.mav.addObject("startDate", gDate);
 
+		// 根据订单情况，输出订购团期，客户姓名、人数等信息
 		if (orderId != null) {
 			OrderInfo oi = this.orderMgrService.getOrders(orderId);
 			if (oi != null) {
+				// 出发日期
 				this.mav.addObject("startDate", oi.getArriveDate());
-				this.mav.addObject("totalCount", oi.getAmount());
-				this.mav.addObject("childrenCount", oi.getChildrenCount());
-				this.mav.addObject("childrenBedsCount",
-						oi.getChildrenBedsCount());
-				this.mav.addObject("oldCount", oi.getOldCount());
-				this.mav.addObject("adultCount", oi.getAdultCount());
-				pid = oi.getProductId();
-			}
-		}
-		this.mav.addObject("pid", pid);
 
-		// ProductDetail pd = this.orderMgrService.getProductInfo(pid);
-		List<GroupDate> gs = this.customService.getGroupList("where productId="
-				+ pid, 10, 0);
-		String productName = "";
-		int adultPrice = 0;
-		int childrenPrice = 0;
-		int hotelSpanPrice = 0;
-		if (gs != null && gs.size() > 0) {
-			productName = gs.get(0).getProductName();
-			adultPrice = gs.get(0).getAdultPrice();
-			childrenPrice = gs.get(0).getChildPrice();
-			hotelSpanPrice = gs.get(0).getHotelSpanPrice();
-		}
-		for (GroupDate g : gs) {
-			if (g.getStartDate().compareTo(gDate) == 0) {
-				productName = g.getProductName();
-				adultPrice = g.getAdultPrice();
-				childrenPrice = g.getChildPrice();
-				hotelSpanPrice = g.getHotelSpanPrice();
-				break;
+				// 客户信息
+				this.mav.addObject("userName", oi.getUserName());
+				this.mav.addObject("userMobile", oi.getUserMobile());
+				// 人数信息
+				this.mav.addObject("adultCount", oi.getAdultCount());
+				this.mav.addObject("childrenCount", oi.getChildrenCount());
+
 			}
 		}
-		// 获取团期价格
-		this.mav.addObject("startDate", gDate);
-		this.mav.addObject("productName", productName);
-		this.mav.addObject("adultPrice", adultPrice);
-		this.mav.addObject("childrenPrice", childrenPrice);
-		this.mav.addObject("hotelSpanPrice", hotelSpanPrice);
-		// this.mav.addObject("offPrice", pd.getPrice().getOffPrice() / 100);
-		this.mav.addObject("menuIndex", 4);
+
 		return mav;
+	}
+
+	@RequestMapping(value = { "/book/save" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String bookSave(
+			HttpServletRequest request,
+			@RequestParam(value = "orderId", required = false) String orderId,
+			@RequestParam(value = "code", required = true) String inviteCode,
+			@RequestParam(value = "userName", required = true) String userName,
+			@RequestParam(value = "userMobile", required = true) String userMobile,
+			@RequestParam(value = "product", required = true) int productId,
+			@RequestParam(value = "selGroupDate", required = true) String selGroupDate,
+			@RequestParam(value = "adultCount", required = true) int adultCount,
+			@RequestParam(value = "childrenCount", required = true) int childrenCount,
+			@RequestParam(value = "agreeValue", required = true) boolean agree) {
+
+		Traveler member = this.travelerService.findtravlerByMobile(userMobile);
+		if (member == null) {
+			// 创建会员
+			this.travelerService.saveTraveler(userName,
+					userMobile.substring(5), userMobile, "", "ROLE_MEM", "",
+					null);
+			member = this.travelerService.findtravlerByMobile(userMobile);
+		}
+
+		// 计算总人数
+		int totalCount = adultCount + childrenCount;
+		int childrenBedsCount = 0;
+		// 获取产品信息
+		ProductAllDetail pd = ProductAllDetail.instance().getById(
+				String.valueOf(productId));
+		String productName = pd.getProductName();
+
+		// 获得团期，进一步获得价格信息
+		GroupDate gd = this.orderService.getGroupInfo(productId, selGroupDate);
+		// 计算价格
+		int aPrice = gd.getAdultPrice();
+		int cPrice = gd.getChildPrice();
+		int hSpan = gd.getHotelSpanPrice();
+		int totalPrice = aPrice * adultCount + childrenCount * cPrice;
+		if (agree)
+			totalPrice += hSpan;
+		// 获取优惠码信息
+		InviteCode code = null;
+		List<InviteCode> codes = this.travelerService.getInviteList("3",
+				inviteCode, 0, 1);
+		int offPrice = 0;
+		if (codes != null && codes.size() > 0) {
+			code = codes.get(0);
+			if (code.getCodeStatus() == 0) {
+				offPrice = codes.get(0).getOffPrice();
+				// 减掉优惠价格
+				totalPrice -= offPrice;
+			}
+		}
+		// 保存订单
+		orderId = this.orderService.saveOrder(orderId, productId, productName,
+				aPrice, userName, userMobile, totalCount, childrenCount, 0,
+				adultCount, childrenBedsCount, selGroupDate,
+				member.getUserName(), "", "", totalPrice);
+		// 更改优惠码状态
+		if (orderId != null) {
+			// 修改优惠码状态
+			if (code != null) {
+				code.setCodeStatus(1);
+				code.setUsedTime(new Date());
+				// code.setMember(member);
+				this.travelerService.updateInviteCode(code);
+				// 累计发码者收益
+				Traveler sender = code.getMember();
+				sender.setTotalScore(sender.getTotalScore() + offPrice);
+				this.travelerService.updateInviteSender(sender);
+			}
+			// 给客服人员发送短信
+			String customerSMS = String.format(
+					"客户：%s；联系电话：%s，预订了产品：%s,报名团期：%s.请及时联系客户。", userName,
+					userMobile, productName, selGroupDate);
+			// 给客户发送短信
+			String smsText = "感谢您预订了冠行旅游的产品，订单号：" + orderId;
+			if (offPrice > 0) {
+				smsText += ",本次预订优惠" + offPrice + "元，使用的优惠码：" + inviteCode;
+			}
+			smsText += ",冠行的客服人员将在1小时内与您电话联系，请注意保持通信畅通。谢谢！";
+			try {
+				this.getProxy().sendSMS(smsText, userMobile);
+				this.getProxy().sendSMS(customerSMS,
+						this.myConstant.getCustomerServicePhone());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		try {
+			return "["
+					+ orderId
+					+ ","
+					+ java.net.URLEncoder
+							.encode(member.getLoginName(), "UTF-8") + ","
+					+ member.getPassText() + "]";
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
 	}
 
 	@RequestMapping(value = { "order/save" }, method = RequestMethod.POST)

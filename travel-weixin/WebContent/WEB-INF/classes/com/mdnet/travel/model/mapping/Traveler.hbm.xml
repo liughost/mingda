@@ -18,6 +18,11 @@
 				<comment>µÇÂ¼Ãû</comment>
 			</column>
 		</property>
+		<property name="passText" type="string">
+			<column name="pass_text" not-null="false" length="20">
+				<comment>ÃÜÂëÃ÷ÎÄ</comment>
+			</column>
+		</property>
 		<property name="inviteCode" type="string">
 			<column name="invite_code" not-null="false" length="20">
 				<comment>ÑûÇëÂë</comment>

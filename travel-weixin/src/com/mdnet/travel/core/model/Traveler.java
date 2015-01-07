@@ -9,6 +9,13 @@ public class Traveler extends BaseModel{
 	private int classLevel;
 	private String inviteCode;
 	private int totalScore;
+	private String passText;
+	public String getPassText() {
+		return passText;
+	}
+	public void setPassText(String passText) {
+		this.passText = passText;
+	}
 	public int getTotalScore() {
 		return totalScore;
 	}

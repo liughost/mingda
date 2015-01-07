@@ -23,6 +23,9 @@ public class ProductAllDetail extends BaseDocument {
 	private int pid = 0;// 产品ID关联到原来的数据库
 	private String productName = "";// 产品名称
 	private String aliasName;// 产品别名，或者内部名称
+	private String serialName;// 系列名称
+	
+
 	private String deaprtCity;// 出发城市 上海 出发
 	private String destCity;// 目的地拉斯维加斯、旧金山、洛杉矶、美国
 	private String settle;// 时间安排11天 9晚
@@ -45,7 +48,13 @@ public class ProductAllDetail extends BaseDocument {
 	private List<String> images = new ArrayList<String>();
 	private int aheadDays=10;//团期显示提前天数
 	
-	
+	public String getSerialName() {
+		return serialName;
+	}
+
+	public void setSerialName(String serialName) {
+		this.serialName = serialName;
+	}
 
 	public int getAheadDays() {
 		return aheadDays;
@@ -374,13 +383,27 @@ public class ProductAllDetail extends BaseDocument {
 		return mapFunc;
 	}
 
-	public ShowProductInfo[] getProductList() {
+	/**
+	 * 
+	 * @param sName 产品系列名称
+	 * @return
+	 */
+	public ShowProductInfo[] getProductList(int sName) {
 		Options opt = new Options();
 		opt.limit(30);
 		opt.reduce(false);
 		// db.
 		opt.descending(true);
-		ViewResult<String[]> result = db.queryView("product/list",
+		String viewName= "product/list";
+		if(sName==1)
+			viewName= "product/alone";
+		else if(sName==2)
+			viewName= "product/cheap";
+		else if(sName==3)
+			viewName= "product/spring";
+		else if(sName==4)
+			viewName= "product/standard";
+		ViewResult<String[]> result = db.queryView(viewName,
 				String[].class, opt, null);
 		if (result.getRows().size() > 0) {
 			int i = 0;

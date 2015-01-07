@@ -196,7 +196,7 @@ h3 {
 							<c:choose>
 								<c:when test="${items.price != 0 }">
 									<td class="group_date"
-										onclick="group_detail(${info.pid},${groupCanlendar.year}, ${groupCanlendar.month }, ${items.day})">${items.day
+										onclick="group_detail(${info.pid},'${items.date}')">${items.day
 										}<br />￥${items.price }
 									</td>
 								</c:when>
@@ -312,9 +312,9 @@ h3 {
 
 <div style="height: 20px;"></div>
 <script type="text/javascript">
-function group_detail(id, y, m, d)
+function group_detail(id, gd)
 {
-	location.href="${context}/custom/order?productID="+id+"&gdate="+y+"-"+m+"-"+d;
+	location.href="${context}/custom/order?productID="+id+"&gdate="+gd;
 }
 function getGroup(t,inx)
 {

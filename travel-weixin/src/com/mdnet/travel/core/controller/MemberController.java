@@ -35,8 +35,7 @@ public class MemberController extends BaseController {
 	@Resource(name = ICustomService.SERVICE_NAME)
 	protected ICustomService customService;
 
-	@Resource(name = IOrderMgrService.SERVICE_NAME)
-	protected IOrderMgrService orderService;
+	
 
 	/**
 	 * 显示会员列表界面
@@ -60,6 +59,41 @@ public class MemberController extends BaseController {
 		return this.mav;
 	}
 
+	@RequestMapping(value = { "/invite/resend" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String resendIinvite(HttpServletRequest request,
+			@RequestParam(value = "id", required = true) int id) {
+		String uname = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+		InviteCode code = this.travelerService.getInviteCodeObj(id);
+		if (this.sendInviteSMS(uname, code.getCodeType() == 1 ? "true"
+				: "false", code.getInviteCode(), code.getDest_mobile(), code
+				.getOffPrice()) > 0)
+			return "1";
+		else
+			return "0";
+	}
+
+	protected int sendInviteSMS(String uname, String isBind, String inviteCode,
+			String invitedMobile, int offPrice) {
+
+		String smsText = uname + "给您发送冠行旅游邀请码：" + inviteCode
+				+ ",凭此码到冠行旅游报名参团，优惠" + offPrice + "元";
+		if (isBind != null && isBind.compareTo("true") == 0) {
+			smsText += "，转赠无效。";
+		} else
+			smsText += "，此码转赠有效。";
+		// 发送邀请码
+		try {
+			this.getProxy().sendSMS(smsText, invitedMobile);
+			return 1;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 	@RequestMapping(value = { "/invite/sendReq" }, method = RequestMethod.POST)
 	@ResponseBody
 	public String sendIinvite(
@@ -80,21 +114,11 @@ public class MemberController extends BaseController {
 				inviteCode, offPrice);
 		if (r <= 0)
 			return "-1";
-		String smsText = uname + "给您发送冠行旅游邀请码：" + inviteCode
-				+ ",凭此码到冠行旅游报名参团，优惠" + offPrice + "元";
-		if (isBind != null && isBind.compareTo("true") == 0) {
-			smsText += "，转赠无效。";
-		} else
-			smsText += "，此码转赠有效。";
-		// 发送邀请码
-		try {
-			this.getProxy().sendSMS(smsText, invitedMobile);
+		if (this.sendInviteSMS(uname, isBind, inviteCode, invitedMobile,
+				offPrice) > 0)
 			return "1";
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "0";
+		else
+			return "0";
 	}
 
 	@RequestMapping(value = { "/invite/send" }, method = RequestMethod.GET)
@@ -115,11 +139,12 @@ public class MemberController extends BaseController {
 
 		Traveler traveler = this.travelerService.findTravelerByUname(uname);
 
-		this.mav.addObject(
-				"inviteList",
-				this.travelerService.getInviteList(sType, sText,
-						traveler.getMobile(), page, 20));
-
+		List<InviteCode> codes = this.travelerService.getInviteList(sType,
+				sText, traveler.getMobile(), page, 20);
+		this.mav.addObject("inviteList", codes);
+		this.mav.addObject("sType", sType==null?0:sType);
+		this.mav.addObject("sText", sText);
+		this.doPager(page, codes != null ? codes.size() : 0);
 		return this.mav;
 	}
 
@@ -194,7 +219,7 @@ public class MemberController extends BaseController {
 	 * 会员登录首页，展示会员基本信息
 	 */
 	@RequestMapping(value = { "/info" }, method = RequestMethod.GET)
-	public ModelAndView bookUI(HttpServletRequest request) {
+	public ModelAndView bookInfo(HttpServletRequest request) {
 		this.getMav(request);
 		this.mav.setViewName("member/info");
 		String uname = SecurityContextHolder.getContext().getAuthentication()
@@ -223,75 +248,10 @@ public class MemberController extends BaseController {
 		return this.mav;
 	}
 
-	@RequestMapping(value = { "/book/save" }, method = RequestMethod.POST)
-	@ResponseBody
-	public String bookConfirm(
-			HttpServletRequest request,
-			@RequestParam(value = "orderId", required = false) String orderId,
-			@RequestParam(value = "code", required = true) String code,
-			@RequestParam(value = "userName", required = true) String userName,
-			@RequestParam(value = "userMobile", required = true) String userMobile,
-			@RequestParam(value = "product", required = true) int productId,
-			@RequestParam(value = "selGroupDate", required = true) String selGroupDate,
-			@RequestParam(value = "adultCount", required = true) int adultCount,
-			@RequestParam(value = "childrenCount", required = true) int childrenCount,
-			@RequestParam(value = "agreeValue", required = true) boolean agree) {
+	
 
-		int totalCount = adultCount + childrenCount;
-		int childrenBedsCount = 0;
-		String uname = SecurityContextHolder.getContext().getAuthentication()
-				.getName();
-		ProductAllDetail pd = ProductAllDetail.instance().getById(
-				String.valueOf(productId));
-		String productName = pd.getProductName();
 
-		GroupDate gd = this.orderService.getGroupInfo(productId, selGroupDate);
-
-		int aPrice = gd.getAdultPrice();
-		int cPrice = gd.getChildPrice();
-		int hSpan = gd.getHotelSpanPrice();
-		int totalPrice = aPrice * adultCount + childrenCount * cPrice;
-		if (agree)
-			totalPrice += hSpan;
-
-		orderId = this.orderService.saveOrder(orderId, productId, productName,
-				aPrice, userName, userMobile, totalCount, childrenCount, 0,
-				adultCount, childrenBedsCount, selGroupDate, uname, "", "",
-				totalPrice);
-		return orderId;
-	}
-
-	@RequestMapping(value = { "/inviteCodeValidate" }, method = RequestMethod.POST)
-	@ResponseBody
-	public String inviteCodeValidate(HttpServletRequest request,
-			@RequestParam(value = "code", required = true) String code) {
-
-		List<InviteCode> codes = this.travelerService.validateCode(code);
-		if (codes != null && codes.size() > 0) {
-			Gson g = new Gson();
-			return "[" + g.toJson(codes.get(0)) + "]";
-
-		}
-		return "";
-	}
-
-	/**
-	 * 获得相关产品团期日历
-	 * 
-	 * @param request
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value = { "/groupDate" }, method = RequestMethod.POST)
-	@ResponseBody
-	public String groupDate(HttpServletRequest request,
-			@RequestParam(value = "id", required = false) String id) {
-
-		// 获取当月团期日历
-		List<GroupMonth> gms = customService.makeGroupCalendar(id, 10);
-		Gson g = new Gson();
-		return g.toJson(gms);
-	}
+	
 
 	/**
 	 * 会员积分列表
