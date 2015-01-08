@@ -242,10 +242,10 @@
 		}, function(result, status) {
 			debugger;
 			if (status == 'success') {
-
-				if (parseInt(result) > 0) {
-					orderId.value = result;
-					alert("报名成功，订单号:" + result);
+				var ret = eval(result);
+				if (ret.length > 0) {
+					orderId.value = ret[0];
+					alert("报名成功，订单号:" + ret[0]);
 				} else
 					alert("对不起，预订失败，请检查相关数据。");
 			} else {

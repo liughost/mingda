@@ -805,7 +805,7 @@ public class CustomController extends BaseController {
 		}
 		// 保存订单
 		orderId = this.orderService.saveOrder(orderId, productId, productName,
-				aPrice, userName, userMobile, totalCount, childrenCount, 0,
+				aPrice, cPrice, offPrice, userName, userMobile, totalCount, childrenCount, 0,
 				adultCount, childrenBedsCount, selGroupDate,
 				member.getUserName(), "", "", totalPrice);
 		// 更改优惠码状态
@@ -841,12 +841,12 @@ public class CustomController extends BaseController {
 			}
 		}
 		try {
-			return "["
+			return "['"
 					+ orderId
-					+ ","
+					+ "','"
 					+ java.net.URLEncoder
-							.encode(member.getLoginName(), "UTF-8") + ","
-					+ member.getPassText() + "]";
+							.encode(member.getLoginName(), "UTF-8") + "','"
+					+ member.getPassText() + "']";
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -875,7 +875,7 @@ public class CustomController extends BaseController {
 			int totalCount = oldCount + adultCount + childrenCount;
 			orderId = this.orderMgrService.saveOrder(orderId, pid, pd
 					.getProductInfo().getProductName(), pd.getPrice()
-					.getLowPrice(), userName, userMobile, totalCount,
+					.getLowPrice(), 0,0, userName, userMobile, totalCount,
 					childrenCount, oldCount, adultCount, childrenBedsCount,
 					startDate, uname, "", "weixin", 0);
 			try {

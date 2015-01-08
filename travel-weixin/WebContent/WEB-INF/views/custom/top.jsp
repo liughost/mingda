@@ -287,7 +287,8 @@
 								</a>
 									<ul class="dropdown-menu">
 										<li><a href="${context}/member/info">我的信息</a></li>
-										<li><a href="${context}/member/invite/send">发送邀请码</a></li>
+										<li><a href="${context}/member/order/list">我的订单</a></li>
+										<li><a href="${context}/member/invite/send">发送邀请</a></li>
 										<li class="divider"></li>
 										<li><a href="${context}/static/j_spring_security_logout">退出</a>
 										</li>

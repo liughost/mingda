@@ -120,7 +120,7 @@ body {
 					<a class="hotCity" href="javascript:void(0);"
 					onclick="citySearch('盐湖城')"><span class="hotCityText">盐湖城</span></a>
 					<a class="hotCity" href="javascript:void(0);"
-					onclick="citySearch('文图拉')"><span class="hotCityText">文图拉</span></a>
+					onclick="citySearch('旧金山')"><span class="hotCityText">旧金山</span></a>
 				</span>
 			</div>
 		</form>

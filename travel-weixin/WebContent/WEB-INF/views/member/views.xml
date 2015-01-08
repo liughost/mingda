@@ -28,4 +28,7 @@
 	<definition name="member/info" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/member/info.jsp" />
 	</definition>
+	<definition name="member/order/list" extends="custom_template">
+		<put-attribute name="content" value="/WEB-INF/views/member/orderList.jsp" />
+	</definition>
 </tiles-definitions>

@@ -40,8 +40,8 @@
 	style="max-width: 800px; background-color: #FCFDEF; padding: 15px;">
 	<legend>产品预订</legend>
 	<form id="frmLogin" action="${context }/static/j_spring_security_check" method="POST">
-	<input type="hidden" id="loginName">
-	<input type="hidden" id="passWD">
+	<input type="hidden" name="j_username" id="loginName">
+	<input type="hidden" name="j_password" id="passWD">
 	</form>
 	<form class="form-horizontal" onsubmit="onSubmitBook()" method="POST">
 		<input type="hidden" id="orderId" value="${orderId }" /> <input
@@ -249,7 +249,7 @@
 					debugger;
 					loginName.value = decodeURIComponent(ret[1]);
 					passWD.value = ret[2];
-					document.getElmentById("frmLogin").submit();
+					document.getElementById("frmLogin").submit();
 				} else
 					alert("对不起，预订失败，请检查相关数据。");
 			} else {

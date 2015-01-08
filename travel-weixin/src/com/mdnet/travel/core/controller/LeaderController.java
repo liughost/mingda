@@ -90,7 +90,7 @@ public class LeaderController extends BaseController {
 		if (pd.getProductInfo() != null) {
 			orderId = this.orderMgrService.saveOrder(orderId, pid, pd
 					.getProductInfo().getProductName(), pd.getPrice()
-					.getLowPrice(), userName, userMobile, totalCount,
+					.getLowPrice(),0,0, userName, userMobile, totalCount,
 					childrenCount, oldCount, adultCount, childrenBedsCount,
 					startDate, uname, "", "weixin", 0);
 			try {

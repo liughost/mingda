@@ -7,7 +7,9 @@ public class OrderInfo {
 	private String productName;// 产品名称
 
 	// 消费者/用户信息
-	private int productPrice;// 产品单价 单位：分，可以有两位小数
+	private int productPrice;// 产品成人单价 单位：分，可以有两位小数
+	private int childrenPrice;// 产品儿童单价 单位：分，可以有两位小数
+	private int offPrice;// 产品总优惠单价 单位：分，可以有两位小数
 	private int amount;// 购买数量 整数
 	private int childrenCount;// 包含儿童的数量
 	private int childrenBedsCount;
@@ -41,6 +43,21 @@ public class OrderInfo {
 	private int consumeCount;// 消费数量
 	private String lastConsumeTime;// 最后消费时间
 
+	public int getChildrenPrice() {
+		return childrenPrice;
+	}
+
+	public void setChildrenPrice(int childrenPrice) {
+		this.childrenPrice = childrenPrice;
+	}
+
+	public int getOffPrice() {
+		return offPrice;
+	}
+
+	public void setOffPrice(int offPrice) {
+		this.offPrice = offPrice;
+	}
 	public int getChildrenBedsCount() {
 		return childrenBedsCount;
 	}

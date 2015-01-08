@@ -28,14 +28,15 @@ import com.mdnet.travel.core.service.ICustomService;
 import com.mdnet.travel.core.service.ILeaderService;
 import com.mdnet.travel.core.service.IOrderMgrService;
 import com.mdnet.travel.core.vo.ShowProductInfo;
+import com.mdnet.travel.order.model.OrderInfo;
 
 @Controller
 @RequestMapping("/member")
 public class MemberController extends BaseController {
 	@Resource(name = ICustomService.SERVICE_NAME)
 	protected ICustomService customService;
-
-	
+	@Resource(name = IOrderMgrService.SERVICE_NAME)
+	private IOrderMgrService orderMgrService;
 
 	/**
 	 * 显示会员列表界面
@@ -56,6 +57,25 @@ public class MemberController extends BaseController {
 
 		this.getMav(request);
 		this.mav.setViewName("member/invite");
+		return this.mav;
+	}
+
+	@RequestMapping(value = { "/order/list" }, method = RequestMethod.GET)
+	public ModelAndView orderListUI(HttpServletRequest request,
+			@RequestParam(value = "page", required = false) String page) {
+
+		this.getMav(request);
+		this.mav.setViewName("member/order/list");
+		String uname = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+		Traveler traveler = this.travelerService.findTravelerByUname(uname);
+		int pageNo = 0;
+		if (page != null)
+			pageNo = Integer.parseInt(page);
+		List<OrderInfo> orders = this.orderMgrService.getOrders(1,
+				traveler.getMobile(), pageNo);
+		this.mav.addObject("orderList", orders);
+		this.doPager(pageNo, orders == null ? 0 : orders.size());
 		return this.mav;
 	}
 
@@ -142,7 +162,7 @@ public class MemberController extends BaseController {
 		List<InviteCode> codes = this.travelerService.getInviteList(sType,
 				sText, traveler.getMobile(), page, 20);
 		this.mav.addObject("inviteList", codes);
-		this.mav.addObject("sType", sType==null?0:sType);
+		this.mav.addObject("sType", sType == null ? 0 : sType);
 		this.mav.addObject("sText", sText);
 		this.doPager(page, codes != null ? codes.size() : 0);
 		return this.mav;
@@ -179,6 +199,45 @@ public class MemberController extends BaseController {
 		return g.toJson(inCodes);
 	}
 
+	/**
+	 * 更新会员信息
+	 * @param request
+	 * @param uid
+	 * @param loginName
+	 * @param userMobile
+	 * @param userName
+	 * @return
+	 */
+	@RequestMapping(value = { "info/update" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String updateUserInfo(
+			HttpServletRequest request,
+			@RequestParam(value = "uid", required = true) String uid,
+			@RequestParam(value = "loginName", required = true) String loginName,
+			@RequestParam(value = "userMobile", required = true) String userMobile,
+			@RequestParam(value = "userName", required = true) String userName) {
+		String uname = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+
+		Traveler traveler = this.travelerService.findTravelerByUname(uname);
+		if (traveler.getTravelerId().compareTo(uid) != 0)
+			return "-1";
+		traveler.setLoginName(loginName);
+		traveler.setUserName(userName);
+		traveler.setMobile(userMobile);
+		this.travelerService.updateInviteSender(traveler);
+		return "1";
+	}
+
+	/**
+	 * 获取会员列表
+	 * 
+	 * @param request
+	 * @param sType
+	 * @param sText
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value = { "/getList" }, method = RequestMethod.POST)
 	@ResponseBody
 	public String getList(HttpServletRequest request,
@@ -247,11 +306,6 @@ public class MemberController extends BaseController {
 		this.mav.addObject("productList", ps);
 		return this.mav;
 	}
-
-	
-
-
-	
 
 	/**
 	 * 会员积分列表

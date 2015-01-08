@@ -16,7 +16,7 @@ public interface IOrderMgrService {
 	ProductDetail getProductInfo(int pid, String startDate);
 
 	String saveOrder(String orderId, int productId, String productName,
-			int salePrice, String userName, String userMobile, int totalCount,
+			int salePrice, int childrenPrice, int offPrice, String userName, String userMobile, int totalCount,
 			int childrenCount, int oldCount, int adultCount,
 			int childrenBedsCount, String startDate, String bookerName,
 			String bookerPhone, String channelSource, int payMoney);
