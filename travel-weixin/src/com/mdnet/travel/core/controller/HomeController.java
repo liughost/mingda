@@ -2,8 +2,10 @@ package com.mdnet.travel.core.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +18,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.deanx.CouchDB;
 
 import com.mdnet.travel.core.dao.ReqMessageDAO;
 import com.mdnet.travel.core.model.Traveler;
+import com.mdnet.travel.core.model.ValidateCode;
 import com.mdnet.travel.core.utils.CommonUtils;
 import com.mdnet.travel.core.vo.ExceptionInfo;
 import com.mdnet.travel.core.vo.RegistBean;
@@ -32,7 +37,7 @@ public class HomeController extends BaseController {
 
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String home(HttpServletRequest request) {
-		
+
 		if (CommonUtils.IsMobile(request))
 			return this.REDIRECT + this.myConstant.getMobileHomePage();// /mobilehome";
 		else
@@ -102,47 +107,47 @@ public class HomeController extends BaseController {
 	}
 
 	@RequestMapping("/dosignup")
-	public ModelAndView signup(RegistBean regist) {
-		String username = regist.getUsername();
-		String pass = regist.getPass();
-		String confirm_pass = regist.getConfirm_pass();
-		String mobile = regist.getMobile();
-		String validCode = regist.getValid_code();
+	@ResponseBody
+	public String signup(
+			@RequestParam(value = "username", required = true) String username,
+			@RequestParam(value = "pass", required = true) String pass,
+			@RequestParam(value = "confirmPass", required = true) String confirm_pass,
+			@RequestParam(value = "mobile", required = true) String mobile,
+			@RequestParam(value = "validCode", required = true) String validCode)
+			throws UnsupportedEncodingException {
 
-		if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(pass)
-				&& StringUtils.isNotEmpty(confirm_pass)
-				&& StringUtils.isNotEmpty(mobile)
-				&& StringUtils.isNotEmpty(validCode)) {
-			if (this.travelerService.findValidCodeByMobile(mobile.trim())
-					.equals(validCode.trim())) {
-				if (null != this.travelerService.findMobile(username.trim())) {
-					this.message = "用户名已被占用!";
-				} else {
-					if (pass.trim().equals(confirm_pass.trim())) {
-						Boolean flag = (this.travelerService.saveTraveler(
-								username, pass, mobile, "",
-								Traveler.ROLE_TRAVELER, "", null) > 0 ? true
-								: false);
-						if (flag) {
-							this.message = "注册成功,赶快登入瞧瞧!";
-						} else {
-							this.message = "系统繁忙,请稍后重试哦!";
-						}
-					} else {
-						this.message = "注册失败,两次输入密码不一致！";
-					}
-				}
-			} else {
-				this.message = "注册失败,输入验证码不符";
-			}
+		String message = "";
 
-		} else {
-			this.message = "注册失败,*号的为必填项，请确认...";
+		if (null != this.travelerService.findMobile(username.trim())) {
+			return java.net.URLEncoder.encode("对不起，用户名已被占用!", "UTF-8");
 		}
-		this.mav = new ModelAndView();
-		this.mav.setViewName(this.FORWARD + "/signup");
-		this.mav.addObject("message", this.message);
-		return mav;
+
+		ValidateCode code = this.travelerService.findValidCodeByMobile(mobile
+				.trim());
+		Date now = new Date();
+		long span = now.getTime() / 1000
+				- (code == null ? 0 : code.getCreateTime().getTime()) / 1000;
+		if (code == null || span > 2 * 60 * 60 || code.getStatus() != 0
+				|| !code.getValidCode().equals(validCode.trim())) {
+			return java.net.URLEncoder
+					.encode("对不起，注册失败,验证码错误，请确认后重试!", "UTF-8");
+		}
+
+		if (pass.trim().equals(confirm_pass.trim())) {
+			Boolean flag = (this.travelerService.saveTraveler(username, pass,
+					mobile, "", Traveler.ROLE_MEM, "", null) > 0 ? true : false);
+			if (flag) {
+				message = "注册成功,请登入冠行旅游网!";
+				code.setStatus(1);
+				this.travelerService.update(code);
+			} else {
+				message = "对不起，系统繁忙,请稍后重试哦!";
+			}
+		} else {
+			message = "对不起，注册失败,密码和确认密码不一致，请重新输入！";
+		}
+
+		return java.net.URLEncoder.encode(message, "UTF-8");
 	}
 
 	@RequestMapping(value = "/check/username", method = RequestMethod.POST)
@@ -166,34 +171,22 @@ public class HomeController extends BaseController {
 		}
 	}
 
-	@RequestMapping(value = "/signup/get_valid_code", method = RequestMethod.POST)
-	public void sendValidCode(RegistBean regist, HttpServletResponse response) {
-		response.setContentType("text/html;charset=utf-8");
-		String username = regist.getUsername();
-		String mobile = regist.getMobile();
-		String info = "";
-		PrintWriter out = null;
+	@RequestMapping(value = "/signup/sendValidCode", method = RequestMethod.POST)
+	@ResponseBody
+	public String sendValidCode(
+			@RequestParam(value = "mobile", required = true) String userMobile) {
+
+		String validCode = CommonUtils.getRandomSixNum();
+		String validContent = "用户您好。冠行旅游的验证码为:" + validCode
+				+ ",此验证码2小时内有效，请妥善保管!";
+
+		this.travelerService.saveValidCode(userMobile, validCode);
 		try {
-			out = response.getWriter();
-		} catch (IOException e) {
-			this.logger.info("获取响应流失败");
+			getProxy().sendSMS(validContent, userMobile.trim());
+		} catch (RemoteException e) {
+			return "0";
 		}
-		if (null != username && null != mobile) {
-			// TODO 待完成：检测手机号是否符合要求
-			String validCode = CommonUtils.getRandomSixNum();
-			String validContent = "尊敬的用户,您好。您正在使用我们的注册服务,验证码为:" + validCode
-					+ ",请妥善保管!";
-			try {
-				getProxy().sendSMS(validContent, mobile.trim());
-			} catch (RemoteException e) {
-				this.logger.info("注册发码异常");
-			}
-			info = this.travelerService.saveValidCode(username, mobile,
-					validCode);
-		} else {
-			info = "用户名或手机号不能为空";
-		}
-		out.print(info);
+		return "1";
 	}
 
 	/**

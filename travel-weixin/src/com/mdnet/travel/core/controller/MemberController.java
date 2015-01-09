@@ -86,9 +86,10 @@ public class MemberController extends BaseController {
 		String uname = SecurityContextHolder.getContext().getAuthentication()
 				.getName();
 		InviteCode code = this.travelerService.getInviteCodeObj(id);
-		if (this.sendInviteSMS(uname, code.getCodeType() == 1 ? "true"
-				: "false", code.getInviteCode(), code.getDest_mobile(), code
-				.getOffPrice()) > 0)
+		if (code.getCodeStatus() == 0
+				&& this.sendInviteSMS(uname, code.getCodeType() == 1 ? "true"
+						: "false", code.getInviteCode(), code.getDest_mobile(),
+						code.getOffPrice()) > 0)
 			return "1";
 		else
 			return "0";
@@ -201,6 +202,7 @@ public class MemberController extends BaseController {
 
 	/**
 	 * 更新会员信息
+	 * 
 	 * @param request
 	 * @param uid
 	 * @param loginName

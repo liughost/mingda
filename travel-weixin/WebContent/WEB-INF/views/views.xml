@@ -40,18 +40,19 @@
 		<put-attribute name="head" value="/WEB-INF/views/client/head.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/public/footer.jsp" />
 	</definition>
-
+<!-- 
 	<definition name="login" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/login.jsp" />
 	</definition>
-	
+ -->	
 	<definition name="sitemap" extends="nothing_template">
 		<put-attribute name="content" value="/WEB-INF/views/public/sitemap.jsp" />
 	</definition>
-
-	<definition name="signup" extends="client_template">
+<!-- 
+	<definition name="signup" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/signup.jsp" />
 	</definition>
+ -->
 	<definition name="home" extends="client_template">
 		<put-attribute name="content" value="/WEB-INF/views/client/home.jsp" />
 	</definition>

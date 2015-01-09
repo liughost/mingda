@@ -22,7 +22,7 @@
 	function sel_count(objName) {
 		var count = 0;
 		var obj = document.getElementsByName(objName);
-		for ( var i = 0; i < obj.length; i++) {
+		for (var i = 0; i < obj.length; i++) {
 			if (obj[i].checked)
 				count++;
 		}
@@ -68,7 +68,7 @@
 	}
 	function sel_all(allObj) {
 		var cities = document.getElementsByName("sel_city");
-		for ( var i = 0; i < cities.length; i++) {
+		for (var i = 0; i < cities.length; i++) {
 			cities[i].checked = allObj.checked;
 		}
 	}
@@ -77,7 +77,7 @@
 		//debugger;
 		var sels = "";
 		var cities = document.getElementsByName("sel_city");
-		for ( var i = 0; i < cities.length; i++) {
+		for (var i = 0; i < cities.length; i++) {
 			if (cities[i].checked)
 				sels += cities[i].value + ",";
 		}
@@ -95,7 +95,7 @@
 								//debugger;
 								var cities = eval(data);
 								var c_str = "";
-								for ( var i = 0; i < cities.length; i++) {
+								for (var i = 0; i < cities.length; i++) {
 									var cName = decodeURIComponent(cities[i].cityName);
 									/*if (i % 3 == 0)
 										c_str += "<tr>";
@@ -130,16 +130,22 @@
 				action="${context }/custom/product/search" method="POST"
 				style="margin-bottom: 0;">
 				<div class="control-group">
+				<!-- 
 					<c:if test="${empty username}">
 
 						<lable class="control-label"> <a
 							href="${context }/member/info"><span
 							style="position: absolute; z-index: 1; margin: 15px -30px 0px -70px;">会员登录</span></a></lable>
 					</c:if>
+					 -->
 					<input type="text" class="input-small" name="city"
 						style="margin-top: 10px;" onclick="clickCity()" id="txtSelCity"
 						placeholder="请输入目的地城市名称" autocomplete="off">
 					<button type="submit" class="btn" style="margin-top: 10px;">搜索</button>
+					<c:if test="${empty username}">
+
+						<a class="btn" style="margin-top: 10px;color:gray;" onclick="location.href='${context }/member/info';">登录</a>
+					</c:if>
 				</div>
 			</form>
 		</div>

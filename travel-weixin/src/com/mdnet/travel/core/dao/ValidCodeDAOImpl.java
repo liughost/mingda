@@ -29,7 +29,7 @@ public class ValidCodeDAOImpl extends BasicDAOImpl<ValidateCode> implements Vali
 		List<ValidateCode> codeList=new ArrayList<ValidateCode>();
 
 		ValidateCode code = null;
-		String hql = "from ValidCode t where t.mobile=? order by t.vcId desc";
+		String hql = "from ValidateCode t where t.mobile=? order by t.vcId desc";
 		codeList = this.getHibernateTemplate().find(hql,mobile);
 		if(codeList.size()>0){
 			code = codeList.get(0);

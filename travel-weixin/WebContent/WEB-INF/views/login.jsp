@@ -28,6 +28,7 @@
 			<div class="controls">
 				<input id="user_password" name="j_password" type="password"
 					id="inputPassword" class="form-control" placeholder="密码" />
+					<br/><a href="${forget}">忘记密码</a>
 			</div>
 		</div>
 		<div class="control-group">
@@ -35,7 +36,7 @@
 				<label class="checkbox"> <input
 					name="_spring_security_remember_me" type="hidden" value="0" /> <input
 					id="user_remember_me" name="_spring_security_remember_me"
-					type="checkbox" value="1" /> 记住密码 <br /> <a href="${forget}">忘记密码</a>
+					type="checkbox" value="1" /> 记住密码
 				</label>
 			</div>
 		</div>

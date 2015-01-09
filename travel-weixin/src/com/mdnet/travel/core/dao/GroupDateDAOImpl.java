@@ -18,8 +18,30 @@ public class GroupDateDAOImpl extends BasicDAOImpl<GroupDate> implements
 		GroupDateDAO {
 
 	@Override
+	public GroupDate getFirst(String where) {
+
+		final String queryString = "from GroupDate " + where
+				+ " order by startDate ASC ";
+		final int length = 1;
+		final int offset = 0;
+		List list = getHibernateTemplate().executeFind(new HibernateCallback() {
+			public Object doInHibernate(Session session) {
+				Query query = session.createQuery(queryString);
+				query.setFirstResult(offset);
+				query.setMaxResults(length);
+				List list = query.list();
+				return list;
+			}
+		});
+		if (list != null && list.size() > 0)
+			return (GroupDate) list.get(0);
+		else
+			return null;
+	}
+
+	@Override
 	public List<GroupDate> getList(String where, int page) {
-		
+
 		final String queryString = "from GroupDate " + where
 				+ " order by startDate ASC ";
 		final int length = 210;

@@ -135,7 +135,7 @@ public class AccountController extends BaseController {
 				info = "系统繁忙,稍后重试!";
 			}
 			if(flag){
-				info = this.travelerService.saveValidCode(name, mobile,
+				info = this.travelerService.saveValidCode(mobile,
 						validCode);
 			}else{
 				info = "系统繁忙,稍后重试!";
@@ -211,7 +211,7 @@ public class AccountController extends BaseController {
 				info = "系统繁忙,稍后重试!";
 			}
 			if(flag){
-				info = this.travelerService.saveValidCode(name, validMobile.trim(),
+				info = this.travelerService.saveValidCode(validMobile.trim(),
 						validCode);
 			}else{
 				info = "系统繁忙,稍后重试!";

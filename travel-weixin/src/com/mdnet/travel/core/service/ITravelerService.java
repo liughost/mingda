@@ -5,6 +5,7 @@ import java.util.List;
 import com.mdnet.travel.core.model.InviteCode;
 import com.mdnet.travel.core.model.MetaKeys;
 import com.mdnet.travel.core.model.Traveler;
+import com.mdnet.travel.core.model.ValidateCode;
 import com.mdnet.travel.core.model.WeixinAccount;
 import com.mdnet.travel.core.vo.FindPassVO;
 import com.mdnet.travel.core.vo.MemberInfoVO;
@@ -28,7 +29,7 @@ public interface ITravelerService {
 
 	String resetPassByUser(ResetPassVO passInfo, String username);
 
-	String saveValidCode(String username,String mobile, String validCode);
+	String saveValidCode(String mobile, String validCode);
 
 	String resetMobileByUser(ResetMobileVO mobiles, String username);
 
@@ -37,7 +38,7 @@ public interface ITravelerService {
 
 	String findPassOrUser(FindPassVO findInfo);
 
-	String findValidCodeByMobile(String mobile);
+	ValidateCode findValidCodeByMobile(String mobile);
 	
 	String findValidateCodeByMobileAndName(String username,String mobile);
 	
@@ -84,5 +85,9 @@ public interface ITravelerService {
 	void updateInviteCode(InviteCode code);
 
 	void updateInviteSender(Traveler sender);
+
+	void update(ValidateCode code);
+
+	
 
 }

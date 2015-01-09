@@ -24,8 +24,14 @@ a:hover {
 
 		<div class="span5">
 			<h4>联系冠行</h4>
+			
+			<p>
+				微信号：zwxzjz(<a href="javascript:showQR();" style="color:white;">点击扫二维码</a>)
+			</p>
+			<img id="QR"
+				style="display: none; position: absolute; z-index: 5; width: 150px;"
+				src="http://guantravel.com/resources/media/201410/566c75560d6e19fcf33b480bf0f030c1.jpg">
 			<p>客户电话：400-6910-800</p>
-			<p>微信号：zwxzjz</p>
 			<p>地址：北京市朝阳区潘家园南里12号潘家园大厦北区319室</p>
 
 		</div>
@@ -62,3 +68,15 @@ a:hover {
 		</div>
 	</div>
 </footer>
+<script>
+	function showQR() {
+		var imgObj = document.getElementById("QR");
+		if (imgObj.style.display == "none")
+			imgObj.style.display = "block";
+		else
+			imgObj.style.display = "none";
+
+	}
+
+	
+</script>

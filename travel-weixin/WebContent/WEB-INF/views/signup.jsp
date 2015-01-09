@@ -4,111 +4,132 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <s:url var="home" value="/home" />
 <s:url var="dosignup" value="/dosignup"></s:url>
+<div class="container">
+	<div class="page-header">
 
-<div class="page-header">
-	<div style="height: 3px;"></div>
-	<h1>
-		<small>绑定手机</small>
-	</h1>
-</div>
-<c:choose>
-	<c:when test="${empty message}"></c:when>
-	<c:otherwise>
-		<div style="height: 15px;">
-			<h5 class="text-primary text-danger">${message}</h5>
-		</div>
-	</c:otherwise>
-</c:choose>
-<form accept-charset="UTF-8" action="${dosignup}" id="new_user"
-	method="post" role="form">
+		<h1>
+			<small>用户注册</small>
+		</h1>
+	</div>
+
+
+
 	<div class="form-group">
-		<label for="username"><span class="text-warning">*</span>登录唯一账户</label>
+		<label for="username"><span class="text-warning">*</span>登录账户</label>
 		<span style="color: red; font-size: 24px; font-style: italic;"
 			id="username_msg"></span> <input id="username" class="form-control"
 			name="username" type="text" required="required" />
 	</div>
 	<div class="form-group">
 		<label for="login_pass"><span class="text-warning">*</span>登录密码</label>
-		<input id="login_pass" name="pass" required="required" type="password"
+		<input id="pass" name="pass" required="required" type="password"
 			class="form-control" />
 	</div>
 	<div class="form-group">
 		<label for="exampleInputPassword"><span class="text-warning">*</span>确认密码</label>
-		<input name="confirm_pass" type="password" required="required"
+		<input id="confirm_pass" type="password" required="required"
 			class="form-control" id="exampleInputPassword" />
 	</div>
 	<div class="form-group">
 		<label for="mobile"><span class="text-warning">*</span>有效手机号码</label>
-		<input id="mobile" name="mobile" type="text" class="form-control"
-			required="required" />
+		<input id="mobile" name="mobile" type="text" maxlength="11"
+			class="form-control" required="required" />
 	</div>
 	<div class="form-group">
-		<label for="get_valid_code"><a id="signup_validcode"
-			class="btn btn-default">获取验证码</a><span id="get_valid_info"
-			class="text-info"></span></label> <input name="valid_code" type="text"
+		<label for="get_valid_code"><button id="signup_validcode"
+				class="btn btn-default">获取验证码</button> <span id="get_valid_info"
+			class="text-info"></span></label> <input id="validCode" type="text"
 			class="form-control" required="required" id="get_valid_code" />
 	</div>
-	<button type="submit" data-disable-with="正在确认..."
-		class="btn btn-primary btn-lg">创建账户</button>
-</form>
-<p class='muted'>
-	<span class="glyphicon glyphicon-user"></span> <span
-		class="text-warning">已注册</span> &nbsp;<span
-		class="glyphicon glyphicon-hand-right"></span> <a
-		class="btn btn-default btn-xs" href='<s:url value="/login"/>'>登录</a>
-</p>
-
+	<button type="button" data-disable-with="正在确认..." id="btnRegister"
+		class="btn btn-primary btn-lg" onclick="registerUser()">注册</button>
+	<div style="height: 15px;">
+		<h5 class="text-primary text-danger" id="msg"></h5>
+	</div>
+	<p class='muted'>
+		<span class="glyphicon glyphicon-user"></span> <span
+			class="text-warning">已注册</span> &nbsp;<span
+			class="glyphicon glyphicon-hand-right"></span> <a
+			class="btn btn-default btn-xs" href='<s:url value="/login"/>'>登录</a>
+	</p>
+</div>
 <script>
+	function registerUser() {
+		if (username.value.length == 0) {
+			alert("请输入登录帐号。");
+			username.focus();
+			return;
+		}
+		if (pass.value.length == 0) {
+			alert("请输入登录密码。");
+			pass.focus();
+			return;
+		}
+		if (confirm_pass.value.length == 0) {
+			alert("请输入确认密码。");
+			confirm_pass.focus();
+			return;
+		}
+		if (mobile.value.length == 0) {
+			alert("请输入电话号码。");
+			mobile.focus();
+			return;
+		}
+		if (validCode.value.length == 0) {
+			alert("请输入验证码。");
+			validCode.focus();
+			return;
+		}
+		var url = "${context}/dosignup";
+		$.post(url, {
+			username : username.value,
+			pass : pass.value,
+			confirmPass : confirm_pass.value,
+			mobile : mobile.value,
+			validCode : validCode.value
+		}, function(result, status) {
+			debugger;
+			if (status == 'success') {
+				if (result.length > 0) {
+					result = decodeURIComponent(result);
+					$('#msg').text(result);
+					if (result.indexOf('成功') >= 0) {
+						btnRegister.disabled = true;
+					}
+				} else {
+					alert("注册失败，请稍候重试！");
+				}
+			} else {
+				alert("网络忙，请稍候重试！");
+			}
+
+		});
+	}
 	window.onload = function() {
-		$('#signup_validcode').click(
-				function() {
-					var username = $('#username').val();
-					var mobile = $('#mobile').val();
-					var xhr = getXmlHttpRequest();
-					
-					var temp = loc.length ? loc.split("/") : [];
-					var send_loc = '/' + temp[1] + '/signup/get_valid_code';
-					xhr.open('post', send_loc, true); // 必须添加一个消息头content-type
-					xhr.setRequestHeader("Content-Type",
-							"application/x-www-form-urlencoded");
-					
-					xhr.onreadystatechange = function() {
-						// 编写相应的处理代码
-						if (xhr.readyState == 4) {
-							if (xhr.status == 200) {
-								var txt = xhr.responseText;
-								$('#get_valid_info').text(txt);
-							} else {
-								$('#get_valid_info').text('系统错误，稍后重试');
-							}
-						} else {
-							$('#get_valid_info').text('玩命发送...');
-						}
-					};
-					xhr.send('username='+username+'&mobile='+mobile);
-				});
-		$('#username').blur(
-				function() {
-					var xhr = getXmlHttpRequest();
-					var username = $('#username').val();
-					xhr.open('post', 'check/username', true); //必须添加一个消息头content-type 
-					xhr.setRequestHeader("Content-Type",
-							"application/x-www-form-urlencoded");
-					xhr.onreadystatechange = function() {
-						//编写相应的处理代码 
-						if (xhr.readyState == 4) {
-							if (xhr.status == 200) {
-								var txt = xhr.responseText;
-								$('#username_msg').text(txt);
-							} else {
-								$('#username_msg').text('系统错误，稍后重试');
-							}
-						} else {
-							$('#username_msg').text('正在验证...');
-						}
-					};
-					xhr.send('username=' + username);
-				});
+		$('#signup_validcode').click(function() {
+			debugger;
+			var mobile = $('#mobile').val();
+			var url = "${context}/signup/sendValidCode";
+			$.post(url, {
+				mobile : mobile,
+			}, function(result, status) {
+				debugger;
+				if (status == 'success') {
+					if (result == 1) {
+						alert("验证码已经发送到您的手机，请注意查收。此验证码在2小时内有效。");
+						signup_validcode.disabled = true;
+					} else {
+						alert("验证码发送失败，请稍候重试！");
+					}
+				} else {
+					alert("网络忙，请稍候重试！");
+				}
+
+			});
+		});
+		$('#username').blur(function() {
+
+		});
 	};
 
 	

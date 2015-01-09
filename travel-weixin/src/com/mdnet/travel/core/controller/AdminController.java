@@ -49,7 +49,7 @@ public class AdminController extends BaseController {
 			return this.REDIRECT + "/leader/home";
 		}
 		else if (roles.contains("ROLE_MEM")) {
-			return this.REDIRECT + "/member/info";
+			return this.REDIRECT + "/member/order/list";
 		}
 		return this.REDIRECT + "/";
 	}

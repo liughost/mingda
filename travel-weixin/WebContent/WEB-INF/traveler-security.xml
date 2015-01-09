@@ -21,7 +21,6 @@
 		<intercept-url pattern="/menu/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/event/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/member/**" access="hasAnyRole('ROLE_MEM, ROLE_ADMIN,ROLE_DRIVE')" />
-		<intercept-url pattern="/member/inviteCodeValidate" access="permitAll" />
 		<intercept-url pattern="/special/**" access="hasAnyRole('ROLE_ADMIN,ROLE_DRIVE')" />
 		<intercept-url pattern="/media/**" access="hasAnyRole('ROLE_ADMIN,ROLE_DRIVE')" />
 		<intercept-url pattern="/drive/**" access="hasAnyRole('ROLE_DRIVE')" />

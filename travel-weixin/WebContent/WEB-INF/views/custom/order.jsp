@@ -37,129 +37,151 @@
 }
 </style>
 <div class="container"
-	style="max-width: 800px; background-color: #FCFDEF; padding: 15px;">
-	<legend>产品预订</legend>
-	<form id="frmLogin" action="${context }/static/j_spring_security_check" method="POST">
-	<input type="hidden" name="j_username" id="loginName">
-	<input type="hidden" name="j_password" id="passWD">
-	</form>
-	<form class="form-horizontal" onsubmit="onSubmitBook()" method="POST">
-		<input type="hidden" id="orderId" value="${orderId }" /> <input
-			type="hidden" id="productID" value="${pid }" />
+	style="max-width: 960px; background-color: #FCFDEF; padding: 15px;">
+	<div class="row-fluid">
+		<div class="span8">
+			<legend>产品预订</legend>
+			<form id="frmLogin"
+				action="${context }/static/j_spring_security_check" method="POST">
+				<input type="hidden" name="j_username" id="loginName"> <input
+					type="hidden" name="j_password" id="passWD">
+			</form>
+			<form class="form-horizontal" onsubmit="onSubmitBook()" method="POST">
+				<input type="hidden" id="orderId" value="${orderId }" /> <input
+					type="hidden" id="productID" value="${pid }" />
 
-		<ul class="breadcrumb">
-			<li><a href="#">客户信息</a></li>
-		</ul>
-		<div class="control-group">
-			<label class="control-label" for="inputEmail">客户姓名：</label>
-			<div class="controls">
-				<input type="text" id="userName" placeholder="客户姓名"><br />
-				<label style="color: red" id="txtunameResult"></label>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">客户联系手机：</label>
-			<div class="controls">
-				<input type="text" id="userMobile" placeholder="客人联系手机号码"
-					maxlength="11"><br /> <label style="color: red"
-					id="txtMobileResult"></label>
-			</div>
-		</div>
-		<ul class="breadcrumb">
-			<li><a href="#">产品信息</a></li>
-		</ul>
-		<div class="control-group">
-			<label class="control-label">产品名称：</label>
-			<div class="controls">
-				<span style="margin-top: 5px; display: block;">${productName }</span><input
-					type="hidden" id="product" value="${pid }">
-			</div>
-		</div>
-		<div class="control-group ">
-			<div class="date form_datetime" id="divGroupCanlendar"></div>
+				<ul class="breadcrumb">
+					<li><a href="#">客户信息</a></li>
+				</ul>
+				<div class="control-group">
+					<label class="control-label" for="inputEmail">客户姓名：</label>
+					<div class="controls">
+						<input type="text" id="userName" placeholder="客户姓名" value="${userName }"><br />
+						<label style="color: red" id="txtunameResult"></label>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">客户联系手机：</label>
+					<div class="controls">
+						<input type="text" id="userMobile" placeholder="客人联系手机号码"
+							maxlength="11" value="${userMobile }"><br /> <label style="color: red"
+							id="txtMobileResult"></label>
+					</div>
+				</div>
+				<ul class="breadcrumb">
+					<li><a href="#">产品信息</a></li>
+				</ul>
+				<div class="control-group">
+					<label class="control-label">产品名称：</label>
+					<div class="controls">
+						<span style="margin-top: 5px; display: block;">${productName }</span><input
+							type="hidden" id="product" value="${pid }">
+					</div>
+				</div>
+				<div class="control-group ">
+					<div class="date form_datetime" id="divGroupCanlendar"></div>
 
-		</div>
-		<div class="control-group">
-			<label class="control-label">出行日期：</label>
-			<div class="controls">
-				<label style="margin-top: 4px;" id="selGroupDate">${startDate }</label>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">产品售价：</label>
-			<div class="controls">
-				<label style="margin-top: 4px;">成人价格：<span
-					style="color: orangered; font-size: 18px;" id="adultPrice">${adultPrice }</span>&nbsp;&nbsp;
-					儿童价格：<span style="color: orangered; font-size: 18px;"
-					id="childrenPrice">${childrenPrice }</span>
-				</label> <input type="hidden" id="adultPriceValue"> <input
-					type="hidden" id="childrenPriceValue"> <input type="hidden"
-					id="hotelSpanPriceValue"> <input type="hidden"
-					id="offPriceValue" value="0"> 
+				</div>
+				<div class="control-group">
+					<label class="control-label">出行日期：</label>
+					<div class="controls">
+						<label style="margin-top: 4px;" id="selGroupDate">${startDate }</label>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">产品售价：</label>
+					<div class="controls">
+						<label style="margin-top: 4px;">成人价格：<span
+							style="color: orangered; font-size: 18px;" id="adultPrice">${adultPrice }</span>&nbsp;&nbsp;
+							儿童价格：<span style="color: orangered; font-size: 18px;"
+							id="childrenPrice">${childrenPrice }</span>
+						</label> <input type="hidden" id="adultPriceValue"> <input
+							type="hidden" id="childrenPriceValue"> <input
+							type="hidden" id="hotelSpanPriceValue" value="${hotelSpanPrice }"> <input
+							type="hidden" id="offPriceValue" value="${offPrice }">
 
-			</div>
-		</div>
-
-
-		<ul class="breadcrumb">
-			<li><a href="#">订购信息</a></li>
-		</ul>
-		<div class="control-group">
-			<label class="control-label" for="inputEmail">优惠码：</label>
-			<div class="controls">
-				<input type="text" id="inviteCode" placeholder="优惠码">
-				<button type="button" id="btnValidateCode" class="btn btn-primary"
-					onclick="validateInviteCode()">优惠码校验</button>
-				<br /> <label style="color: red" id="offPriceResult"></label> <label
-					style="color: red" id="txtInviteCodeResult"></label>
-			</div>
-		</div>
+					</div>
+				</div>
 
 
-		<div class="control-group">
-			<label class="control-label">成年人数：</label>
-			<div class="controls inline">
-				<input type="number" id="adultCount" class="input"
-					onchange="priceChange()" value="2"><br /> <input
-					type="radio" name="agreeShare" value="1" onchange="priceChange()"
-					checked>同意拼房<input name="agreeShare" type="radio" value="0"
-					onchange="priceChange()">不同意拼房，愿意支付房差费用¥<span
-					id="hotelSpanPrice">${hotelSpanPrice }</span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">儿童人数：</label>
-			<div class="controls inline">
-				<input type="number" id="childrenCount" class="input"
-					onchange="priceChange(this)" value="0"> <br /> <span
-					style="color: gray">12岁以下（含12岁）不占床免房差<br />12岁以下儿童机票根据航空公司实际优惠政策收取（可自行购买）
-				</span>
-			</div>
-		</div>
-		<div class="control-group" style="display: none;">
-			<label class="control-label">房间数：</label>
-			<div class="controls inline">
-				<input type="number" id="bedsCount" class="input"
-					onchange="priceChange(this)" value="0"> <br /> <span
-					style="color: gray" id="hotelSpan"> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">价格总计：</label>
-			<div class="controls inline" style="margin-top: 6px;">
-				<span style="color: red; font-size: 18px;" id="totalPrice"></span>
-			</div>
-		</div>
+				<ul class="breadcrumb">
+					<li><a href="#">订购信息</a></li>
+				</ul>
+				<div class="control-group">
+					<label class="control-label" for="inputEmail">优惠码：</label>
+					<div class="controls">
+						<input type="text" id="inviteCode" placeholder="优惠码" value="${inviteCode }" <c:if test="${not empty inviteCode }">disabled</c:if>>
+						<button type="button" id="btnValidateCode" class="btn btn-primary" <c:if test="${not empty inviteCode }">disabled</c:if>
+							onclick="validateInviteCode()">优惠码校验</button>
+						<br /> <label style="color: red" id="offPriceResult"><c:if test="${offPrice>0 }">优惠：${offPrice }元</c:if></label> <label
+							style="color: red" id="txtInviteCodeResult"></label>
+					</div>
+				</div>
 
-		<div class="control-group">
-			<div class="controls">
-				<button type="button" class="btn btn-warning"
-					onclick="onSubmitBook()" id="btnBook">报名</button>
 
-				<!-- <label id="txtResult"></label>  -->
-			</div>
+				<div class="control-group">
+					<label class="control-label">成年人数：</label>
+					<div class="controls inline">
+						<input type="number" id="adultCount" class="input"
+							onchange="priceChange()" value="${adultCount }"><br /> <input
+							type="radio" name="agreeShare" value="1" onchange="priceChange()"
+							checked>同意拼房<input name="agreeShare" type="radio"
+							value="0" onchange="priceChange()">不同意拼房，愿意支付房差费用：<span
+							id="hotelSpanPrice">${hotelSpanPrice }</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">儿童人数：</label>
+					<div class="controls inline">
+						<input type="number" id="childrenCount" class="input"
+							onchange="priceChange(this)" value="${childrenCount }"> <br /> <span
+							style="color: gray">12岁以下（含12岁）不占床免房差<br />12岁以下儿童机票根据航空公司实际优惠政策收取（可自行购买）
+						</span>
+					</div>
+				</div>
+				<div class="control-group" style="display: none;">
+					<label class="control-label">房间数：</label>
+					<div class="controls inline">
+						<input type="number" id="bedsCount" class="input"
+							onchange="priceChange(this)" value="0"> <br /> <span
+							style="color: gray" id="hotelSpan"> </span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">价格总计：</label>
+					<div class="controls inline" style="margin-top: 6px;">
+						<span style="color: red; font-size: 18px;" id="totalPrice"></span>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<div class="controls">
+						<button type="button" class="btn btn-warning"
+							onclick="onSubmitBook()" id="btnBook">报名</button>
+
+						<!-- <label id="txtResult"></label>  -->
+					</div>
+				</div>
+			</form>
 		</div>
-	</form>
+		<div class="span4">
+
+			<legend>产品推荐</legend>
+			<table style="border-left: 0px solid lightgray;">
+				<c:forEach var="info" items="${comments}">
+					<tr style="height:100px;">
+						<td style="padding:10px;"><a href="${context }/custom/detail?id=${info.productID }"><img
+								style="max-width: 90px; width: 90px;" src="${info.img }"></a></td>
+						<td><a href="${context }/custom/detail?id=${info.productID }"><span
+								class="tb_title">${info.name }</span></a></td>
+					</tr>
+
+					
+				</c:forEach>
+			</table>
+		</div>
+	</div>
+
 </div>
 <div style="display: none" id="groupTableTmpl">
 	<table class="table table-bordered "

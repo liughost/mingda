@@ -145,9 +145,9 @@ public class TravelerServiceImpl implements ITravelerService {
 	 * 
 	 * 根据用户名查找记录 1、没找到 直接存 2、找到 更新记录
 	 */
-
+	@Override
 	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
-	public String saveValidCode(String username, String mobile, String validCode) {
+	public String saveValidCode(String mobile, String validCode) {
 		String saveInfo = "";
 
 		// 根据用户名查找记录
@@ -155,14 +155,13 @@ public class TravelerServiceImpl implements ITravelerService {
 			ValidateCode code = this.validCodeDAO
 					.getCodeByMobile(mobile.trim());
 			if (null != code) {
-				code.setTraveler(username);
-				code.setCreateTime(SimpleDateUtil.curTimeMillis() + "");
+				code.setStatus(0);
+				code.setCreateTime(new Date());
 				code.setValidCode(validCode);
 				this.validCodeDAO.update(code);
 			} else {
-				this.validCodeDAO
-						.save(new ValidateCode(username, SimpleDateUtil
-								.curTimeMillis() + "", mobile, validCode));
+				this.validCodeDAO.save(new ValidateCode(new Date(), mobile,
+						validCode));
 			}
 			saveInfo = "保存成功";
 		} else {
@@ -188,7 +187,8 @@ public class TravelerServiceImpl implements ITravelerService {
 		ValidateCode vcode = this.validCodeDAO.getCodeByUser(username);
 		if (null != vcode) {
 			Long minuteDifference = SimpleDateUtil.getMinuteDifference(
-					Long.parseLong(vcode.getCreateTime().trim()), curTime);
+					Long.parseLong(String.valueOf(vcode.getCreateTime())),
+					curTime);
 			if (3 >= minuteDifference) {
 				if (code.equals(vcode.getValidCode().trim())) {
 					Traveler traveler = this.travelDAO
@@ -259,14 +259,9 @@ public class TravelerServiceImpl implements ITravelerService {
 	/**
 	 * 根据移动手机号查找发送的验证码
 	 */
-
-	public String findValidCodeByMobile(String mobile) {
-		String validCode = "";
-		ValidateCode code = this.validCodeDAO.getCodeByMobile(mobile.trim());
-		if (null != code) {
-			validCode = code.getValidCode();
-		}
-		return validCode;
+	@Override
+	public ValidateCode findValidCodeByMobile(String mobile) {
+		return this.validCodeDAO.getCodeByMobile(mobile.trim());
 	}
 
 	@Override
@@ -509,6 +504,8 @@ public class TravelerServiceImpl implements ITravelerService {
 	public int saveInvite(String uname, String isBind, String invitedMobile,
 			String inviteCode, int offPrice) {
 		Traveler traveler = this.findTravelerByUname(uname);
+		if (traveler.getMobile().compareTo(invitedMobile) == 0)
+			return -2;
 		InviteCode entity = new InviteCode();
 		entity.setCodeLevel(0);
 		entity.setCodeStatus(0);
@@ -545,6 +542,12 @@ public class TravelerServiceImpl implements ITravelerService {
 	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
 	public void updateInviteSender(Traveler sender) {
 		this.travelDAO.update(sender);
+	}
+
+	@Override
+	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+	public void update(ValidateCode code) {
+		this.validCodeDAO.update(code);
 	}
 
 }

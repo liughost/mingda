@@ -9,4 +9,6 @@ public interface GroupDateDAO extends BasicDAO<GroupDate> {
 
 	List<GroupDate> getList(String string, int i);
 
+	GroupDate getFirst(String where);
+
 }

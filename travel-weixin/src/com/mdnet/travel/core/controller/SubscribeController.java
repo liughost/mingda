@@ -70,7 +70,7 @@ public class SubscribeController extends BaseController {
 			String validContent = "您正在使用【想走就走】的注册服务,验证码为:" + validCode
 					+ ",请妥善保管!";
 			// 保存到数据库
-			String info = this.travelerService.saveValidCode(username, mobile,
+			String info = this.travelerService.saveValidCode(mobile,
 					validCode);
 			if (info.compareTo("保存成功") == 0) {
 				// 发送验证短信

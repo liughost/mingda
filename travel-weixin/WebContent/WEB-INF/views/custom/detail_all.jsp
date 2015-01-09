@@ -122,7 +122,7 @@ h3 {
 		<div class="span7">
 			<table class="baseInfo">
 				<tr>
-					<td><b>出发城市</b></td>
+					<td style="width:80px;"><b>出发城市</b></td>
 					<td class="baseRight">${info.deaprtCity }</td>
 				<tr>
 					<td><b>目的地</b></td>

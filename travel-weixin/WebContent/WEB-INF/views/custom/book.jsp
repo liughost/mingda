@@ -299,10 +299,40 @@ body {
 	<!-- 产品列表 -->
 	<div class="row">
 		<div class="span9">
-			<legend>热门推荐</legend>
+		<legend>精品小团</legend>
 			<!-- 产品列表  -->
 			<ul class="nav nav-tabs" style="border-bottom: 0px;">
-				<c:forEach var="items" items="${productList}">
+				<c:forEach var="items" items="${standardList}">
+					<li id="img_sel_0" style="text-align: left; min-height: 160px;">
+						<div style="width: 285px; min-height: 255px;">
+							<a target="_blank" href="${detailURL}${items.productID }"><img
+								class="img-rounded" src="${items.img}" style="width: 270px;"
+								title="${items.name}"></a>
+
+							<table style="" class="product">
+								<tr>
+									<td colspan="5"
+										style="color: white; font-size: 16px; padding-left: 5px; display: none;">${items.name}</td>
+								</tr>
+								<tr>
+									<td><a href="${detailURL}${items.productID }" title="在线报名"><span
+											style="color: white; font-size: 16px">￥${items.lowPrice
+												}/</span><span style="color: white;">人</span></a></td>
+									<td style="text-align: right;"><a
+										href="javascript:book(${items.productID });"
+										style="margin-right: 10px; margin-top: 0px; display: none;"
+										class="btn btn-warning pull-right">报名</a></td>
+								</tr>
+							</table>
+							<p style="">${items.name}</p>
+						</div>
+					</li>
+				</c:forEach>
+			</ul>
+			<legend>私家小团</legend>
+			<!-- 产品列表  -->
+			<ul class="nav nav-tabs" style="border-bottom: 0px;">
+				<c:forEach var="items" items="${aloneList}">
 					<li id="img_sel_0" style="text-align: left; min-height: 160px;">
 						<div style="width: 285px; min-height: 255px;">
 							<a target="_blank" href="${detailURL}${items.productID }"><img

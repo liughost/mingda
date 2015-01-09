@@ -92,7 +92,7 @@ public class LeaderController extends BaseController {
 					.getProductInfo().getProductName(), pd.getPrice()
 					.getLowPrice(),0,0, userName, userMobile, totalCount,
 					childrenCount, oldCount, adultCount, childrenBedsCount,
-					startDate, uname, "", "weixin", 0);
+					startDate, uname, "", "weixin", 0, "", 0);
 			try {
 				this.getProxy().sendSMS(
 						"客户您好，您已经成功预订‘" + pd.getProductInfo().getProductName()

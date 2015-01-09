@@ -217,7 +217,7 @@ public class CustomServiceImpl implements ICustomService {
 		for (int i = 0; i < totalDays; i++) {
 			GroupDay d = new GroupDay();
 
-			//d.setPrice(this.getGroupPrice(gs, seg, year, month, day));
+			// d.setPrice(this.getGroupPrice(gs, seg, year, month, day));
 			this.setGroupPrice(gs, seg, year, month, day, d);
 
 			d.setDay(day++);
@@ -265,7 +265,7 @@ public class CustomServiceImpl implements ICustomService {
 		}
 		return -1;
 	}
-	
+
 	private int getGroupPrice(List<GroupDate> gs, int seg, int year, int month,
 			int day) {
 		if (seg == 0)// 上个月
@@ -307,7 +307,8 @@ public class CustomServiceImpl implements ICustomService {
 	@Override
 	public List<GroupMonth> makeGroupCalendar(String id, int aheadDays) {
 		List<GroupMonth> gms = new ArrayList<GroupMonth>();
-		List<GroupDate> gs = this.getGroupList("where productId=" + id, aheadDays, 0);
+		List<GroupDate> gs = this.getGroupList("where productId=" + id,
+				aheadDays, 0);
 		int lastYear = 0;
 		int lastMonth = 0;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -335,7 +336,8 @@ public class CustomServiceImpl implements ICustomService {
 
 	@Override
 	public ShowProductInfo[] getProductList(int type, int page) {
-		ShowProductInfo[] spis = ProductAllDetail.instance().getProductList(type);
+		ShowProductInfo[] spis = ProductAllDetail.instance().getProductList(
+				type);
 		for (ShowProductInfo spi : spis) {
 			// 生成团期最小日期
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -348,9 +350,9 @@ public class CustomServiceImpl implements ICustomService {
 			String where = " where productId=" + spi.getProductID()
 					+ " and  startDate >'" + minDate + "'";
 
-			List<GroupDate> gs = this.groupDateDAO.getList(where, 0);
-			if (gs != null && gs.size() > 0)// 单位：元
-				spi.setLowPrice(gs.get(0).getAdultPrice());
+			GroupDate g = this.groupDateDAO.getFirst(where);
+			if (g != null)// 单位：元
+				spi.setLowPrice(g.getAdultPrice());
 			// ps[i].setDays(pi.getDays());
 			// ps[i].setIntroduce(pi.getIntroduce());
 		}

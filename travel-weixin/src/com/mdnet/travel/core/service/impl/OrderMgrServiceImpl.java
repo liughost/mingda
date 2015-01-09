@@ -149,7 +149,7 @@ public class OrderMgrServiceImpl implements IOrderMgrService {
 			int salePrice, int childrenPrice, int offPrice, String userName, String userMobile, int totalCount,
 			int childrenCount, int oldCount, int adultCount,
 			int childrenBedsCount, String startDate, String bookerName,
-			String bookerPhone, String channelSource, int payMoney) {
+			String bookerPhone, String channelSource, int payMoney, String inviteCode, int hSpan) {
 		boolean isNew = false;
 		OrderInfo oi = this.getOrders(orderId);
 		if (oi == null) {
@@ -189,6 +189,8 @@ public class OrderMgrServiceImpl implements IOrderMgrService {
 		oi.setProductPrice(salePrice);
 		oi.setChildrenPrice(childrenPrice);
 		oi.setOffPrice(offPrice);
+		oi.setInviteCode(inviteCode);
+		oi.setHotelSpan(hSpan);
 
 		if (isNew)
 			this.orderDAO.save(oi);

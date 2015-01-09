@@ -12,7 +12,7 @@
  	<definition name="my/reset_pass" extends="client_template">
 		<put-attribute name="content" value="/WEB-INF/views/client/account/reset_pass.jsp" />
 	</definition>
-	<definition name="forget" extends="client_template">
+	<definition name="forget" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/client/account/forget.jsp" />
 	</definition>
 </tiles-definitions>

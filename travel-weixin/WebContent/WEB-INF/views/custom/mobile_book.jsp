@@ -183,10 +183,31 @@ body {
 	<!-- 产品列表 -->
 	<div class="row-fluid">
 		<div class="span12" style="padding-top: 0px;">
-			<legend>&nbsp;&nbsp;&nbsp;热门产品</legend>
+		<legend>&nbsp;&nbsp;&nbsp;精品小团</legend>
 			<!-- 产品列表  -->
 			<table class="table">
-				<c:forEach var="items" items="${productList}">
+				<c:forEach var="items" items="${standardList}">
+					<tr>
+						<td style="vertical-align: middle;" class="product_img"><a
+							target="_blank" href="${detailURL}${items.productID }"><img
+								class="img-rounded" style="width: 100%;" src="${items.img}"
+								title="${items.name}"></a></td>
+						<td>
+							<p class="">
+								<a href="${detailURL}${items.productID }" title="在线报名"><span
+									style="font-size: 16px">￥${items.lowPrice }/</span><span
+									style="">人</span></a>
+							</p>
+							<p class="">${fn:substring(items.name, 0, 50)}</p>
+						</td>
+					</tr>
+
+				</c:forEach>
+			</table>
+			<legend>&nbsp;&nbsp;&nbsp;私家小团</legend>
+			<!-- 产品列表  -->
+			<table class="table">
+				<c:forEach var="items" items="${aloneList}">
 					<tr>
 						<td style="vertical-align: middle;" class="product_img"><a
 							target="_blank" href="${detailURL}${items.productID }"><img

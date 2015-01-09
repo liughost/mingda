@@ -632,9 +632,12 @@ public class CustomController extends BaseController {
 	public ModelAndView book(HttpServletRequest request) {
 		this.getMav(request);
 		this.mav.addObject("menuIndex", 4);
-		ShowProductInfo[] ps = this.customService.getProductList(0, 0);// .orderMgrService.getProductList(3,
-																		// 0);
-
+		// 获得全部产品
+		// ShowProductInfo[] ps = this.customService.getProductList(0, 0);
+		// 获得任性1人团
+		ShowProductInfo[] ps0 = this.customService.getProductList(1, 0);
+		// 除任性1人团外的
+		ShowProductInfo[] ps1 = this.customService.getProductList(2, 0);
 		// 代码测试
 		// List<ProductDetail> pds = this.orderMgrService
 		// .getProductInfoByCity("1,2");
@@ -644,21 +647,23 @@ public class CustomController extends BaseController {
 		// ps[i].setCities(cities);
 		// }
 		// 代码测试结束
-		this.mav.addObject("productList", ps);
+		this.mav.addObject("aloneList", ps0);
+		this.mav.addObject("standardList", ps1);
 		this.mav.setViewName(this.preMobile(request) + "custom/book");
 		this.mav.addObject("isMobile", CommonUtils.IsMobile(request));
-		List<GroupDate> gs = this.customService.getGroupList("", 10, 0);
-		for (int i = 0; gs != null && i < gs.size(); i++) {
-			String startDate = gs.get(i).getStartDate();
-			String[] d = startDate.split("-");
 
-			gs.get(i).setStartDate(
-			/* d[0] + "年" + */d[1] + "月" + d[2] + "日");
-
-			gs.get(i).setGroupDate(startDate);
-		}
-		this.mav.addObject("groupList", gs);
-
+		// List<GroupDate> gs = this.customService.getGroupList("", 10, 0);
+		// for (int i = 0; gs != null && i < gs.size(); i++) {
+		// String startDate = gs.get(i).getStartDate();
+		// String[] d = startDate.split("-");
+		//
+		// gs.get(i).setStartDate(
+		// /* d[0] + "年" + */d[1] + "月" + d[2] + "日");
+		//
+		// gs.get(i).setGroupDate(startDate);
+		// }
+		// this.mav.addObject("groupList", gs);
+		//
 		List<SpecialBean> sb = getMoreArticle();
 		this.mav.addObject("articleList", sb);
 
@@ -730,6 +735,11 @@ public class CustomController extends BaseController {
 		this.mav.addObject("productName", pd.getProductName());
 		this.mav.addObject("startDate", gDate);
 
+		this.mav.addObject("adultCount", 2);
+		this.mav.addObject("childrenCount", 0);
+		this.mav.addObject("offPrice", 0);
+		this.mav.addObject("hotelSpan", 0);
+
 		// 根据订单情况，输出订购团期，客户姓名、人数等信息
 		if (orderId != null) {
 			OrderInfo oi = this.orderMgrService.getOrders(orderId);
@@ -744,9 +754,15 @@ public class CustomController extends BaseController {
 				this.mav.addObject("adultCount", oi.getAdultCount());
 				this.mav.addObject("childrenCount", oi.getChildrenCount());
 
+				//
+				this.mav.addObject("offPrice", oi.getOffPrice());
+				this.mav.addObject("inviteCode", oi.getInviteCode());
+				this.mav.addObject("hotelSpan", oi.getHotelSpan());
 			}
 		}
 
+		this.mav.addObject("comments", ProductAllDetail.instance()
+				.getProductList(4));
 		return mav;
 	}
 
@@ -765,7 +781,9 @@ public class CustomController extends BaseController {
 			@RequestParam(value = "agreeValue", required = true) boolean agree) {
 
 		Traveler member = this.travelerService.findtravlerByMobile(userMobile);
+		boolean isNew = false;
 		if (member == null) {
+			isNew = true;
 			// 创建会员
 			this.travelerService.saveTraveler(userName,
 					userMobile.substring(5), userMobile, "", "ROLE_MEM", "",
@@ -805,9 +823,9 @@ public class CustomController extends BaseController {
 		}
 		// 保存订单
 		orderId = this.orderService.saveOrder(orderId, productId, productName,
-				aPrice, cPrice, offPrice, userName, userMobile, totalCount, childrenCount, 0,
-				adultCount, childrenBedsCount, selGroupDate,
-				member.getUserName(), "", "", totalPrice);
+				aPrice, cPrice, offPrice, userName, userMobile, totalCount,
+				childrenCount, 0, adultCount, childrenBedsCount, selGroupDate,
+				member.getUserName(), "", "", totalPrice, inviteCode, hSpan);
 		// 更改优惠码状态
 		if (orderId != null) {
 			// 修改优惠码状态
@@ -830,11 +848,18 @@ public class CustomController extends BaseController {
 			if (offPrice > 0) {
 				smsText += ",本次预订优惠" + offPrice + "元，使用的优惠码：" + inviteCode;
 			}
-			smsText += ",冠行的客服人员将在1小时内与您电话联系，请注意保持通信畅通。谢谢！";
+			smsText += ",冠行的客服人员将在1小时内与您电话联系，请注意保持通信畅通。";
+
 			try {
 				this.getProxy().sendSMS(smsText, userMobile);
 				this.getProxy().sendSMS(customerSMS,
 						this.myConstant.getCustomerServicePhone());
+				if (isNew)// 会员信息
+				{
+					smsText = "您已经成为冠行会员，请使用姓名:" + userName
+							+ "登录，默认密码为手机后六位，冠行会员可以给朋友发送优惠码，凭优惠码报名参团享受500元优惠。";
+					this.getProxy().sendSMS(smsText, userMobile);
+				}
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -875,9 +900,9 @@ public class CustomController extends BaseController {
 			int totalCount = oldCount + adultCount + childrenCount;
 			orderId = this.orderMgrService.saveOrder(orderId, pid, pd
 					.getProductInfo().getProductName(), pd.getPrice()
-					.getLowPrice(), 0,0, userName, userMobile, totalCount,
+					.getLowPrice(), 0, 0, userName, userMobile, totalCount,
 					childrenCount, oldCount, adultCount, childrenBedsCount,
-					startDate, uname, "", "weixin", 0);
+					startDate, uname, "", "weixin", 0, "", 0);
 			try {
 				this.getProxy().sendSMS(
 						"客户您好，您已经成功预订‘" + pd.getProductInfo().getProductName()

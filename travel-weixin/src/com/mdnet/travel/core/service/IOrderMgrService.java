@@ -19,7 +19,7 @@ public interface IOrderMgrService {
 			int salePrice, int childrenPrice, int offPrice, String userName, String userMobile, int totalCount,
 			int childrenCount, int oldCount, int adultCount,
 			int childrenBedsCount, String startDate, String bookerName,
-			String bookerPhone, String channelSource, int payMoney);
+			String bookerPhone, String channelSource, int payMoney, String inviteCode, int hSpan);
 
 	OrderInfo getOrders(String orderId);
 

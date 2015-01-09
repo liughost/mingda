@@ -70,7 +70,7 @@
 	<definition name="login" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/login.jsp" />
 	</definition>
-	<definition name="signup" extends="admin_template">
+	<definition name="signup" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/signup.jsp" />
 	</definition>
 </tiles-definitions>

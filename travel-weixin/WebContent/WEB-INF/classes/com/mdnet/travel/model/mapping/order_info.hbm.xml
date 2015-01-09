@@ -22,6 +22,18 @@
 				<comment>产品名称</comment>
 			</column>
 		</property>
+		<property generated="never" lazy="false" name="inviteCode"
+			type="string">
+			<column length="64" name="invite_code" not-null="false">
+				<comment>邀请码</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="hotelSpan"
+			type="int">
+			<column name="hotel_span" default="0">
+				<comment>单房差</comment>
+			</column>
+		</property>
 		<property generated="never" lazy="false" name="productPrice"
 			type="int">
 			<column name="product_price">
@@ -36,7 +48,7 @@
 		</property>
 		<property generated="never" lazy="false" name="offPrice"
 			type="int">
-			<column name="off_price">
+			<column name="off_price" default="0">
 				<comment>总优惠价， 单位：分，可以有两位小数</comment>
 			</column>
 		</property>

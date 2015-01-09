@@ -31,34 +31,33 @@ input[type="checkbox"] {
 			<label class="control-label"></label>
 			<div class="controls">
 				<input type="text" id="invitedMobile" maxlength="11"
-					name="invitedMobile" value="" placeholder="受邀者手机号码"> <input
-					type="checkbox" id="isBind" name="isBind">此手机专用
+					required="required" name="invitedMobile" value=""
+					placeholder="受邀者手机号码"> <input type="checkbox" id="isBind"
+					name="isBind">此手机专用
 				<button type="button" name="send" onclick="javascript:sendCode()"
 					class="btn btn-primary" style="margin-top: -8px;" value="0">发码</button>
 			</div>
 		</div>
 
-		<table>
-			<tr>
-				<td><select id="sType" name="sType">
-						<option value="0" <c:if test="${sType==0}">selected</c:if>>全部</option>
-						<option value="3" <c:if test="${sType==1}">selected</c:if>>受邀手机</option>
-						<option value="1" <c:if test="${sType==3}">selected</c:if>>邀请码</option>
-				</select></td>
-				<td><input type="text" id="sText" value="${sText }"
-					name="sText"></td>
-				<td><button type="button" name="search"
-						onclick="javascript:codeSearch()" class="btn btn-primary" value="1"
-						style="margin-top: -8px;">搜索</button></td>
 
-			</tr>
-		</table>
 	</form>
-	<legend>邀请码历史数据</legend>
-	<button class="btn btn-primary" onclick="sendAgain()">重新发送</button>
-	<br />
-	<br />
+	<legend>发送历史</legend>
+	<table>
+		<tr>
+			<td><select id="sType" name="sType">
+					<option value="0" <c:if test="${sType==0}">selected</c:if>>全部</option>
+					<option value="3" <c:if test="${sType==1}">selected</c:if>>受邀手机</option>
+					<option value="1" <c:if test="${sType==3}">selected</c:if>>邀请码</option>
+			</select></td>
+			<td><input type="text" id="sText" value="${sText }" name="sText"></td>
+			<td><button type="button" name="search"
+					onclick="javascript:codeSearch()" class="btn btn-primary" value="1"
+					style="margin-top: -8px;">搜索</button></td>
+
+		</tr>
+	</table>
 	<table class="table table-striped table-bordered" id="inviteCodeList">
+
 		<tr>
 			<th style="width: 50px;"><input type="checkbox">全选</th>
 			<th>邀请码</th>
@@ -73,12 +72,16 @@ input[type="checkbox"] {
 					value="${items.id}"></td>
 				<td>${items.inviteCode}</td>
 				<td>${items.dest_mobile}</td>
-				<td>${items.codeStatus}</td>
+				<td><c:if test="${items.codeStatus==0}">未使用</c:if>
+					<c:if test="${items.codeStatus!=0}">已使用</c:if></td>
 				<td>${items.makeTime}</td>
-				<td>${items.usedTime}</td>
+				<td><c:if test="${items.codeStatus==0}">--</c:if>
+					<c:if test="${items.codeStatus!=0}">${items.usedTime }</c:if></td>
 			</tr>
 		</c:forEach>
 	</table>
+	<button class="btn btn-primary" onclick="sendAgain()">重新发送</button>
+
 	<div class="pagination">
 		<ul id="pageZone">
 
@@ -98,14 +101,18 @@ showPage(0, ${fn:length(inviteList)});
 			$.post(url, {
 				id : objs[i].value
 			}, function(result, status) {
-				//debugger;
+				debugger;
 				if (status == 'success') {
 
-					if (result == '1') {
-
+					if (result == 1) {
 						alert('邀请码已经成功发送。');
-
-					} else {
+						location.href = "${context}/member/invite/send";
+					}
+					else if (result == -2)
+						{
+						alert('对不起，邀请码不能发送给自己。');
+						}
+					else {
 						//count.innerHTML = 0;
 						alert('邀请码发送失败。');
 					}

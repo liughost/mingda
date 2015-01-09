@@ -3,6 +3,7 @@ package com.mdnet.travel.core.model;
 public class Traveler extends BaseModel{
 	private static final long serialVersionUID = 7727L;
 	public static final String ROLE_TRAVELER = "ROLE_TRAVELER";
+	public static final String ROLE_MEM = "ROLE_MEM";
 	private String travelerId;
 	private String loginName;
 	private String userName;
