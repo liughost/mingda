@@ -88,6 +88,8 @@ public interface ITravelerService {
 
 	void update(ValidateCode code);
 
+	void updateTraveler(Traveler traveler);
+
 	
 
 }

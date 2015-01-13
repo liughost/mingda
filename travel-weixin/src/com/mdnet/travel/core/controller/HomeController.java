@@ -28,6 +28,7 @@ import com.mdnet.travel.core.dao.ReqMessageDAO;
 import com.mdnet.travel.core.model.Traveler;
 import com.mdnet.travel.core.model.ValidateCode;
 import com.mdnet.travel.core.utils.CommonUtils;
+import com.mdnet.travel.core.utils.EncryptSpring;
 import com.mdnet.travel.core.vo.ExceptionInfo;
 import com.mdnet.travel.core.vo.RegistBean;
 import com.mdnet.travel.core.vo.SignupCheck;
@@ -101,9 +102,44 @@ public class HomeController extends BaseController {
 		return "signup";
 	}
 
-	@RequestMapping("/forget")
-	public String forget() {
-		return "forget";
+	@RequestMapping(value = { "forget" }, method = RequestMethod.GET)
+	public ModelAndView forget(HttpServletRequest request) {
+		this.getMav(request);
+		this.mav.setViewName("forget");
+		return this.mav;
+	}
+
+	@RequestMapping("/resetPwd")
+	@ResponseBody
+	public String restePwd(
+			@RequestParam(value = "mobile", required = true) String mobile,
+			@RequestParam(value = "validateCode", required = true) String validateCode,
+			@RequestParam(value = "pass", required = true) String pass,
+			@RequestParam(value = "confirmPass", required = true) String confirmPass)
+			throws UnsupportedEncodingException {
+		ValidateCode code = this.travelerService.findValidCodeByMobile(mobile
+				.trim());
+		Date now = new Date();
+		long span = now.getTime() / 1000
+				- (code == null ? 0 : code.getCreateTime().getTime()) / 1000;
+		if (code == null || span > 2 * 60 * 60 || code.getStatus() != 0
+				|| !code.getValidCode().equals(validateCode.trim())) {
+			return "-1";// java.net.URLEncoder.encode("对不起，验证码错误，请确认后重试!",
+						// "UTF-8")
+
+		}
+
+		if (pass.compareTo(confirmPass) != 0) {
+
+			return "-2";// java.net.URLEncoder.encode("对不起，密码和确认密码不一致，请重新输入!",
+
+		}
+		Traveler traveler = this.travelerService.findtravlerByMobile(mobile);
+
+		traveler.setPassText(pass);
+		traveler.setPassword(EncryptSpring.md5_32(pass));
+		this.travelerService.updateTraveler(traveler);
+		return "0";// java.net.URLEncoder.encode("密码已经重新设置，请用新密码登录!", "UTF-8")
 	}
 
 	@RequestMapping("/dosignup")
@@ -151,24 +187,17 @@ public class HomeController extends BaseController {
 	}
 
 	@RequestMapping(value = "/check/username", method = RequestMethod.POST)
-	public void check_username(SignupCheck signup, HttpServletResponse response) {
-		PrintWriter out = null;
-		response.setContentType("text/html;charset=UTF-8");
-		try {
-			out = response.getWriter();
-		} catch (IOException e) {
-			this.logger.info("获取输出流错误!");
-		}
-		String username = signup.getUsername();
-		if (StringUtils.isNotEmpty(username)) {
-			if (null != this.travelerService.findMobile(username.trim())) {
-				out.print("用户名已被占用!");
-			} else {
-				out.print("可以使用");
-			}
+	@ResponseBody
+	public String check_username(
+			@RequestParam(value = "username", required = true) String username)
+			throws UnsupportedEncodingException {
+
+		if (null != this.travelerService.findMobile(username.trim())) {
+			return java.net.URLEncoder.encode("用户名已被占用!", "UTF-8");
 		} else {
-			out.print("请输入用户名!");
+			return java.net.URLEncoder.encode("", "UTF-8");
 		}
+
 	}
 
 	@RequestMapping(value = "/signup/sendValidCode", method = RequestMethod.POST)

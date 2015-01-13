@@ -550,4 +550,10 @@ public class TravelerServiceImpl implements ITravelerService {
 		this.validCodeDAO.update(code);
 	}
 
+	@Override
+	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+	public void updateTraveler(Traveler traveler) {
+		this.travelDAO.update(traveler);
+	}
+
 }

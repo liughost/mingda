@@ -141,10 +141,11 @@
 					<input type="text" class="input-small" name="city"
 						style="margin-top: 10px;" onclick="clickCity()" id="txtSelCity"
 						placeholder="请输入目的地城市名称" autocomplete="off">
-					<button type="submit" class="btn" style="margin-top: 10px;">搜索</button>
+					<button type="submit" class="btn btn-warning" style="margin-top: 10px;">搜索</button>
 					<c:if test="${empty username}">
 
-						<a class="btn" style="margin-top: 10px;color:gray;" onclick="location.href='${context }/member/info';">登录</a>
+						<a class="btn" style="margin-top: 10px;color:gray;" onclick="location.href='${context }/login';">登录</a>
+						<a class="btn" style="margin-top: 10px;color:gray;" onclick="location.href='${context }/signup';">注册</a>
 					</c:if>
 				</div>
 			</form>
@@ -295,6 +296,7 @@
 										<li><a href="${context}/member/info">我的信息</a></li>
 										<li><a href="${context}/member/order/list">我的订单</a></li>
 										<li><a href="${context}/member/invite/send">发送邀请</a></li>
+										<li><a href="${context}/forget">修改密码</a></li>
 										<li class="divider"></li>
 										<li><a href="${context}/static/j_spring_security_logout">退出</a>
 										</li>

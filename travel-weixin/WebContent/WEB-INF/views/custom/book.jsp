@@ -92,7 +92,7 @@ body {
 
 <!-- 产品大图区 -->
 <div
-	style="position: absolute; z-index: 10; width: 100%; margin-top: 6%;"
+	style="position: absolute; z-index: 10; width: 100%; margin-top: 3%;"
 	class="text-center">
 
 	<div style="width: 500px; margin-left: auto; margin-right: auto;">
@@ -131,7 +131,7 @@ body {
 <!-- Carousel
     ================================================== -->
 
-<div id="myCarousel" class="carousel slide">
+<div id="myCarousel" class="container carousel slide" style="max-width: ${maxWidth}px;">
 	<div class="carousel-inner">
 		<div class="item ">
 			<a href="${context }/custom/detail_all?id=16"><img
@@ -225,7 +225,7 @@ body {
 		frmCitySearch.submit();
 	}
 	$('#myCarousel').carousel();
-	headMenu.style.display = "none";
+	
 	/*	!function($) {
 	 $(function() {
 	 // carousel demo
@@ -403,8 +403,9 @@ body {
 </div>
 <script type="text/javascript">
 	//设置首页的页头
-	head.className = "container firstHead";
+	//head.className = "container firstHead";
 	//frmCitySearch.style.display = "none";
+	//headMenu.style.display = "none";
 
 	function closeGroup() {
 		$('#groupDate').modal('hide');
