@@ -29,7 +29,7 @@ body {
 
 .baseInfo {
 	color: gray;
-	font-size: 16px;
+	font-size: 14px;
 	line-height: 30px;
 }
 
@@ -130,18 +130,18 @@ h3 {
 			<legend>基本信息</legend>
 			<table class="table">
 				<tr>
-					<td class="td_left"><b>出发城市</b></td>
+					<td class="td_left">出发城市</td>
 					<td style="border-top: 0;">${info.deaprtCity }</td>
 				<tr>
-					<td class="td_left"><b>目的地</b></td>
+					<td class="td_left">目的地</td>
 					<td class="baseRight">${info.destCity }</td>
 				<tr>
 				<tr>
-					<td class="td_left"><b>时间安排</b></td>
+					<td class="td_left">时间安排</td>
 					<td class="baseRight">${info.settle }</td>
 				<tr>
 				<tr>
-					<td class="td_left"><b>发团日期</b></td>
+					<td class="td_left">发团日期</td>
 					<td>${firstGroup } <!-- 
 					<span
 						class="label label-important">查看详细</span>
@@ -150,7 +150,7 @@ h3 {
 				<tr>
 				<tr>
 
-					<td class="td_left"><b>交通信息</b></td>
+					<td class="td_left">交通信息</td>
 					<td style="border-bottom: 1px solid lightgray;">${info.traffic
 						} <!-- 
 					<span

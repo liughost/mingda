@@ -15,4 +15,7 @@
 	<definition name="forget" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/client/account/forget.jsp" />
 	</definition>
+	<definition name="mobile/forget" extends="mobile_custom_template">
+		<put-attribute name="content" value="/WEB-INF/views/client/account/forget.jsp" />
+	</definition>
 </tiles-definitions>

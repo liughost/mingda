@@ -73,4 +73,10 @@
 	<definition name="signup" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/signup.jsp" />
 	</definition>
+	<definition name="mobile/login" extends="mobile_custom_template">
+		<put-attribute name="content" value="/WEB-INF/views/login.jsp" />
+	</definition>
+	<definition name="mobile/signup" extends="mobile_custom_template">
+		<put-attribute name="content" value="/WEB-INF/views/signup.jsp" />
+	</definition>
 </tiles-definitions>

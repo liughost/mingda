@@ -320,20 +320,20 @@ function AutoSave(textObj, hashCode)
 				<c:forEach var="item" items="${content_list}" varStatus="state">
 					<tr id="special_${item.hashCode}">
 						<td class="float_up"
-							<c:if test="${state.count==1 }">style="display:none;"</c:if>><c:choose>
-								<c:when test="${state.index>1 }">
+							<c:if test="${state.count==1 }">style="display:;"</c:if>><c:choose>
+								<c:when test="${state.index>0 }">
 									<input type="button" value="上移"
 										onclick="move_up(${id}, ${item.hashCode})"
 										class="btn btn-info" />
 									<br />
 								</c:when>
 							</c:choose> <c:choose>
-								<c:when test="${state.index>0}">
+								<c:when test="${state.index>=0}">
 									<input type="button" value="删除"
 										onclick="delete_special(${id},${item.hashCode})"
 										class="btn btn-danger" />
 									<br />
-									<div class="switch switch-large">
+									<div class="switch switch-large" style="display:none;">
 										<input type="checkbox"
 											<c:choose><c:when test="${item.is_show==1}">checked</c:when></c:choose>
 											onclick="state_special(${id}, ${item.hashCode},this)" />显示

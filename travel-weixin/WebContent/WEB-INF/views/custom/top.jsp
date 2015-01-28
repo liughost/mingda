@@ -118,13 +118,15 @@
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication var="username" property="principal.username" />
 </sec:authorize>
+
+    	
 <div class="container" id="head" style="max-width: ${maxWidth}px;">
-	<div class="row">
-		<div class="span3" style="width: 340px;">
+	<div class="row-fluid">
+		<div class="span8" style="/*width: 340px;*/">
 			<a href="${ context}/custom/book"><img
 				src="${context }/resources/image/web_logo.png" style="height: 60px;"></a>
 		</div>
-		<div class="span4 offset4 text-right">
+		<div class="span4 /*offset4*/ text-right">
 
 			<form class="form-inline" id="frmCitySearch"
 				action="${context }/custom/product/search" method="POST"
@@ -138,6 +140,7 @@
 							style="position: absolute; z-index: 1; margin: 15px -30px 0px -70px;">会员登录</span></a></lable>
 					</c:if>
 					 -->
+					 
 					<input type="text" class="input-small" name="city"
 						style="margin-top: 10px;" onclick="clickCity()" id="txtSelCity"
 						placeholder="请输入目的地城市名称" autocomplete="off">
@@ -169,7 +172,7 @@
 				href="#" onclick="javascript:SelCityOk();" class="btn btn-primary">确认</a>
 		</div>
 	</div>
-	<div id="headMenu" class="navbar  navbar-inverse">
+	<div id="headMenu" class="navbar  "><!-- navbar-inverse -->
 		<!-- navbar-inverse">  -->
 		<div class="navbar-inner">
 			<div class="nav-collapse collapse">

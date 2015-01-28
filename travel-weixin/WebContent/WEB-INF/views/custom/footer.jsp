@@ -53,15 +53,15 @@ a:hover {
 		<div class="span12">
 			<p class="text-center" style="color: white;">
 				<span style="color: lightgray;">友情链接：</span><a
-					href="http://usa-home.cn/">美国房产精英</a>
+					href="http://usa-home.cn/">美国房产精英</a> &nbsp;&nbsp;<a
+					href="http://51766.com/">51766</a>
 			</p>
 		</div>
 	</div>
 	<div class="row-fluid">
 		<div class="span12">
-			<p class="text-center">技术支持 ©北京智网明达信息技术有限公司
-				2014&nbsp;&nbsp;京ICP备11001537号-3</p>
 			<p class="text-center">
+				技术支持 ©北京智网明达信息技术有限公司 2014&nbsp;&nbsp;京ICP备11001537号-3&nbsp;
 				<script type="text/javascript">
 					var cnzz_protocol = (("https:" == document.location.protocol) ? " https://"
 							: " http://");
@@ -74,7 +74,52 @@ a:hover {
 		</div>
 	</div>
 </footer>
-<script>
+
+<style>
+.shape {
+	width: 50px;
+	height: 50px;
+	position: fixed !important;
+	position: absolute;
+	right: 0px;
+	bottom: 35px !important;
+	bottom: auto;
+	top: expression(eval(document.compatMode &&                    
+		    document.compatMode ==       
+		   
+		           'CSS1Compat')?             (documentElement.clientHeight-
+		this.clientHeight):document.body.scrollTop+(document.body.clientHeight-
+		this.clientHeight));
+	z-index: 9000;
+}
+.shape .button {
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+	border-radius: 0px;
+	background: url(${context}/resources/image/client/return_bg.png) no-repeat 0 -50px;
+}
+</style>
+<div class="shape" style="display: none">
+	<div class="button" onclick="javascript:gotop()" title="返回顶部"></div>
+</div>
+<script type="text/javascript">
+	function gotop() {
+		$('body,html').animate({
+			scrollTop : 0
+		}, 1000);
+	}
+
+	function scroll_event(load) {
+	debugger;
+		if (document.body.scrollTop > 0 && load == 1) {
+			//alert($('.shape'));
+			$('.shape').css('display', '');
+		} else {
+			$('.shape').css('display', 'none');
+		}
+	}
+
 	function showQR() {
 		var imgObj = document.getElementById("QR");
 		if (imgObj.style.display == "none")
@@ -83,6 +128,6 @@ a:hover {
 			imgObj.style.display = "none";
 
 	}
-
 	
+	//scroll_event();
 </script>

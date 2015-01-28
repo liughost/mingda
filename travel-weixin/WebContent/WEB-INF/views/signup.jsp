@@ -4,6 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <s:url var="home" value="/home" />
 <s:url var="dosignup" value="/dosignup"></s:url>
+<c:if test="${IsMobile }">
+	<div style="height: 20px;"></div>
+</c:if>
 <div class="container form-horizontal">
 	<div class="control-group">
 		<label></label>

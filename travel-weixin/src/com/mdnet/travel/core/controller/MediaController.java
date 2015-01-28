@@ -264,18 +264,23 @@ public class MediaController extends BaseController {
 		String weixinId = acc.getWxFromUserName();
 		int id = this.messageService.AddSpecial(title, "", "left", weixinId);
 
-		SpecialInfo[] content_list = new SpecialInfo[urls.length];
-		for (int i = 0; i < urls.length; i++) {
+		SpecialInfo[] content_list = new SpecialInfo[urls.length+1];
+		content_list[0] = new SpecialInfo();
+		content_list[0].setSmart("");
+		content_list[0].setHashCode("".hashCode());
+		content_list[0].setIs_show(1);
+		content_list[0].setSmart_text("");
+		for (int i = 1; i <= urls.length; i++) {
 			content_list[i] = new SpecialInfo();
-			content_list[i].setSmart(urls[i]);
-			content_list[i].setHashCode(urls[i].hashCode());
+			content_list[i].setSmart(urls[i-1]);
+			content_list[i].setHashCode(urls[i-1].hashCode());
 			content_list[i].setIs_show(1);
 			content_list[i].setSmart_text("");
 		}
 		Gson g = new Gson();
 		String content = g.toJson(content_list);
 		this.messageService.updateSpecial(id, title, "", "left", content);
-		return "0";
+		return String.valueOf(id);
 	}
 
 	@RequestMapping(value = "/getImg", method = RequestMethod.POST)

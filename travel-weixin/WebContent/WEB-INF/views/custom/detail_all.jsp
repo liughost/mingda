@@ -16,7 +16,7 @@ body {
 }
 
 .main {
-	max-width: 960px;
+	max-width: ${maxWidth-40}px;
 	background-color: white;
 	padding: 0 20px 0 20px;
 	border: 1px solid #CDCDCD;
@@ -24,7 +24,7 @@ body {
 
 .baseInfo {
 	color: gray;
-	font-size: 16px;
+	font-size: 14px;
 	line-height: 30px;
 }
 
@@ -122,18 +122,18 @@ h3 {
 		<div class="span7">
 			<table class="baseInfo">
 				<tr>
-					<td style="width:80px;"><b>出发城市</b></td>
+					<td style="width:80px;">出发城市</td>
 					<td class="baseRight">${info.deaprtCity }</td>
 				<tr>
-					<td><b>目的地</b></td>
+					<td>目的地</td>
 					<td class="baseRight">${info.destCity }</td>
 				<tr>
 				<tr>
-					<td><b>时间安排</b></td>
+					<td>时间安排</td>
 					<td class="baseRight">${info.settle }</td>
 				<tr>
 				<tr>
-					<td><b>发团日期</b></td>
+					<td>发团日期</td>
 					<td class="baseRight">${firstGroup } <!-- 
 					<span
 						class="label label-important">查看详细</span>
@@ -142,7 +142,7 @@ h3 {
 				<tr>
 				<tr>
 
-					<td><b>交通信息</b></td>
+					<td>交通信息</td>
 					<td class="baseRight">${info.traffic } <!-- 
 					<span
 						class="label label-important">查看详情</span> --></td>

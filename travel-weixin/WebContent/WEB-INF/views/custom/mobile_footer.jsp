@@ -59,3 +59,59 @@ a:hover {
 		</div>
 	</div>
 </footer>
+<style>
+.shape {
+	width: 50px;
+	height: 50px;
+	position: fixed !important;
+	position: absolute;
+	right: 0px;
+	bottom: 35px !important;
+	bottom: auto;
+	top: expression(eval(document.compatMode &&                    
+		    document.compatMode ==       
+		   
+		           'CSS1Compat')?             (documentElement.clientHeight-
+		this.clientHeight):document.body.scrollTop+(document.body.clientHeight-
+		this.clientHeight));
+	z-index: 9000;
+}
+.shape .button {
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+	border-radius: 0px;
+	background: url(${context}/resources/image/client/return_bg.png) no-repeat 0 -50px;
+}
+</style>
+<div class="shape" style="display: none">
+	<div class="button" onclick="javascript:gotop()"></div>
+</div>
+<script type="text/javascript">
+	function gotop() {
+		$('body,html').animate({
+			scrollTop : 0
+		}, 1000);
+	}
+
+	function scroll_event(load) {
+	debugger;
+		if (document.body.scrollTop > 0 && load == 1) {
+			//alert($('.shape'));
+			$('.shape').css('display', '');
+		} else {
+			$('.shape').css('display', 'none');
+		}
+	}
+
+	function showQR() {
+		var imgObj = document.getElementById("QR");
+		if (imgObj.style.display == "none")
+			imgObj.style.display = "block";
+		else
+			imgObj.style.display = "none";
+
+	}
+	
+	//scroll_event();
+</script>

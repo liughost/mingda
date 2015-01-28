@@ -98,14 +98,23 @@ public class HomeController extends BaseController {
 	}
 
 	@RequestMapping("/signup")
-	public String signupUI() {
-		return "signup";
+	public ModelAndView signupUI(HttpServletRequest request) {
+		this.getMav(request);
+		this.mav.setViewName(this.preMobile(request) + "signup");
+		return this.mav;
+	}
+
+	@RequestMapping("/login")
+	public ModelAndView loginUI(HttpServletRequest request) {
+		this.getMav(request);
+		this.mav.setViewName(this.preMobile(request) + "login");
+		return this.mav;
 	}
 
 	@RequestMapping(value = { "forget" }, method = RequestMethod.GET)
 	public ModelAndView forget(HttpServletRequest request) {
 		this.getMav(request);
-		this.mav.setViewName("forget");
+		this.mav.setViewName(this.preMobile(request) + "forget");
 		return this.mav;
 	}
 

@@ -65,7 +65,7 @@ public class MemberController extends BaseController {
 			@RequestParam(value = "page", required = false) String page) {
 
 		this.getMav(request);
-		this.mav.setViewName("member/order/list");
+		this.mav.setViewName(this.preMobile(request) + "member/order/list");
 		String uname = SecurityContextHolder.getContext().getAuthentication()
 				.getName();
 		Traveler traveler = this.travelerService.findTravelerByUname(uname);
@@ -150,7 +150,7 @@ public class MemberController extends BaseController {
 			@RequestParam(value = "page", required = false) String pageNo) {
 
 		this.getMav(request);
-		this.mav.setViewName("member/invite/send");
+		this.mav.setViewName(this.preMobile(request) + "member/invite/send");
 		int page = 0;
 		if (pageNo != null)
 			page = Integer.parseInt(pageNo);
@@ -282,7 +282,7 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = { "/info" }, method = RequestMethod.GET)
 	public ModelAndView bookInfo(HttpServletRequest request) {
 		this.getMav(request);
-		this.mav.setViewName("member/info");
+		this.mav.setViewName(this.preMobile(request) + "member/info");
 		String uname = SecurityContextHolder.getContext().getAuthentication()
 				.getName();
 		// this.mav.addObject("invite", this.travelerService.getInviteList(-1,

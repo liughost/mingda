@@ -22,6 +22,9 @@ input[type="checkbox"] {
 	margin: 0;
 }
 </style>
+<c:if test="${IsMobile }">
+	<div style="height: 20px;"></div>
+</c:if>
 <div class="container" style="max-width: 960px; text-align: left;">
 	<legend>邀请码信息</legend>
 	<form id="frmInvite" action="${context }/member/invite/send"

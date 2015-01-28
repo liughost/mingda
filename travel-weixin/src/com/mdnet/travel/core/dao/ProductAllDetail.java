@@ -24,7 +24,6 @@ public class ProductAllDetail extends BaseDocument {
 	private String productName = "";// 产品名称
 	private String aliasName;// 产品别名，或者内部名称
 	private String serialName;// 系列名称
-	
 
 	private String deaprtCity;// 出发城市 上海 出发
 	private String destCity;// 目的地拉斯维加斯、旧金山、洛杉矶、美国
@@ -46,8 +45,27 @@ public class ProductAllDetail extends BaseDocument {
 	private String feature;// 产品特色
 	private String assembly;// 集合地点说明
 	private List<String> images = new ArrayList<String>();
-	private int aheadDays=10;//团期显示提前天数
-	
+	private int aheadDays = 10;// 团期显示提前天数
+
+	private String scenics;
+	private boolean show;
+
+	public String getScenics() {
+		return scenics;
+	}
+
+	public void setScenics(String scenics) {
+		this.scenics = scenics;
+	}
+
+	public boolean getShow() {
+		return show;
+	}
+
+	public void setShow(boolean show) {
+		this.show = show;
+	}
+
 	public String getSerialName() {
 		return serialName;
 	}
@@ -220,9 +238,10 @@ public class ProductAllDetail extends BaseDocument {
 
 	protected ProductAllDetail() {
 		db = new Database("guantravel.com", 5984, "travel");
-//		AuthScope authScope = new AuthScope("guantravel.com", 5984);
-//		Credentials credentials = new UsernamePasswordCredentials("mingda", "mingdaNET");
-//		db.getServer().setCredentials(authScope, credentials);
+		// AuthScope authScope = new AuthScope("guantravel.com", 5984);
+		// Credentials credentials = new UsernamePasswordCredentials("mingda",
+		// "mingdaNET");
+		// db.getServer().setCredentials(authScope, credentials);
 		className = this.getClass().getName();
 	}
 
@@ -311,28 +330,27 @@ public class ProductAllDetail extends BaseDocument {
 		}
 		return 0;
 	}
-	
 
 	public List<ShowProductInfo> getByCities(String cities, String types) {
-		//生成城市表达式
+		// 生成城市表达式
 		String[] cs = cities.split(",");
 		String cities_str = "";
 		for (String c : cs) {
-			if(c!= null && c.length()>0)
+			if (c != null && c.length() > 0)
 				cities_str += "'" + c + "',";
 		}
-		if(cities_str != null && cities_str.length()>0)
+		if (cities_str != null && cities_str.length() > 0)
 			cities_str = cities_str.substring(0, cities_str.length() - 1);
-		//生成线路类型表达式
+		// 生成线路类型表达式
 		String types_str = "";
 		String[] ts = types.split(",");
 		for (String t : ts) {
-			if(t!= null && t.length()>0)
+			if (t != null && t.length() > 0)
 				types_str += "'" + t + "',";
 		}
-		if(types_str != null && types_str.length()>0)
+		if (types_str != null && types_str.length() > 0)
 			types_str = types_str.substring(0, types_str.length() - 1);
-		
+
 		List<ShowProductInfo> list = new ArrayList<ShowProductInfo>();
 		String mapFunc = createCitiesMap(cities_str, types_str);
 		ViewResult<String[]> result = db.queryAdHocView(String[].class,
@@ -344,33 +362,35 @@ public class ProductAllDetail extends BaseDocument {
 			String[] v = (String[]) vr.getValue();
 			e.setName(v[0]);
 			e.setImg(v[1]);
-			e.setCities_str(v[2]==null?"":v[2]);
-			e.setDays(v[3]==null?"":v[3]);
-			e.setLineType(v[4]==null?"":v[4]);
+			e.setCities_str(v[2] == null ? "" : v[2]);
+			e.setDays(v[3] == null ? "" : v[3]);
+			e.setLineType(v[4] == null ? "" : v[4]);
 			list.add(e);
 		}
 		return list;
 	}
 
 	public String createCitiesMap(String cities, String types) {
-		String mapFunc = "{\"map\":\""
-				+ "function(doc) {"
-				+ "	  if(doc.pid != null)"
-				+ "	  {    var cities = ["	+ cities	+ "];"
+		String mapFunc = "{\"map\":\"" + "function(doc) {"
+				+ "	  if(doc.pid != null)" + "	  {    var cities = ["
+				+ cities
+				+ "];"
 				+ "        if(cities== null || cities.length==0){filterType(doc);return;}"
 				+ "	       for(var i=0; i<cities.length; i++)"
 				+ "	       {"
 				+ "	           if(doc.destCity.indexOf(cities[i])>=0)"
 				+ "	           {"
 				+ "	               filterType(doc);"
-				+ "	               return;" 
-				+ "	           }" 
+				+ "	               return;"
+				+ "	           }"
 				+ "	       }"
-				+ "	  }" 
-				+ "	}" 
+				+ "	  }"
+				+ "	}"
 				+ "function filterType(doc)"
 				+ "{"
-				+ "		var types = ["+types+"];"
+				+ "		var types = ["
+				+ types
+				+ "];"
 				+ "		if(types== null || types.length==0){output(doc);return;}"
 				+ "	    for(var i=0; i<types.length; i++)"
 				+ "		{"
@@ -385,7 +405,8 @@ public class ProductAllDetail extends BaseDocument {
 
 	/**
 	 * 
-	 * @param sName 产品系列名称
+	 * @param sName
+	 *            产品系列名称
 	 * @return
 	 */
 	public ShowProductInfo[] getProductList(int sName) {
@@ -394,17 +415,17 @@ public class ProductAllDetail extends BaseDocument {
 		opt.reduce(false);
 		// db.
 		opt.descending(true);
-		String viewName= "product/list";
-		if(sName==1)
-			viewName= "product/alone";
-		else if(sName==2)
-			viewName= "product/cheap";
-		else if(sName==3)
-			viewName= "product/spring";
-		else if(sName==4)
-			viewName= "product/standard";
-		ViewResult<String[]> result = db.queryView(viewName,
-				String[].class, opt, null);
+		String viewName = "product/list";
+		if (sName == 1)
+			viewName = "product/alone";
+		else if (sName == 2)
+			viewName = "product/cheap";
+		else if (sName == 3)
+			viewName = "product/spring";
+		else if (sName == 4)
+			viewName = "product/standard";
+		ViewResult<String[]> result = db.queryView(viewName, String[].class,
+				opt, null);
 		if (result.getRows().size() > 0) {
 			int i = 0;
 			ShowProductInfo[] spi = new ShowProductInfo[result.getRows().size()];
@@ -424,64 +445,60 @@ public class ProductAllDetail extends BaseDocument {
 
 	public static void main(String[] args) {
 		ProductAllDetail p = ProductAllDetail.instance();
-		p.setPid(24);// 北京/上海出发。产品ID关联到原来的数据库
-		p.setProductName("【任性1人团】西部大环线12日美国自驾游◆七大公园+66号公路◆全国联运◆纯玩◆0自费！");// 产品名称
-		//p.setProductName("上海直飞：奥兰多+迈阿密+拉斯维加斯+洛杉矶美国");// 产品名称
-		p.setAliasName("美国西部七大国家公园/部落公园+66号公路12日纵情自驾之旅");// 产品别名，或者内部名称
-		p.setDeaprtCity("北京/上海 出发");// 出发城市 上海 出发
+		p.setPid(25);
+		p.setProductName("轻奢自驾十人小团：加州一号公路+大峡谷+美西三大经典城市10日美国自驾游");
+		
+		p.setAliasName("加州一号公路+大峡谷+美西三大经典城市10日美国自驾游");
+		p.setDeaprtCity("北京/上海   出发");// 出发城市 上海 出发
 		//p.setDeaprtCity("上海 出发");// 出发城市 上海 出发
-		p.setDestCity("拉斯维加斯、洛杉矶、犹他州");
-		p.setSettle("12天 10晚");
+		p.setDestCity("拉斯维加斯、盐湖城、洛杉矶、怀俄明、美国、犹他州");
+		p.setScenics("黄石公园、老忠实泉、大稜镜彩泉、大提顿国家公园、大盐湖、布莱斯布赖斯国家公园、羚羊谷、马蹄湾、大峡谷、威廉姆斯小镇、66号公路、棕榈泉奥特莱斯、星光大道、中国剧院（外观）、杜比剧院");
+		p.setShow(true);
+		p.setSettle("10天 8晚");
 		p.setTraffic("飞机去飞机回");// 交通信息
-		p.setRecommend("【冠行之旅】专为您一人打造的私人定制团，时间、路线、车型和酒店等均可调整。有导游的自由行！让您的行程更加精彩、自由、省心、安全！ 我们的旅行专家，都有超过10年以上的专业旅行经验，对您的旅行目的地，都了如指掌，为了旅程的完美与难忘，我们投入了全部的心力，贡献我们全部的能力，这既是对旅行的尊重，也是对自身的尊重！那必将令您永生难忘！ 每一位专属导游，都是最专业的旅行家，专属的行程安排与7x24小时导游服务，给您一次独一无二旅行体验！");
+		p.setSerialName("特惠团");
+		p.setRecommend("【冠行之旅】专业自驾向导带您自驾美式巨型肌肉车！ 驰骋在美利坚的大地上，自由随心享受绚丽风光和美式风情！ 我们不是大巴团！ 上车睡觉，下车拍照，什么都玩不到，还可能遭遇消费陷阱！ 我们不是自由行！ 语言不通，操心费力，没人管！ 怎么办？ 那就跟我们出发吧！ “欢迎来到加州旅馆，多么可爱的地方，如此美丽的脸庞……”每当听到《加州旅馆》这首经典的歌曲，那迷茫而颓废的旋律背后，总是伴随着令人不禁想前往美国西部那片热土一探究竟的欲望。");
 
-		//北京出发的
-//		p.getImages()
-	//			.add("http://guantravel.com/resources/media/201411/891164c1c01aeb45952fd12968c0781a.jpg");
-
-		//上海出发
+		
 		p.getImages()
-		.add("http://guantravel.com/resources/media/201411/87ac4426db868ff89a51832946a5df31.jpg");
+				.add("http://guantravel.com/resources/media/201501/20027102e4c82d04d2d86a2e7fa978d6.jpg");
+		
+			
 
 		// 费用包含
-		p.setFeeInclude("1、7x24小时优秀中/英双语自驾向导服务；"
-+"2、包含七大公园门票：环球影城+宰恩+拱门+布莱斯+大峡谷+羚羊谷+纪念碑峡谷；<br/>"
-+"3、国内往返美国航班经济舱机票、燃油附加费、机票税；<br/>"
-+"4、城市繁华区4钻品质酒店，小镇3钻酒店住宿；<br/>"
-+"5、免收每人每天8美元的导游小费；<br/>"
-+"6、汽车租赁费及随车保险（车损或盗抢不计免赔，第三者100万美金+个人意外伤害保险+各种税费）；<br/>"
-+"7、全程燃油/对讲机/中文导航；<br/>"
-+"8、中国驾照英文翻译件；<br/>"
-+"9、英国太阳联合海外无忧个人旅游保险（高达100万的意外险），详情见保单。<br/>");
+		p.setFeeInclude("* 7x24小时优秀中/英双语自驾向导服务；<br/>"
++"* 国内往返美国经济舱机票、燃油附加税、机票税；<br/>"
++"* 包含好莱坞环球影城+美国大峡谷+17英里海岸门票；<br/>"
++"* 城市繁华区4钻品质酒店，小镇3钻酒店住宿；<br/>"
++"* 免收每人每天8美元的导游小费；<br/>"
++"* 汽车租赁费及随车保险（车损或盗抢不计免赔，第三者100万美金+个人意外伤害保险+各种税费）；<br/>"
++"* 全程燃油/对讲机/中文导航；<br/>"
++"* 中国驾照英文翻译件；<br/>"
++"* 英国太阳联合海外无忧个人旅游保险（高达100万的意外险），详情见保单。");
 
 		// 费用不包含
-		p.setFeeNotInclude(""
-				+ "1、护照、签证等相关证件的费用；<br/>"
-				+ "2、超出机票包含免费行李的行李托运费；<br/>"
-				+ "3、全程餐食自理（多数酒店早餐包含，午、晚餐走到哪吃到哪儿，丰简由己，午餐约4-8美金，晚餐约10美金；<br/>"
-				+ "4、停车费、高速通行费及违章罚款等费用请自理（若产生）；<br/>"
-				+ "5、行程中自由活动时的产生的一切费用请自理；<br/>"
-				+ "6、行程以外的一切私人消费，如酒店内的洗衣费、电话费、饮料、付费电视、行李搬运费以及吸烟罚款等费用，个人消费所引起的小费、出入境的行李海关课税、超重行李的托运费、管理费等；<br/>"
-				+ "7、不可抗拒的客观原因（如天灾、战争、罢工等）或航空公司航班延误、取消、领馆签证延误等非我公司原因引起的特殊情况，我公司有权变更或取消行程，由此产生的相关费用（如在外延期签证、食、宿、行一切费用）请自理；<br/>");
+		p.setFeeNotInclude("* 护照、签证等相关证件的费用；<br/>"
++"* 超出机票包含免费行李的行李托运费；<br/>"
++"* 全程餐食自理（多数酒店早餐包含，午、晚餐走到哪吃到哪儿，丰简由己，午餐约4-8美金，晚餐约10美金+）；<br/>"
++"* 停车费、高速通行费及违章罚款等费用请自理（若产生）；<br/>"
++"* 行程中自由活动时的产生的一切费用请自理；<br/>"
++"* 行程以外的一切私人消费，如酒店内的洗衣费、电话费、饮料、付费电视、行李搬运费以及吸烟罚款等费用，个人消费所引起的小费、出入境的行李海关课税、超重行李的托运费、管理费等；<br/>"
++"* 不可抗拒的客观原因（如天灾、战争、罢工等）或航空公司航班延误、取消、领馆签证延误等非我公司原因引起的特殊情况，我公司有权变更或取消行程，由此产生的相关费用（如在外延期签证、食、宿、行一切费用）请自理。");
 
 		// 费用说明
-		p.setFeeIntro("");
+		p.setFeeIntro("本产品报价根据12人成团核算，如未达到成团人数，而实际报名人数已经达到7人，如全体旅游者同意，亦可成团，需按7人价格补缴3000元/人。或者本社经征得旅游者书面同意后，可以延期出团或者改签其他线路出团，因此增加的费用由旅游者承担，减少的费用出境社予以退还。");
 
 		// 线路特色
-		p.setFeature("★ 任性一人团，全心全意只为您一人服务！<br/>"
-+"★ 专属导游，随身极致服务，伴您放心出行！<br/>"
-+"★ 专属线路，具体行程专为您打造！<br/>"
-+"★ 全程专业自驾向导7X24小时陪同，无超时费用！<br/>"
-+"★ 包含七大公园门票：环球影城+宰恩+拱门+布莱斯+大峡谷+羚羊谷+纪念碑峡谷!<br/>"
-+"★ 国内到洛杉矶国际航班往返直飞！<br/>"
+		p.setFeature("★ 全程专业自驾向导7x24小时陪同，无超时费用，省心省力、安全无忧！<br/>"
++"★ 包含好莱坞环球影城+大峡谷+17英里海岸门票！<br/>"
 +"★ 城市繁华区4钻品质酒店（小镇3钻）！<br/>"
-+"★ 美国西海岸七大公园+66号公路！<br/>"
-+"★ 无旅游商店购物或额外收费项目！<br/>"
-+"★ 巨无霸越野车+燃油+豪华保险套餐+导航全部包含！");
++"★ 轻松纯玩自驾小团，无旅游商店购物或额外收费项目！<br/>"
++"★ 巨无霸越野车+燃油+豪华保险套餐+导航全部包含！<br/>"
++"★ 加州一号公路穿越+大峡谷深度探秘之旅！");
 
 		// 产品详情
 		p.setDetail("如需我们代办签证，费用为人民币1250元/人（含签证费及使馆面谈辅导、翻译、填表、快递服务等费用，以上费用为美国使馆收取和旅行社实际支出，拒签恕不退还）。咨询电话：4006-910-800.");
-		p.setAssembly("集合地点：<br/>北京出发:航班起飞3.5小时前到达北京首都机场T3航站4层出发大厅6号门内中国海关处。<br/>"
+		p.setAssembly("<br/>北京出发:航班起飞3.5小时前到达北京首都机场T3航站4层出发大厅6号门内中国海关处。<br/>"
 		+"上海出发：航班起飞3.5小时前到达浦东国际机场出发大厅。");
 		// 预订说明
 		p.setBookNotice("预订说明");
@@ -491,18 +508,19 @@ public class ProductAllDetail extends BaseDocument {
 		Journey j = new Journey();
 		// 基本信息
 		j.setDay("第一天");
-		j.setTitle("北京/上海—洛杉矶（车程约60km）");
-		//j.setTitle("上海-奥兰多（2月16日）");
+		j.setTitle("北京/上海—旧金山");
 
 		// 交通信息
 		List<Traffic> traffic = new ArrayList<Traffic>();
 		Traffic t1 = new Traffic();
-		t1.setVehicle("第1段 北京起飞 飞机");
-		t1.setDetail("航班号：CA987	北京（13:30）-洛杉矶（次日09:30）	座舱：经济舱");
+		
+		t1.setVehicle("第1段 飞机");
+		t1.setDetail("国际航班	北京-旧金山（次日到达）	座舱：经济舱");
 		traffic.add(t1);
+		
 		Traffic t2 = new Traffic();
-		t2.setVehicle("第1段 上海起飞 飞机");
-		t2.setDetail("航班号：AA182	上海（18:20）-拉斯维加斯（23:20）	座舱：经济舱");
+		t2.setVehicle("第1段 飞机");
+		t2.setDetail("国际航班	上海-旧金山（次日到达）	座舱：经济舱");
 		traffic.add(t2);
 		j.setTraffic(traffic);
 		
@@ -517,17 +535,13 @@ public class ProductAllDetail extends BaseDocument {
 
 		// 详细内容
 		List<DetailContext> d = new ArrayList<DetailContext>();
+		 
+		d.add(new DetailContext("text", "搭乘国际航班飞往西部名城-旧金山，抵达后，提车前往市区游览九曲花街、唐人街、联合广场等主要景点，晚上渔人码头逛街，吃海鲜。<br/>"
+		+"【行程亮点】旧金山，又称三藩市,位于美国加州西海岸。它三面环水，环境优美，是一座山城。旧金山气候冬暖夏凉，阳光充足，被誉为“最受美国人欢迎的城市”。同时它还是一个崇尚“多元化”的城市。在这里，白人、黑人、黄种人和谐共处；同性恋者泰然自若地在屋顶插上彩虹旗，与异性恋者比邻而居；在这里，你可以看到专以造型取胜的街头艺人，有的把全身漆成五彩斑斓，有的扮成巫婆、小丑甚至黑色幽灵；在这里，你可以看到头顶红绿头发的年轻人招摇过市，公然在街头拥吻的同性恋情侣。在这片土地上，任何的标新立异都不会招来旁人的侧目，每个人都是特立独行的楷模。"));
+		d.add(new
+		 DetailContext("img","https://imgs.qunarzz.com/vc/ed/cf/1a/a1c23af404abbe407b1ea42108.jpg_92.jpg"));
 		 d.add(new
-		 DetailContext("img","https://imgs.qunarzz.com/vc/48/16/61/6ab366aff5b889f5bb2b96ef8f.jpg_92.jpg"));
-		d.add(new DetailContext("text", "13:00左右，抵达洛杉矶<br/>" 
-+"14:30 过关提取行李，去车场提车 <br/>"
-+"15:30 提车后，前往圣莫妮卡海滩游玩(游玩时间约3小时)<br/>" 
-+"17:00 游览完毕，前往酒店 <br/>"
-+"18:00 抵达酒店 <br/>"
-+"19:00 酒店附近吃晚餐，餐后返回酒店休息<br/>" 
-+"本日行程取决于航班抵达时间，可能微调。 <br/>"
-+"【行程亮点】<br/>"
-+"洛杉矶是加州第一大城市，美国第二大城市，仅次于纽约。同时它也是全世界的文化、科技、国际贸易和高等教育中心之一。洛杉矶一望无垠的沙滩和明媚的阳光、闻名遐迩的“电影王国”好莱坞、引人入胜的迪斯尼乐园、峰秀地灵的贝佛利山庄使洛杉矶成为一座举世闻名的“电影城”和“旅游城”。洛杉矶市区广阔，布局分散，整座城市是以千千万万栋一家一户的小住宅为基础。绿荫丛中，鳞次栉比的庭院式建筑，色彩淡雅，造型精巧，风格各异，遍布于平地山丘上。"));
+		 DetailContext("img","https://imgs.qunarzz.com/vc/76/e9/60/e0bf49cad6f54ce81d1042b14a.jpg_92.jpg"));
 		j.setDetail(d);
 		// 结束第一天的数据
 		journey.add(j);
@@ -537,7 +551,7 @@ public class ProductAllDetail extends BaseDocument {
 		j = new Journey();
 		// 基本信息
 		j.setDay("第二天");
-		j.setTitle("洛杉矶（车程约80km）");
+		j.setTitle("旧金山-蒙特利（180公里，2小时左右车程）");
 		// 交通信息
 		traffic = new ArrayList<Traffic>();
 		t2 = new Traffic();
@@ -551,19 +565,17 @@ public class ProductAllDetail extends BaseDocument {
 
 		// 详细内容
 		d = new ArrayList<DetailContext>();
-		d.add(new DetailContext(
-				"img",
-				"https://imgs.qunarzz.com/vc/3d/40/81/77f867b982c14a8c95ac6c4465.jpg_92.jpg"));
+		
 		d.add(new DetailContext(
 				"text",
-				"9:00 出发到环球影城<br/>" 
-+"10:00 抵达环球影城游览（游玩时间约7小时） <br/>"
-+"17:00 离开环球影城 <br/>"
-+"17:15 抵达星光大道，参观星光大道、中国剧院、奥斯卡金像奖颁奖礼的举行地点-杜比剧院（外观）等好莱坞地区景点<br/>" 
-+"18:45 离开星光大道，去用餐 <br/>"
-+"20:00 回到酒店 <br/>"
-+"【行程亮点】<br/>"
-+"环球影城是好莱坞最吸引人的去处。它是一个再现电影场景的主题游乐园，其内以多部大制作电影为主题的景点最受欢迎。侏罗纪公园，形态生动的恐龙、危险奇异的侏罗纪丛林、游船从高空俯冲入水的刺激，让人兴奋不已。如果在侏罗纪公园还未过足水瘾，水上世界定可满足你。各类水上特技营造不亚于电影的紧张画面，而火爆的动作场面更会将游客囊括在内，给人真实的危难当头之感。2012年最新推出的变形金刚3D过山车是一段模拟的战车骑乘体验，期间会受到霸天虎的袭击，更有擎天柱英勇的营救。环球影城的电车之旅惊险刺激，乘坐电车，一路上会遇到大地震、洪水、木桥坍塌、大白鲨追尾、与金刚对峙等种种意外！"));
+				"上午参观旧金山标志-金门大桥、双峰山鸟瞰旧金山全景。下午前往蒙特利半岛著名的17英里海岸游览（含门票）。<br/>"
+		+"【行程亮点】这里是美国西海岸风光的精华-碧海蓝天、鲜花礁石、随处可见松鼠和海豹、悬崖峭壁、古老的的松柏，构成了17英里迷人的画卷。海岸线上最为漂亮的地方叫圆石滩。它被称为“世界上海洋和陆地的最佳连接处”，是一个美得令人窒息的地方。夜宿蒙特利附近。"));
+	d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/49/38/91/d3a790e84d8c1221c2455a176b.jpg_92.jpg"));
+				d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/f7/30/f9/6bd005893f39671efbd8e65016.jpg_92.jpg"));
 		j.setDetail(d);
 		// 结束第二天的数据
 		journey.add(j);
@@ -571,7 +583,7 @@ public class ProductAllDetail extends BaseDocument {
 		j = new Journey();
 		// 基本信息
 		j.setDay("第三天");
-		j.setTitle("洛杉矶-拉斯维加斯（车程约408km)");
+		j.setTitle("蒙特利-文图拉（435公里，6小时左右车程）");
 		// 交通信息
 		traffic = new ArrayList<Traffic>();
 		t2 = new Traffic();
@@ -585,20 +597,17 @@ public class ProductAllDetail extends BaseDocument {
 
 		// 详细内容
 		d = new ArrayList<DetailContext>();
-		d.add(new DetailContext(
-				"img",
-				"https://imgs.qunarzz.com/vc/a3/d1/89/7f6e74f015a0e5986098cc892f.jpg_92.jpg"));
+		
 		d.add(new DetailContext(
 				"text",
-				"9:30 出发 <br/>"
-+"12:00 抵达巴斯托小镇，用餐休息 <br/>"
-+"13:30 离开巴斯托，前往沙漠上的海市蜃楼-拉斯维加斯<br/>" 
-+"16:00 抵达拉斯维加斯，入住酒店 <br/>"
-+"18:00 当地特色餐厅用晚餐 <br/>"
-+"19:30 夜游拉斯维加斯大道及各赌场，或客人可自由活动（夜游导游服务费包含）<br/>" 
-+"22:00左右活动结束，返回酒店 <br/>"
-+"【行程亮点】<br/>"
-+"在这个沙漠环绕的地方，所有的注意力都集中在热闹非凡的拉斯维加斯大道上。据说世界上十家最大的度假酒店就有九家是在这里。投资商花不惜花费数十亿美元的巨资，打造大批奢华的、标新立异的主题酒店，每家酒店都有自己的赌场、各种高档餐厅以及购物中心，游客可以免费进入参观。每当夜幕降临，拉斯维加斯才会迎来它一天中最辉煌的时刻。除了赌场以外，很多酒店还有丰富多彩的剧场表演秀：歌舞、脱口秀、杂技、催眠、魔术，精彩的你都不知道该看那个。"));
+				"开始令人兴奋的加州一号公路之旅。途经卡梅尔、大苏尔（国家地理杂志推荐人生必去的50个地方之一）等地游览，感受真正的加利福尼亚。傍晚入住文图拉。<br/>"
+		+"【行程亮点】加州一号公路从北至南连接着旧金山与洛杉矶，沿着美国西海岸蜿蜒前进，全长超过1000公里。由于得天独厚的地理环境，它一边是海阔天空惊涛拍岸，风帆点点碧波万顷；一边是陡峭悬崖群峦迭翠，牧草如茵牛马成群。"));
+		d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/3e/c9/7d/3bd9e19682e0cf7ea7b1626071.jpg_92.jpg"));
+		d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/13/9b/a8/2d541d79be4d4637a14d100a43.jpg_92.jpg"));
 		j.setDetail(d);
 		// 结束第三天的数据
 		journey.add(j);
@@ -606,7 +615,7 @@ public class ProductAllDetail extends BaseDocument {
 		j = new Journey();
 		// 基本信息
 		j.setDay("第四天");
-		j.setTitle("拉斯维加斯-布莱斯(车程约355km)");
+		j.setTitle("文图拉-拉斯维加斯（500公里，5小时左右车程）");
 		// 交通信息
 		traffic = new ArrayList<Traffic>();
 		t2 = new Traffic();
@@ -620,17 +629,17 @@ public class ProductAllDetail extends BaseDocument {
 
 		// 详细内容
 		d = new ArrayList<DetailContext>();
-		d.add(new DetailContext(
-				"img",
-				"https://imgs.qunarzz.com/vc/39/26/bd/20df3930ce0e2706f32c27b072.jpg_92.jpg"));
+		
 		d.add(new DetailContext(
 				"text",
-				"9：00 出发前往宰恩国家公园<br/>" 
-+"11:00 抵达宰恩国家公园游览（游玩约4小时） <br/>"
-+"15:00 前往雪松城 <br/>"
-+"16:00 抵达雪松城，入住酒店休息，用餐<br/>" 
-+"【行程亮点】<br/>"
-+"宰恩国家公园占地约593平方公里，位于科罗拉多高原（Colorado Plateau）、大盆地（Great Basin）与莫哈韦沙漠（Mojave Desert）三地交汇处。公园内的峡谷如鬼斧神工般削就，绝壁凌空，风景如画，为热爱大自然的游客提供了许多游玩选择，既有短途远足路线，也有神秘的探险路线。"));
+				" 驱车前往沙漠上的海市蜃楼-拉斯维加斯。晚上拉斯维加斯大道夜游，体验世界赌城各种极尽奢华的酒店赌场。（包含夜游）<br/>"
+		+"【行程亮点】在这个沙漠环绕的地方，所有的注意力都集中在热闹非凡的拉斯维加斯大道上。据说世界上十家最大的度假酒店就有九家是在这里。投资商花不惜花费数十亿美元的巨资，打造大批奢华的、标新立异的主题酒店，每家酒店都有自己的赌场、各种高档餐厅以及购物中心，游客可以免费进入参观。每当夜幕降临，拉斯维加斯才会迎来它一天中最辉煌的时刻。除了赌场以外，很多酒店还有丰富多彩的剧场表演秀：歌舞、脱口秀、杂技、催眠、魔术，精彩的你都不知道该看那个。"));
+		d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/bd/b5/f9/907d2d2faec5e2e402d86f74df.jpg_92.jpg"));
+		d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/7c/91/59/2433ff0a26d054d9d0c44189dd.jpg_92.jpg"));
 		j.setDetail(d);
 		// 结束第四天的数据
 		journey.add(j);
@@ -638,7 +647,7 @@ public class ProductAllDetail extends BaseDocument {
 		j = new Journey();
 		// 基本信息
 		j.setDay("第五天");
-		j.setTitle("布莱斯-摩押（车程约569km）");
+		j.setTitle("拉斯维加斯");
 		// 交通信息
 		traffic = new ArrayList<Traffic>();
 		t2 = new Traffic();
@@ -652,17 +661,17 @@ public class ProductAllDetail extends BaseDocument {
 
 		// 详细内容
 		d = new ArrayList<DetailContext>();
-		d.add(new DetailContext(
-				"img",
-				"https://imgs.qunarzz.com/vc/d3/c4/c6/f4f1ca0c0d363064e4c2c35847.jpg_92.jpg"));
+		
 		d.add(new DetailContext(
 				"text",
-				"8:30 出发前往布莱斯国家公园<br/>" 
-+"10：00 抵达布莱斯公园（游玩约2小时） <br/>"
-+"15:00 游览公园，含午餐时间，之后前往犹他州摩押（Moab）<br/>" 
-+"17:30 抵达摩押，入住酒店休息，用餐 <br/>"
-+"【行程亮点】<br/>"
-+"布莱斯峡谷国家公园（Bryce Canyon National Park）是位于美国犹他州西南部的国家公园。其名字虽有峡谷一词，但其并非真正的峡谷，而是沿着庞沙冈特高原东面，由侵蚀而成的巨大自然露天剧场。其独特的地理结构称为岩柱（hoodoos），由风、河流里的水与冰侵蚀和湖床的沉积岩组成。位于其内的红色、橙色与白色的岩石形成了奇特的自然景观，因此其被誉为天然石俑的殿堂。"));
+				"驱车前往世界七大自然奇迹之一的美国大峡谷(西峡)。抵达后参观鹰峡、登顶GUANO POINT 360 度感受大自然的鬼斧神工及在HUALAPAI马场感受西部牛仔的热情!<br/>"
+		+"【行程亮点】大峡谷是一处举世闻名的自然奇观，位于亚利桑那州西北部的凯巴布高原上。它全长446公里，平均宽度16公里，最大深度1740米，是联合国教科文组织选为受保护的世界天然遗产之一。其雄伟的地貌、浩瀚的气魄、慑人的神态、奇突的景色，世无其匹！美国总统西奥多-罗斯福来此游览时，感叹地说：“大峡谷使我充满了敬畏，它无可比拟，无法形容，在这辽阔的世界上，绝无仅有。”有人说，在太空唯一可用肉眼看到的自然景观就是大峡谷。"));
+		d.add(new DetailContext(
+				"img",
+				"http://img1.qunarzz.com/vc/96/33/a9/0b339e94f0ba81b4910183c9e9.jpg_92.jpg"));
+		d.add(new DetailContext(
+				"img",
+				"http://img1.qunarzz.com/vc/4b/9d/83/58e2e2f11537e0a99ffa646643.jpg_92.jpg"));
 		j.setDetail(d);
 		// 结束第五天的数据
 		journey.add(j);
@@ -670,7 +679,7 @@ public class ProductAllDetail extends BaseDocument {
 		j = new Journey();
 		// 基本信息
 		j.setDay("第六天");
-		j.setTitle("摩押-科特斯（车程约200km）");
+		j.setTitle("拉斯维加斯-洛杉矶（440公里，车程4.5小时）");
 		// 交通信息
 		traffic = new ArrayList<Traffic>();
 		t2 = new Traffic();
@@ -684,19 +693,15 @@ public class ProductAllDetail extends BaseDocument {
 
 		// 详细内容
 		d = new ArrayList<DetailContext>();
-		d.add(new DetailContext(
-				"img",
-				"https://imgs.qunarzz.com/vc/d6/21/8e/8284fb1c36f4e3a723c27c159e.jpg_92.jpg"));
+		
 		d.add(new DetailContext(
 				"text",
-				"8:30 前往拱门国家公园参观 <br/>"
-+"9:00 抵达拱门国家公园（游玩时间约4小时） <br/>"
-+"13:00 离开拱门，前往科罗拉多州科特斯参观梅萨维德国家公园<br/>" 
-+"15:00 抵达梅萨维德国家公园（游玩时间约2小时） <br/>"
-+"17：00前往科特斯，入住酒店休息，用餐 <br/>"
-+"【行程亮点】<br/>"
-+"拱门国家公园（Arches National Park）是世界上最大的自然沙岩拱门集中地之一，光是编入目录的就超过二千个，其中最小的只有3尺宽，最大的Landscape Arch则长达306尺。所有的石头上更有着颜色对比非常强烈的纹理。石头的成因为三亿年前这里曾是一片汪洋，海水消失以后又经过了很多年，盐床和其它碎片挤压成岩石并且越来越厚。之后，盐床底部不敌上方的压力而破碎，复经地壳隆起变动，加上风化侵蚀，一个个拱形石头就形成了。直到今天，新的拱门仍持续制造中；反之，老拱门也在逐渐走向毁灭。<br/>" 
-+"梅萨维德，西班牙语意为绿色台地，为 18世纪西班牙探险家起的名字。约在2000年前，一个叫作阿纳萨扎伊的印第安部族在此建立了小王国。起初他们在地坑里盖造粗犷的房舍，成为这里最早的聚居和以务农为生的印第安人。后为了躲避其他部族的侵袭，开始迁移到峡谷两侧的悬崖峭壁间，开山凿石，垒砌墙壁，构置峭壁石室，在历史上称为峭壁居民。"));
+				"前往天使之城洛杉矶，抵达后自由活动。<br/>"
+		+"【行程亮点】洛杉矶是加州第一大城市，美国第二大城市，仅次于纽约。同时它也是全世界的文化、科技、国际贸易和高等教育中心之一。洛杉矶一望无垠的沙滩和明媚的阳光、闻名遐迩的“电影王国”好莱坞、引人入胜的迪斯尼乐园、峰秀地灵的贝佛利山庄使洛杉矶成为一座举世闻名的“电影城”和“旅游城”。洛杉矶市区广阔，布局分散，整座城市是以千千万万栋一家一户的小住宅为基础。绿荫丛中，鳞次栉比的庭院式建筑，色彩淡雅，造型精巧，风格各异，遍布于平地山丘上。"));
+		d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/e4/73/ee/44764e12344b6a44f931cc23df.jpg_92.jpg"));
+		
 		j.setDetail(d);
 		// 结束第六天的数据
 		journey.add(j);
@@ -704,7 +709,7 @@ public class ProductAllDetail extends BaseDocument {
 		j = new Journey();
 		// 基本信息
 		j.setDay("第七天");
-		j.setTitle("科特斯-纪念碑谷-佩吉（车程约394km）");
+		j.setTitle("洛杉矶");
 		// 交通信息
 		traffic = new ArrayList<Traffic>();
 		t2 = new Traffic();
@@ -718,18 +723,16 @@ public class ProductAllDetail extends BaseDocument {
 
 		// 详细内容
 		d = new ArrayList<DetailContext>();
-		d.add(new DetailContext(
-				"img",
-				"https://imgs.qunarzz.com/vc/a4/75/80/d8bfd674bcaa5feeb349ac62f9.jpg_92.jpg"));
+		
 		d.add(new DetailContext(
 				"text",
-				"8:30 前往美国西部的永恒象征-纪念碑谷和著名的阿甘路游玩<br/>" 
-+"10:30 抵达阿甘路，纪念碑谷（游玩时间约2.5小时） <br/>"
-+"13:00 离开纪念碑谷，前往佩吉市 <br/>"
-+"15:30 抵达亚利桑那州佩吉市,游览马蹄湾峡谷（游玩时间约1小时）<br/>" 
-+"17：00入住酒店休息，用餐 <br/>"
-+"【行程亮点】<br/>"
-+"纪念碑谷公园（Monument Valley Navajo Tribal Park）横跨于亚利桑那州和尤他州的州界上，属于印第安人纳瓦浩（Navajo）部落的保留地，也是美国最大的印地安保留区。谷地由众多巨型孤峰组成，其中最大的孤峰高于谷底约300米，神圣而令人敬畏，一直都是美国西部永恒的象征。它在美国，和大峡谷，黄石公园一样有名。许多从来没有去过纪念碑谷的人，对这里的景色也会有似曾相识的感觉。因为电影《阿甘正传》中，阿甘在他母亲去世后，不停地奔跑，从东海岸跑到西海岸，最后在HWY163停住脚，对他的一群追随者说：“I'm going home”。他一尺多长的白色胡须飘扬在金色的阳光中，背景就是暗红色的Monument Valley的石碑群。"));
+				"全天在环球影城游玩（门票包含）。晚上参观星光大道、中国剧院、奥斯卡金像奖颁奖礼的举行地点-杜比剧院（外观）等好莱坞景点，追寻明星的印记。"));
+		d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/b6/94/de/1308f254441549587f6eaad68c.jpg_92.jpg"));
+		d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/42/c1/ac/0231d1e78e5b35ac980336d3e0.jpg_92.jpg"));
 		j.setDetail(d);
 		// 结束第七天的数据
 		journey.add(j);
@@ -737,7 +740,7 @@ public class ProductAllDetail extends BaseDocument {
 		j = new Journey();
 		// 基本信息
 		j.setDay("第八天");
-		j.setTitle("佩吉-大峡谷（车程约312km）");
+		j.setTitle("洛杉矶");
 		// 交通信息
 		traffic = new ArrayList<Traffic>();
 		t2 = new Traffic();
@@ -751,109 +754,33 @@ public class ProductAllDetail extends BaseDocument {
 
 		// 详细内容
 		d = new ArrayList<DetailContext>();
-		d.add(new DetailContext(
-				"img",
-				"https://imgs.qunarzz.com/vc/e4/08/aa/fb39b4e9a0800adaeb97252f0e.jpg_92.jpg"));
+		
 		d.add(new DetailContext(
 				"text",
-				"8:30 前往羚羊峡谷 <br/>"
-+"9：00 抵达羚羊谷游览（游玩时间约1.5小时）<br/>" 
-+"10：30 结束羚羊谷游览，前往大峡谷南峡 <br/>"
-+"12:30 抵达大峡谷南缘(Grand Canyon South Rim)（游玩约6小时）<br/>" 
-+"17:00 入住酒店休息，用餐 <br/>"
-+"【行程亮点】<br/>"
-+"羚羊峡谷（Antelope Canyon）是世界上著名的狭缝型峡谷之一，被列为地球上十大最奇特的地貌之一。峡谷总长约400多米，谷顶两侧的距离很窄，但由谷顶到谷底的垂直距离却高达十数米。阳光从峡谷的谷顶沿着缝隙倾泻下，到处都是一线天的感觉。太阳光线经由曲曲折折的不同深度的红色岩层的折射，呈现出了魔幻缤纷的颜色，而且谷内的色彩随着日光照射强度不同也在变化,从黄色到桔黄色到粉色到红褐色，让人叹为观止！<br/>" 
-+"马蹄湾是科罗拉多河(Colorado River)在亚利桑那州(Arizona)境内的一截U形的河道，也是格兰峡谷(Glen Canyon)其中的一小段，由于河湾环绕的巨岩形似马蹄，所以叫作了“马蹄湾”，也有人叫它科罗拉多河的大拐弯。马蹄湾的景色是千变万化的，正午的时候往往是一湾碧水，而到了傍晚，河水则会映射出四周岩壁的颜色，深邃中更具魅力。"));
+				"全天在美国西部最大的奥特莱斯Desert Hills Premium Outlets全天自由购物。与其它奥特莱斯相比，这里的国际大品牌更多，包括Bottega Veneta、Burberry、D&G、Ferregamo、Gucci、Prada、Versace、JimmyChoo、Tod'等等，一共有180多个品牌可供选择。"));
+		d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/ce/46/35/a6eea1b6e181cad1fe1009fafb.png_92.png"));
+		d.add(new DetailContext(
+				"img",
+				"https://imgs.qunarzz.com/vc/45/08/11/4b24767bbd7d5226fd0a746bc3.png_92.png"));
 		j.setDetail(d);
 		// 结束第八天的数据
 		journey.add(j);
 
-		j = new Journey();
-		// 基本信息
-		j.setDay("第九天");
-		j.setTitle("大峡谷-拉斯维加斯（车程约347km）");
-		// 交通信息
-		traffic = new ArrayList<Traffic>();
-		t2 = new Traffic();
-		t2.setVehicle("汽车");
-		t2.setDetail("座位数：9座及以下");
-		traffic.add(t2);
-		j.setTraffic(traffic);
-
-		j.setHotel("四星或同等酒店");
-		j.setMeal(new Meal("自助", "自理", "自理"));
-
-		// 详细内容
-		d = new ArrayList<DetailContext>();
-		d.add(new DetailContext(
-				"img",
-				"https://imgs.qunarzz.com/vc/f4/22/9a/4a74d0507d444f8c7ed0aca0c2.jpg_92.jpg"));
-		d.add(new DetailContext(
-				"text",
-				"9: 30 前往拉斯维加斯，途经66号公路小镇sailigman。 <br/>"
-+"15:00 抵达拉斯维加斯，入住酒店休息，用餐 <br/>"
-+"【行程亮点】<br/>"
-+"大峡谷是一处举世闻名的自然奇观，位于亚利桑那州西北部的凯巴布高原上。它全长446公里，平均宽度16公里，最大深度1740米，是联合国教科文组织选为受保护的世界天然遗产之一。其雄伟的地貌、浩瀚的气魄、慑人的神态、奇突的景色，世无其匹！美国总统西奥多-罗斯福来此游览时，感叹地说：“大峡谷使我充满了敬畏，它无可比拟，无法形容，在这辽阔的世界上，绝无仅有。”有人说，在太空唯一可用肉眼看到的自然景观就是大峡谷。<br/>" 
-+"66号公路，曾属于美国公路系统，建于1926年。它起始于美国北部的芝加哥，斜贯美国版图一直到西部的洛杉矶，跨八个州，三个时区，全长3943公里。在30年代，66号公路对沿途的许多地区的经济帮助极大，被美国人亲切地唤作“母亲之路”。后来因为不再能胜任日益繁忙的州际交通而被迫退役，于1985年从美国公路系统中被抹去。"));
-		j.setDetail(d);
-		// 结束第九天的数据
-		journey.add(j);
-
-		j = new Journey();
-		// 基本信息
-		j.setDay("第十天");
-		j.setTitle("拉斯维加斯-洛杉矶（车程约408km）");
-		// 交通信息
-		traffic = new ArrayList<Traffic>();
-		t2 = new Traffic();
-		t2.setVehicle("汽车");
-		t2.setDetail("座位数：9座及以下");
-		traffic.add(t2);
-		j.setTraffic(traffic);
-
-		j.setHotel("四星或同等酒店");
-		j.setMeal(new Meal("自助", "自理", "自理"));
-
-		// 详细内容
-		d = new ArrayList<DetailContext>();
-		d.add(new DetailContext(
-				"img",
-				"https://imgs.qunarzz.com/vc/94/11/c7/ae38951f024c180d9a235e4d40.jpg_92.jpg"));
-		d.add(new DetailContext(
-				"text",
-				"全天自由活动 <br/>"
-+"9:00 离开拉斯，前往棕榈泉 <br/>"
-+"12:30 抵达棕榈泉奥特莱斯 <br/>"
-+"17:00 前往洛杉矶 <br/>"
-+"19：00 抵达酒店，用晚餐。<br/>" 
-+"【行程亮点】<br/>"
-+"美国西部最大的奥特莱斯-Desert Hills Premium Outlets自由购物，与其它奥特莱斯相比，这里的国际大品牌更多，包括Bottega Veneta、Burberry、D&G、Ferregamo、Gucci、Prada、Versace、Jimmy Choo、Tod'等等，一共有180多个品牌可供选择"));
-		j.setDetail(d);
-		// 结束第十天的数据
-		journey.add(j);
-
-		j = new Journey();
-		// 基本信息
-		j.setDay("第十一、十二天");
-		j.setTitle("洛杉矶-北京/上海（车程约30km）");
-		//j.setTitle("洛杉矶-上海（2月26日）");
-		// 交通信息
-		traffic = new ArrayList<Traffic>();
-		t2 = new Traffic();
-		t2.setVehicle("第1段交通：汽车");
-		t2.setDetail("座位数：9座以及下");
-		traffic.add(t2);
-		j.setTraffic(traffic);
-
-		t2 = new Traffic();
-		t2.setVehicle("第2段交通：飞机");
-		t2.setDetail("航班号：CA988	洛杉矶（11:50）-北京（16:40）	座舱：经济舱");
-		traffic.add(t2);
-		j.setTraffic(traffic);
 		
+		
+		
+
+		j = new Journey();
+		// 基本信息
+		j.setDay("第九、十天");
+		j.setTitle("洛杉矶-北京/上海");
+		// 交通信息
+		traffic = new ArrayList<Traffic>();
 		t2 = new Traffic();
-		t2.setVehicle("第2段交通：飞机");
-		t2.setDetail("航班号：AA183	 	座舱：经济舱");
+		t2.setVehicle("飞机");
+		t2.setDetail("国际航班	座舱：经济舱");
 		traffic.add(t2);
 		j.setTraffic(traffic);
 
@@ -862,18 +789,26 @@ public class ProductAllDetail extends BaseDocument {
 
 		// 详细内容
 		d = new ArrayList<DetailContext>();
-		// d.add(new
-		// DetailContext("img","http://guantravel.com/resources/media/201409/f7a4c716ce1f6d6ee866663d0a50b641.jpg"));
-		d.add(new DetailContext("text", "搭乘航班回国。"));
+		//d.add(new DetailContext(
+		//		"img",
+		//		"http://xdujia.com/resources/media/201408/ecdb15f4730506a03531544bba130682.jpg"));
+		d.add(new DetailContext(
+				"text",
+				"搭乘航班回国。"));
 		j.setDetail(d);
 		// 结束第十一天的数据
 		journey.add(j);
+		
+		
 
+			
+
+		
+		
 		// 设置所有的行程安排
 		p.setJourney(journey);
 
 		p.Add();
 
 	}
-
 }

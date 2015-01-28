@@ -20,16 +20,17 @@
 	function sel_count(objName) {
 		var count = 0;
 		var obj = document.getElementsByName(objName);
-		for ( var i = 0; i < obj.length; i++) {
+		for (var i = 0; i < obj.length; i++) {
 			if (obj[i].checked)
 				count++;
 		}
 		return count;
 	}
 	function CurentTime(dateSpan) {
-		
+
 		var span = 60;//默认提前60天
-		if(dateSpan != null) span = dateSpan;
+		if (dateSpan != null)
+			span = dateSpan;
 		var now = new Date();
 		now = now.valueOf();
 		now = now + span * 24 * 60 * 60 * 1000;
@@ -129,8 +130,8 @@ body {
 	top: expression(eval(document.compatMode &&                        
 		        document.compatMode ==           	   
 		               'CSS1Compat')?                 (documentElement.clientHeight-
-		this.clientHeight ):document.body.scrollTop+(document.body.clientHeight-
-		this.clientHeight ) );
+		this.clientHeight):document.body.scrollTop+(document.body.clientHeight-
+		this.clientHeight));
 	/*background-color: #0065CC;*/
 	background-color: rgb(248, 243, 243, 0);
 }
@@ -147,8 +148,8 @@ body {
 		        document.compatMode ==           
 		   
 		               'CSS1Compat')?                 (documentElement.clientHeight-
-		this.clientHeight ):document.body.scrollTop+(document.body.clientHeight-
-		this.clientHeight ) );
+		this.clientHeight):document.body.scrollTop+(document.body.clientHeight-
+		this.clientHeight));
 	z-index: 9000;
 }
 
@@ -168,10 +169,11 @@ body {
 	height: 42px;
 	background-image: url("${context}/resources/image/client/menu.png");
 }
+
 .menu_text {
-font-size: 16px;
-line-height:20px;
-font-weight: bold;
+	font-size: 16px;
+	line-height: 20px;
+	font-weight: bold;
 }
 </style>
 <sec:authorize access="isAuthenticated()">
@@ -179,16 +181,20 @@ font-weight: bold;
 </sec:authorize>
 <div class="top_shape">
 	<div class="container" style="width: 95%">
-		<a href="${context }/custom/home"><img style="height: 30px; margin-left: 5px; margin-top: 4px;"
+		<a href="${context }/custom/home"><img
+			style="height: 30px; margin-left: 5px; margin-top: 4px;"
 			src="${context}/resources/image/client/guanxing_logo.png"></a>
 		<div class="btn-group" style="float: right;">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 				<div class="icon_menu">&nbsp;</div>
 			</a>
 			<ul class="dropdown-menu pull-right ">
+
+				<li><a href="${context }" class="menu_text">首页</a></li>
 				<li><a href="${context }/custom/book" class="menu_text">经典线路</a></li>
-				<li><a href="${context }/custom/group/list" class="menu_text">即刻发团</a></li>
 				<!-- 
+				<li><a href="${context }/custom/group/list" class="menu_text">即刻发团</a></li>
+				
 				<li><a href="${context }/custom/share" class="menu_text">领队动态</a></li>
 				 -->
 				<li class="divider"></li>
@@ -196,9 +202,27 @@ font-weight: bold;
 				<li><a href="${context }/custom/mine_sel" class="menu_text">我的定制</a></li>
 				<li class="divider"></li>
 				<li><a href="${context }/show/spec?id=123" class="menu_text">车型介绍</a></li>
+				<!--
 				<li><a href="${context }/show/spec?id=124" class="menu_text">自驾须知</a></li>
 				<li><a href="${context }/show/spec?id=125" class="menu_text">准备去美国</a></li>
+				-->
 				<li><a href="${context }/custom/articles" class="menu_text">更多精彩</a></li>
+				<li class="divider"></li>
+				<c:choose>
+					<c:when test="${empty username}">
+						<li><a href="${context}/login">登录</a></li>
+						<li><a href="${context}/signup">注册</a></li>
+					</c:when>
+					<c:otherwise>
+
+						<li><a href="${context}/member/info">我的信息</a></li>
+						<li><a href="${context}/member/order/list">我的订单</a></li>
+						<li><a href="${context}/member/invite/send">发送邀请</a></li>
+						<li><a href="${context}/forget">修改密码</a></li>
+						<li class="divider"></li>
+						<li><a href="${context}/static/j_spring_security_logout">退出</a>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</div>
 	</div>

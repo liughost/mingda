@@ -4,7 +4,9 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <s:url var="resource" value="/resources"></s:url>
-
+<c:if test="${IsMobile }">
+	<div style="height: 20px;"></div>
+</c:if>
 <div class="container">
 
 	<div class="container form-horizontal">

@@ -88,6 +88,13 @@ body {
 .firstHead a {
 	color: white;
 }
+
+p {
+	margin: 0 0 10px;
+	line-height: 24px;
+	color: gray;
+	padding-top: 10px;
+}
 </style>
 
 <!-- 产品大图区 -->
@@ -99,7 +106,7 @@ body {
 		<h2 style="color: white;">达人陪你去旅行</h2>
 		<form action="${context }/custom/product/search" method="POST"
 			style="margin-bottom: 0; background-color: rgba(0, 0, 0, 0.6); padding: 10px 20px 20px 10px;">
-			<button type="button" class="btn btn-lg btn-danger btn-shadow"
+			<button type="button" class="btn btn-lg btn-warning"
 				onclick="tour()"
 				style="line-height: 24px; height: 40px; font-size: 18px; color: white; width: 100px;">找人陪</button>
 			<input type="text" class="span2" name="city"
@@ -131,7 +138,8 @@ body {
 <!-- Carousel
     ================================================== -->
 
-<div id="myCarousel" class="container carousel slide" style="max-width: ${maxWidth}px;">
+<div id="myCarousel" class="container carousel slide"
+	style="max-width: ${maxWidth}px;">
 	<div class="carousel-inner">
 		<div class="item ">
 			<a href="${context }/custom/detail_all?id=16"><img
@@ -225,7 +233,7 @@ body {
 		frmCitySearch.submit();
 	}
 	$('#myCarousel').carousel();
-	
+
 	/*	!function($) {
 	 $(function() {
 	 // carousel demo
@@ -299,7 +307,7 @@ body {
 	<!-- 产品列表 -->
 	<div class="row">
 		<div class="span9">
-		<legend>精品小团</legend>
+			<legend>精品小团</legend>
 			<!-- 产品列表  -->
 			<ul class="nav nav-tabs" style="border-bottom: 0px;">
 				<c:forEach var="items" items="${standardList}">
@@ -317,7 +325,8 @@ body {
 								<tr>
 									<td><a href="${detailURL}${items.productID }" title="在线报名"><span
 											style="color: white; font-size: 16px">￥${items.lowPrice
-												}/</span><span style="color: white;">人</span></a></td>
+												}/</span><span
+											style="color: white;">人</span></a></td>
 									<td style="text-align: right;"><a
 										href="javascript:book(${items.productID });"
 										style="margin-right: 10px; margin-top: 0px; display: none;"
@@ -329,7 +338,9 @@ body {
 					</li>
 				</c:forEach>
 			</ul>
-			<legend>私家小团</legend>
+			<legend>
+				私家小团<small>&nbsp;&nbsp;价格、路线、日期、人数均可按需定制，以下为行程参考</small>
+			</legend>
 			<!-- 产品列表  -->
 			<ul class="nav nav-tabs" style="border-bottom: 0px;">
 				<c:forEach var="items" items="${aloneList}">
@@ -347,7 +358,8 @@ body {
 								<tr>
 									<td><a href="${detailURL}${items.productID }" title="在线报名"><span
 											style="color: white; font-size: 16px">￥${items.lowPrice
-												}/</span><span style="color: white;">人</span></a></td>
+												}/</span><span
+											style="color: white;">人</span></a></td>
 									<td style="text-align: right;"><a
 										href="javascript:book(${items.productID });"
 										style="margin-right: 10px; margin-top: 0px; display: none;"
@@ -360,7 +372,7 @@ body {
 				</c:forEach>
 			</ul>
 		</div>
-		<div class="span2" style="width: 240px;">
+		<div class="span2" style="">
 			<legend>
 				最新动态&nbsp;&nbsp;<a href="${context }/custom/articles"><span
 					style="font-size: 14px;">更多</span></a>
@@ -431,7 +443,7 @@ body {
 								var gs = eval(result);
 								if (gs.length > 0) {
 									var list = "<table class='table'><tr><th>产品名称</th><th>出发日期</th><th></th></tr>";
-									for ( var i = 0; i < gs.length; i++) {
+									for (var i = 0; i < gs.length; i++) {
 										//alert(gs[i].bookCount+";"+gs[i].TotalCount); 
 										var line = "<tr>";
 										line += "<td>";

@@ -4,20 +4,19 @@
 <script type="text/javascript">
 	function imgcheckAll() {
 		var imgChecks = document.getElementsByName("imgCheck");
-		for ( var i = 0; i < imgChecks.length; i++) {
+		for (var i = 0; i < imgChecks.length; i++) {
 			imgChecks[i].checked = checkImgAll.checked;
 		}
 	}
-	
-	function createArticle()
-	{
+
+	function createArticle() {
 		if (title.value.length == 0) {
 			alert("请输入资料标题");
 			return;
 		}
 		var imgChecks = document.getElementsByName("imgCheck");
 		var imgUrls = "";
-		for ( var i = 0; i < imgChecks.length; i++) {
+		for (var i = 0; i < imgChecks.length; i++) {
 			if (imgChecks[i].checked) {
 				imgUrls += imgChecks[i].attributes["imgsrc"].value;
 				imgUrls += ",";
@@ -33,7 +32,15 @@
 		}, function(result, status) {
 
 			if (status == 'success') {
-				alert(result);
+				if(result>0)
+				{
+					if(confirm("点击确认，编辑此文章。"))
+						location.href="${context}/special/detail?id="+result;
+				}
+				else
+				{
+					alert("创建失败。请重试或者联系管理员。");	
+				}
 			}
 
 		});
@@ -46,7 +53,7 @@
 		}
 		var imgChecks = document.getElementsByName("imgCheck");
 		var imgUrls = "";
-		for ( var i = 0; i < imgChecks.length; i++) {
+		for (var i = 0; i < imgChecks.length; i++) {
 			if (imgChecks[i].checked) {
 				imgUrls += imgChecks[i].attributes["imgsrc"].value;
 				imgUrls += ",";
@@ -83,13 +90,16 @@
 								//debugger;
 								var imgList = eval(result);
 								var img_str = "<table class='table'><tr><td><input type='checkbox' onchange='imgcheckAll()' id='checkImgAll' checked >全选 </td><td></td></tr>";
-								for ( var i = 0; i < imgList.length; i++) {
+								for (var i = 0; i < imgList.length; i++) {
 									img_str += "<tr><td><input type='checkbox' name='imgCheck' imgsrc='"+imgList[i]+"' checked ></td><td>";
 									img_str += "<img src='"+imgList[i]+"' style='max-width:300px;'>";
 									img_str += "</td></tr>";
 								}
 								//debugger;
 								divImgList.innerHTML = img_str + "</table>";
+								
+								btnGetImg.style.display = "none";
+								btnCreateArticle.style.display = "";
 							}
 
 						});
@@ -110,7 +120,7 @@
 			<div class="controls">
 				<input type="text" class="form-control" id="imgPage"
 					placeholder="输入获取图片的地址" value="" />
-				<button class="btn btn-primary" onclick="javascript:ImgFromPage()">预览</button>
+
 			</div>
 		</div>
 		<div class="control-group" id="divImgList"></div>
@@ -124,8 +134,10 @@
 		<div class="control-group">
 			<label class="control-label"></label>
 			<div class="controls">
+				<button class="btn btn-primary" onclick="javascript:ImgFromPage()" id="btnGetImg">获取图片</button>
 				<button type="button" class="btn btn-primary"
-					onclick="uploadImage()" style="display:none;">下载到服务器</button><button type="button" class="btn btn-warnning"
+					onclick="uploadImage()" style="display: none;">下载到服务器</button>
+				<button type="button" class="btn btn-warning" style="display:none;" id="btnCreateArticle"
 					onclick="createArticle()">生成新文章</button>
 			</div>
 		</div>

@@ -170,9 +170,9 @@
 			<table style="border-left: 0px solid lightgray;">
 				<c:forEach var="info" items="${comments}">
 					<tr style="height:100px;">
-						<td style="padding:10px;"><a href="${context }/custom/detail?id=${info.productID }"><img
+						<td style="padding:10px;"><a href="${context }/custom/detail_all?id=${info.productID }"><img
 								style="max-width: 90px; width: 90px;" src="${info.img }"></a></td>
-						<td><a href="${context }/custom/detail?id=${info.productID }"><span
+						<td><a href="${context }/custom/detail_all?id=${info.productID }"><span
 								class="tb_title">${info.name }</span></a></td>
 					</tr>
 

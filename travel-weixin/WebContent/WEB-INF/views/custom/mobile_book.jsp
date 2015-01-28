@@ -204,7 +204,7 @@ body {
 
 				</c:forEach>
 			</table>
-			<legend>&nbsp;&nbsp;&nbsp;私家小团</legend>
+			<legend>&nbsp;&nbsp;&nbsp;私家小团<small>&nbsp;&nbsp;价格、路线、日期、人数均可按需定制，以下为行程参考</small></legend>
 			<!-- 产品列表  -->
 			<table class="table">
 				<c:forEach var="items" items="${aloneList}">

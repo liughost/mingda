@@ -76,7 +76,7 @@ h3 {
 	charset="UTF-8"></script>
 </head>
 
-<body>
+<body onscroll="scroll_event(1);" onload="scroll_event(0);">
 	<c:if test="${isMobile==true }">
 		<a href="${context }/custom/book"><img
 			src="${context }/resources/media/201408/178f6cc42fc51255c25747e328a89a38.jpg"

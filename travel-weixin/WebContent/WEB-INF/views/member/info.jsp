@@ -18,6 +18,9 @@
 	border-bottom: 1px solid #dddddd;
 }
 </style>
+<c:if test="${IsMobile }">
+	<div style="height: 20px;"></div>
+</c:if>
 <div class="container" style="max-width: 960px; text-align: left;">
 	<legend>会员信息</legend>
 	<table class="table">

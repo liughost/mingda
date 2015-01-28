@@ -100,7 +100,7 @@
 		<img src="${context }/resources/image/loading.jpg"
 			style="padding-top: 100px;" /><br /> 加载文章中...
 	</div>
-	<div class="bottom_shape" style="display:">
+	<div class="bottom_shape" style="display:none;">
 		<table style="width: 100%; margin-top: 6px;">
 			<tr>
 				<td style="text-align: center"><img id="slide_img"

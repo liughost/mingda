@@ -17,18 +17,22 @@
 	border-top: 0px;
 	border-bottom: 1px solid #dddddd;
 }
+
 .table th {
 	border-top: 0px;
 	border-bottom: 1px solid #dddddd;
 }
 </style>
+<c:if test="${IsMobile }">
+	<div style="height: 20px;"></div>
+</c:if>
 <div class="container" style="max-width: 960px; text-align: left;">
 	<legend>订单信息</legend>
 	<table class="table table-hover">
 		<tr>
 			<th style="width: 50px;"><input type="checkbox">全选</th>
-			<th>订单号</th>
-			<th style="width: 150px;">产品名称</th>
+			<th style="width: 50px;">订单号</th>
+			
 			<th>出发日期</th>
 			<th>人数（儿童）</th>
 			<th>单价</th>
@@ -36,22 +40,29 @@
 			<th>总价</th>
 			<th style="width: 40px;">状态</th>
 			<th>下单时间</th>
-			
+
 		</tr>
 		<c:forEach var="items" items="${orderList}">
+			<tr rowspan="2">
+				<td colspan="9" style="border:0px;"><a
+					href="${context }/custom/detail_all?id=${items.productId}">${items.productName }</a></td>
+			</tr>
 			<tr>
 				<td><input type="checkbox" name="sel_order" value="${items.id}"></td>
-				<td>${items.orderId }<br/><a href="${context}/custom/order?productID=${items.productId }&gdate=${items.arriveDate }&orderId=${items.orderId }">详情</a></td>
-				<td><a href="${context }/custom/detail_all?id=${items.productId}">${items.productName }</a></td>
+				<td>${items.orderId }<br />
+				<a
+					href="${context}/custom/order?productID=${items.productId }&gdate=${items.arriveDate }&orderId=${items.orderId }">详情</a></td>
+
 				<td>${items.arriveDate }</td>
 				<td>${items.adultCount }(${items.childrenCount })</td>
-				<td>成人价：${items.productPrice }<br/>儿童价：${items.childrenPrice }</td>
+				<td>成人价：${items.productPrice }<br />儿童价：${items.childrenPrice }
+				</td>
 				<td>${items.offPrice }</td>
 				<td>${items.payMoney }</td>
-				<td><c:if test="${items.orderState==1 }">有效</c:if>
-					<c:if test="${items.orderState !=1 }">无效</c:if></td>
+				<td><c:if test="${items.orderState==1 }">有效</c:if> <c:if
+						test="${items.orderState !=1 }">无效</c:if></td>
 				<td>${items.orderDate }</td>
-				
+
 			</tr>
 		</c:forEach>
 
