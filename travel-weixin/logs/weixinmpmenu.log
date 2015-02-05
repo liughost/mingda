@@ -1,4 +1,2 @@
-[INFO ] 2014-12-01 10:36:44,911    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce00323e","key":"bar","value":{"_id":"68f5888923e6a5829448e4bfce00323e","_rev":"1-4c6114c65e295552ab1019e2b046b10e","foo":"bar"}}
-[INFO ] 2014-12-01 10:36:44,918    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0040b8","key":"bar","value":{"_id":"68f5888923e6a5829448e4bfce0040b8","_rev":"1-4c6114c65e295552ab1019e2b046b10e","foo":"bar"}}
-[INFO ] 2014-12-01 10:38:18,679    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce00323e","key":"bar","value":{"_id":"68f5888923e6a5829448e4bfce00323e","_rev":"1-4c6114c65e295552ab1019e2b046b10e","foo":"bar"}}
-[INFO ] 2014-12-01 10:38:18,684    com.fourspaces.couchdb.ViewResults     - {"id":"68f5888923e6a5829448e4bfce0040b8","key":"bar","value":{"_id":"68f5888923e6a5829448e4bfce0040b8","_rev":"1-4c6114c65e295552ab1019e2b046b10e","foo":"bar"}}
+[INFO ] 2015-02-05 14:18:52,035 org.apache.http.impl.client.DefaultRequestDirector     - I/O exception (org.apache.http.NoHttpResponseException) caught when processing request: The target server failed to respond
+[INFO ] 2015-02-05 14:18:52,048 org.apache.http.impl.client.DefaultRequestDirector     - Retrying request
