@@ -40,6 +40,7 @@ public class JCouchDB {
 		ViewResult<Map> result = db.queryAdHocView(Map.class, "{\"map\":\"function(doc) {\n\n\tif(doc.foo != null && doc.foo == 'bar'){\n  emit(doc._id, doc);}\n}\"}", opt, null); 
 				//db..queryView("test/test", Map.class, opt, null);
 		//db.queryList(listName, viewName, options)
+		//db.queryList(listName, viewName, options)
 		for (ValueRow vr : result.getRows()) {
 			System.out.println(vr.getId());
 			

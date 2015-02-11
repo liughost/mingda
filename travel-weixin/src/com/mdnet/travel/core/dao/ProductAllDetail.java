@@ -5,18 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.jcouchdb.db.Database;
 import org.jcouchdb.db.Options;
-import org.jcouchdb.document.BaseDocument;
 import org.jcouchdb.document.ValueRow;
 import org.jcouchdb.document.ViewResult;
 
 import com.mdnet.travel.core.vo.ShowProductInfo;
 
-public class ProductAllDetail extends BaseDocument {
+public class ProductAllDetail extends MyBaseDocument {
 
 	// 出境游产品详细数据
 	// 基本信息
@@ -228,7 +224,7 @@ public class ProductAllDetail extends BaseDocument {
 
 	// 单件模式
 	protected static ProductAllDetail _product = null;
-	protected Database db;
+	//protected Database db;
 
 	public static ProductAllDetail instance() {
 		if (_product == null)
@@ -248,13 +244,14 @@ public class ProductAllDetail extends BaseDocument {
 	public ProductAllDetail getById(String id) {
 		String mapFunc = "{\"map\":\"function(doc) {if(doc.pid != null && doc.pid == "
 				+ id + "){emit(doc._id, doc);}}\"}";
+		@SuppressWarnings("rawtypes")
 		ViewResult<Map> result = db.queryAdHocView(Map.class, mapFunc, null,
 				null);
 		// 将值实例化到对象
 		return this.Unseriable(result.getRows().get(0));
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ProductAllDetail Unseriable(ValueRow<Map> result) {
 		// TODO Auto-generated method stub
 		// List<ValueRow<Map>> rr = result.getRows();
@@ -312,6 +309,7 @@ public class ProductAllDetail extends BaseDocument {
 	// ViewResult<Map> result;
 	// return result;
 	// }
+	@SuppressWarnings("rawtypes")
 	public int Add() {
 
 		String mapFunc = "{\"map\":\"function(doc) {if(doc.pid != null && doc.pid == "
