@@ -38,12 +38,12 @@
 							<ul class="nav nav-tabs span3" id="city_seller"
 								style="border-bottom: 0 solid black">
 
-								<c:forEach var="items" items="${city_list}">
+								<c:forEach var="items" items="${city}">
 									<li style="text-align: left; width: 90px;"><label
 										class="checkbox "><input type="checkbox"
-											<c:if test="${fn:contains(cities,items.cityName) }">checked</c:if>
-											name="cityZone" onclick="sel_a_city('${items.cityName }')"
-											value="${items.cityName }"> ${items.cityName } </label></li>
+											<c:if test="${fn:contains(cities,items.key) }">checked</c:if>
+											name="cityZone" onclick="sel_a_city('${items.key }')"
+											value="${items.key }"> ${items.key } </label></li>
 								</c:forEach>
 							</ul>
 						</div>

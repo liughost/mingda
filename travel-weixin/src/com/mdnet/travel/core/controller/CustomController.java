@@ -12,6 +12,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.activiti.engine.ProcessEngine;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,8 @@ import com.mdnet.travel.core.service.ICustomService;
 import com.mdnet.travel.core.service.ILeaderService;
 import com.mdnet.travel.core.service.IMessageService;
 import com.mdnet.travel.core.service.IOrderMgrService;
+import com.mdnet.travel.core.service.impl.LineService;
+import com.mdnet.travel.core.service.impl.TourService;
 import com.mdnet.travel.core.utils.CommonUtils;
 import com.mdnet.travel.core.vo.GroupListBean;
 import com.mdnet.travel.core.vo.PersonalCustomBean;
@@ -62,6 +65,14 @@ public class CustomController extends BaseController {
 	@Resource(name = IOrderMgrService.SERVICE_NAME)
 	protected IOrderMgrService orderService;
 
+	@Resource(name = LineService.SERVICE_NAME)
+	protected LineService lineService;
+	@Resource(name = TourService.SERVICE_NAME)
+	protected TourService tourService;
+
+	@Resource
+	ProcessEngine engine;
+	
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request) {
 		// return this.REDIRECT + "/" + this.preMobile(request) + "custom/book";
@@ -226,7 +237,7 @@ public class CustomController extends BaseController {
 			@RequestParam(value = "id", required = false) String id) {
 		this.getMav(request);
 		this.mav.setViewName(this.preMobile(request) + "custom/detail_all");
-		ProductAllDetail pad = this.customService.getProductInfo(id);
+		ProductAllDetail pad = this.lineService.getProductInfo(id);
 		this.mav.addObject("info", pad);
 		List<SpecialBean> sb = getMoreArticle();
 		this.mav.addObject("articleList", sb);
@@ -635,9 +646,9 @@ public class CustomController extends BaseController {
 		// 获得全部产品
 		// ShowProductInfo[] ps = this.customService.getProductList(0, 0);
 		// 获得任性1人团
-		ShowProductInfo[] ps0 = this.customService.getProductList(1, 0);
+		ShowProductInfo[] ps0 = this.lineService.getProductList(1, 0);
 		// 除任性1人团外的
-		ShowProductInfo[] ps1 = this.customService.getProductList(2, 0);
+		ShowProductInfo[] ps1 = this.lineService.getProductList(2, 0);
 		// 代码测试
 		// List<ProductDetail> pds = this.orderMgrService
 		// .getProductInfoByCity("1,2");
@@ -730,7 +741,7 @@ public class CustomController extends BaseController {
 		this.mav.setViewName(this.preMobile(request) + "custom/order");
 
 		// 获取产品信息
-		ProductAllDetail pd = ProductAllDetail.instance().getById(pid);
+		ProductAllDetail pd = lineService.getById(pid);
 		this.mav.addObject("pid", pid);
 		this.mav.addObject("productName", pd.getProductName());
 		this.mav.addObject("startDate", gDate);
@@ -761,7 +772,7 @@ public class CustomController extends BaseController {
 			}
 		}
 
-		this.mav.addObject("comments", ProductAllDetail.instance()
+		this.mav.addObject("comments", lineService
 				.getProductList(4));
 		return mav;
 	}
@@ -795,7 +806,7 @@ public class CustomController extends BaseController {
 		int totalCount = adultCount + childrenCount;
 		int childrenBedsCount = 0;
 		// 获取产品信息
-		ProductAllDetail pd = ProductAllDetail.instance().getById(
+		ProductAllDetail pd = lineService.getById(
 				String.valueOf(productId));
 		String productName = pd.getProductName();
 
@@ -947,11 +958,16 @@ public class CustomController extends BaseController {
 
 	@RequestMapping(value = "/tour/search", method = RequestMethod.GET)
 	public ModelAndView TourSearch(HttpServletRequest request) {
+		engine.getRepositoryService();
 		this.getMav(request);
+		this.mav.addObject("city", tourService.dataStatic("static/city"));
+		this.mav.addObject("lang", tourService.dataStatic("static/lang"));
+		this.mav.addObject("service", tourService.dataStatic("static/service"));
+		this.mav.addObject("scenic", tourService.dataStatic("static/scenic"));
 		this.mav.setViewName(this.preMobile(request) + "custom/tour/search");
 		// this.mav.addObject("cities", cities);
-		List<CityDef> all_cities = this.leaderService.findCities();
-		this.mav.addObject("city_list", all_cities);
+		// List<CityDef> all_cities = this.leaderService.findCities();
+		// this.mav.addObject("city_list", all_cities);
 
 		return this.mav;
 	}
@@ -991,7 +1007,7 @@ public class CustomController extends BaseController {
 
 		// List<ShowProductInfo> ps = this.getProduct(cities, startDate, fee,
 		// pType, 0, 20);
-		List<ShowProductInfo> ps = ProductAllDetail.instance().getByCities(
+		List<ShowProductInfo> ps = lineService.getByCities(
 				cities, pType);
 
 		for (ShowProductInfo p : ps) {

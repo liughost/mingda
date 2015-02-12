@@ -35,11 +35,11 @@ public interface ICustomService {
 
 	String markGroupFull(int groupId);
 
-	ProductAllDetail getProductInfo(String id);
+	//ProductAllDetail getProductInfo(String id);
 
 	GroupMonth getGroupCanlendar(List<GroupDate> gs, String id, Calendar c);
 
 	List<GroupMonth> makeGroupCalendar(String id, int aheadDays);
 
-	ShowProductInfo[] getProductList(int type, int page);
+	//ShowProductInfo[] getProductList(int type, int page);
 }

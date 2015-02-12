@@ -164,10 +164,6 @@ public class CustomServiceImpl implements ICustomService {
 		return g.toJson(entity);
 	}
 
-	@Override
-	public ProductAllDetail getProductInfo(String id) {
-		return ProductAllDetail.instance().getById(id);
-	}
 
 	protected int monthDays(int year, int month) {
 		int localMaxDay = 31;
@@ -334,29 +330,6 @@ public class CustomServiceImpl implements ICustomService {
 		return gms;
 	}
 
-	@Override
-	public ShowProductInfo[] getProductList(int type, int page) {
-		ShowProductInfo[] spis = ProductAllDetail.instance().getProductList(
-				type);
-		for (ShowProductInfo spi : spis) {
-			// 生成团期最小日期
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date now = new Date();
-			long d = now.getTime() / 1000 + 30 * 24 * 60 * 60;
-			Date minDay = new Date(d * 1000);
-
-			String minDate = sdf.format(minDay);
-
-			String where = " where productId=" + spi.getProductID()
-					+ " and  startDate >'" + minDate + "'";
-
-			GroupDate g = this.groupDateDAO.getFirst(where);
-			if (g != null)// 单位：元
-				spi.setLowPrice(g.getAdultPrice());
-			// ps[i].setDays(pi.getDays());
-			// ps[i].setIntroduce(pi.getIntroduce());
-		}
-		return spis;
-	}
+	
 
 }

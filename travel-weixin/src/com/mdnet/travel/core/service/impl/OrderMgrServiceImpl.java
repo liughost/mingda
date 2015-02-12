@@ -42,6 +42,8 @@ public class OrderMgrServiceImpl implements IOrderMgrService {
 	protected PriceDAO priceDAO;
 	@Resource(name = GroupDateDAO.DAO_NAME)
 	protected GroupDateDAO groupDateDAO;
+	@Resource(name = LineService.SERVICE_NAME)
+	protected LineService lineService;
 
 	@Override
 	public ShowProductInfo[] getProductList(int productType, int page) {
@@ -110,7 +112,7 @@ public class OrderMgrServiceImpl implements IOrderMgrService {
 	public ProductDetail getProductInfo(int pid, String startDate) {
 		ProductDetail pd = new ProductDetail();
 		// 获取基本信息
-		ProductAllDetail pad = ProductAllDetail.instance().getById(
+		ProductAllDetail pad = lineService.getById(
 				String.valueOf(pid));
 
 		// List<ProductInfo> pis = this.productDAO.find("where id=" + pid, 0);

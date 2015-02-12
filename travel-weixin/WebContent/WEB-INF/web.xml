@@ -6,7 +6,7 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-			/WEB-INF/traveler-security.xml,classpath:/applicationContent.xml
+			/WEB-INF/traveler-security.xml,classpath:/applicationContent.xml,classpath:/activiti.cfg.xml
 		</param-value>
   </context-param>
   <filter>

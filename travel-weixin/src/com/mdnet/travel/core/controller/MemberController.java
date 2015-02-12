@@ -27,6 +27,7 @@ import com.mdnet.travel.core.model.Traveler;
 import com.mdnet.travel.core.service.ICustomService;
 import com.mdnet.travel.core.service.ILeaderService;
 import com.mdnet.travel.core.service.IOrderMgrService;
+import com.mdnet.travel.core.service.impl.LineService;
 import com.mdnet.travel.core.vo.ShowProductInfo;
 import com.mdnet.travel.order.model.OrderInfo;
 
@@ -37,6 +38,8 @@ public class MemberController extends BaseController {
 	protected ICustomService customService;
 	@Resource(name = IOrderMgrService.SERVICE_NAME)
 	private IOrderMgrService orderMgrService;
+	@Resource(name = LineService.SERVICE_NAME)
+	private LineService lineService;
 
 	/**
 	 * 显示会员列表界面
@@ -304,7 +307,7 @@ public class MemberController extends BaseController {
 
 		this.getMav(request);
 		this.mav.setViewName("member/book");
-		ShowProductInfo[] ps = this.customService.getProductList(3, 0);// .orderMgrService.getProductList(3,
+		ShowProductInfo[] ps = this.lineService.getProductList(3, 0);// .orderMgrService.getProductList(3,
 		this.mav.addObject("productList", ps);
 		return this.mav;
 	}
