@@ -307,7 +307,7 @@ p {
 	<!-- 产品列表 -->
 	<div class="row">
 		<div class="span9">
-			<legend>精品小团</legend>
+			<legend><a href="${context }/custom/product/search">精品小团<small>&nbsp;&nbsp;更多线路</small></a></legend>
 			<!-- 产品列表  -->
 			<ul class="nav nav-tabs" style="border-bottom: 0px;">
 				<c:forEach var="items" items="${standardList}">
@@ -339,7 +339,7 @@ p {
 				</c:forEach>
 			</ul>
 			<legend>
-				私家小团<small>&nbsp;&nbsp;价格、路线、日期、人数均可按需定制，以下为行程参考</small>
+				<a href="${context }/custom/product/search">私家小团</a><small>&nbsp;&nbsp;价格、路线、日期、人数均可按需定制，以下为行程参考</small>
 			</legend>
 			<!-- 产品列表  -->
 			<ul class="nav nav-tabs" style="border-bottom: 0px;">

@@ -84,7 +84,8 @@ public class CustomServiceImpl implements ICustomService {
 	}
 
 	@Override
-	public List<GroupDate> getGroupList(String where, int aheadDays, int page) {
+	public List<GroupDate> getGroupList(String where, int aheadDays, int page,
+			int count) {
 
 		if (where != null && where.length() > 0) {
 			where += " and ";
@@ -100,7 +101,8 @@ public class CustomServiceImpl implements ICustomService {
 
 		where += " startDate >'" + minDate + "'";
 
-		return this.groupDateDAO.getList(where, page);
+		return this.groupDateDAO
+				.getList("from GroupDate " + where, page, count);
 		// else
 		// return this.groupDateDAO.getList("where productId=" + pid, page);
 	}
@@ -163,7 +165,6 @@ public class CustomServiceImpl implements ICustomService {
 		Gson g = new Gson();
 		return g.toJson(entity);
 	}
-
 
 	protected int monthDays(int year, int month) {
 		int localMaxDay = 31;
@@ -304,7 +305,7 @@ public class CustomServiceImpl implements ICustomService {
 	public List<GroupMonth> makeGroupCalendar(String id, int aheadDays) {
 		List<GroupMonth> gms = new ArrayList<GroupMonth>();
 		List<GroupDate> gs = this.getGroupList("where productId=" + id,
-				aheadDays, 0);
+				aheadDays, 0, 200);
 		int lastYear = 0;
 		int lastMonth = 0;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -329,7 +330,5 @@ public class CustomServiceImpl implements ICustomService {
 		}
 		return gms;
 	}
-
-	
 
 }

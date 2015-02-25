@@ -17,26 +17,31 @@
 	background-color: white;
 	border: 1px solid lightgray;
 }
-.price{
-position: absolute;
-margin-top: -45px;
-background-color: rgba(0,0,0,0.4);
-line-height: 32px;
-width: 270px;
 
+.price {
+	position: absolute;
+	margin-top: -45px;
+	background-color: rgba(0, 0, 0, 0.4);
+	line-height: 32px;
+	width: 270px;
 }
-a:hover{text-decoration: none;}
-.place_item{
-opacity: 0.6;
-height:20px;
-width:auto;
-padding-right:8px;
-margin-left: 4px;
+
+a:hover {
+	text-decoration: none;
 }
-.item{
-padding-right: 5px;
-opacity: 0.6;
-width:20px;
+
+.place_item {
+	opacity: 0.6;
+	height: 20px;
+	width: auto;
+	padding-right: 8px;
+	margin-left: 4px;
+}
+
+.item {
+	padding-right: 5px;
+	opacity: 0.6;
+	width: 20px;
 }
 </style>
 <div class="container"
@@ -74,7 +79,7 @@ width:20px;
 					</div>
 				</div>
 			</div>
-			<div class="row" style="height: 50px;display: none;">
+			<div class="row" style="height: 50px; display: none;">
 				<div class="span1">
 					<span style="color: gray">出行时间:</span>
 				</div>
@@ -109,7 +114,7 @@ width:20px;
 					</div>
 				</div>
 			</div>
-			<div class="row" style="display:none">
+			<div class="row" style="display: none">
 				<div class="span1">
 					<span style="color: gray">出行预算:</span>
 				</div>
@@ -171,13 +176,13 @@ width:20px;
 		<div class="span3">
 			<a href="${context }/custom/detail_all?id=$productId"><img
 				class="img-rounded" style="width: 270px; height: 179px" src="$img">
-				</a>
-				<div class="price">
-				<a href="${context }/custom/order?productID=$productId&gdate=$groupDate"
-									 title="在线报名"><span
-										style="color: white; font-size: 20px">￥$lowPrice/</span><span
-										style="color: white">人起 </span></a>
-										</div>
+			</a>
+			<div class="price">
+				<a
+					href="${context }/custom/order?productID=$productId&gdate=$groupDate"
+					title="在线报名"><span style="color: white; font-size: 20px">￥$lowPrice/</span><span
+					style="color: white">人起 </span></a>
+			</div>
 		</div>
 		<div class="span4" style="color: gray">
 			<table style="height: 180px; width: 100%; text-align: left;">
@@ -193,12 +198,12 @@ width:20px;
 					<td><img class="place_item"
 						src="${context }/resources/image/place_logo.png">&nbsp;城市:&nbsp;&nbsp;$cities</td>
 				</tr>
-				
+
 				<tr>
 					<td><img style="height: 18px;" class="item"
 						src="${context }/resources/image/heart_logo.png">&nbsp;线路类型:&nbsp;&nbsp;$types</td>
 				</tr>
-				
+
 				<tr>
 					<td><img class="item"
 						src="${context }/resources/image/days_logo.png">&nbsp;出行天数:&nbsp;&nbsp;$days<!-- <img
@@ -210,14 +215,15 @@ width:20px;
 						<table style="width: 100%">
 							<tr>
 								<td><img class="item"
-									src="${context }/resources/image/groupdate_logo.png"><span>&nbsp;最近团期：$groupDate&nbsp;<a href="${context }/custom/detail_all?id=$productId">更多</a></span>
-									<a href="${context }/custom/order?productID=$productId&gdate=$groupDate"
-									style="text-decoration: none;display:none;" title="在线报名"><span
+									src="${context }/resources/image/groupdate_logo.png"><span>&nbsp;最近团期：$groupDate&nbsp;<a
+										href="${context }/custom/detail_all?id=$productId">更多</a></span> <a
+									href="${context }/custom/order?productID=$productId&gdate=$groupDate"
+									style="text-decoration: none; display: none;" title="在线报名"><span
 										style="color: rgb(255, 145, 0); font-size: 20px">￥$lowPrice/</span><span
 										style="color: rgb(255, 145, 0)">人起 </span></a></td>
 								<td style="text-align: right;"><a
 									href="${context }/custom/order?productID=$productId&gdate=$groupDate"
-									style="margin-right: 20px; margin-top: 0px; display: ;"
+									style="margin-right: 20px; margin-top: 0px; display:;"
 									class="btn btn-warning pull-right">报名</a></td>
 							</tr>
 						</table>
@@ -238,7 +244,7 @@ width:20px;
 	function sel_a_city(cityName) {
 		var sel_city = "";
 		var cities = document.getElementsByName("cityZone");
-		for ( var i = 0; i < cities.length; i++) {
+		for (var i = 0; i < cities.length; i++) {
 			if (cities[i].checked)
 				sel_city += cities[i].value + ",";
 		}
@@ -248,41 +254,41 @@ width:20px;
 	function closeCityZone() {
 		city_zone.style.display = "none";
 	}
-	function searchProduct() {
-		// type
-		var typeObj = document.getElementsByName("typeZone");
-		var type_str = "";
-		for ( var i = 0; i < typeObj.length; i++) {
-			if (typeObj[i].checked)
-				type_str += typeObj[i].value + ",";
-		}
-		// city
-		var cityObj = document.getElementsByName("cityZone");
-		var city_str = "";
-		for ( var i = 0; i < cityObj.length; i++) {
-			if (cityObj[i].checked)
-				city_str += cityObj[i].value + ",";
-		}
-		// fee
-		// city
-		var feeObj = document.getElementsByName("sel_fee");
-		var fee_str = "";
-		for ( var i = 0; i < feeObj.length; i++) {
-			if (feeObj[i].checked) {
-				fee_str = feeObj[i].value;
-				break;
+	function arr2str(Obj) {
+		var _str = '';
+		for (var i = 0; i < Obj.length; i++) {
+			if (Obj[i].checked) {
+				_str += Obj[i].value;
+				if (i < Obj.length - 1)
+					_str += ',';
 			}
 		}
+		return _str;
+	}
+	function searchProduct() {
+		debugger;
+		// type
+		var typeObj = document.getElementsByName("typeZone");
+		var type_str = arr2str(typeObj);
+		// city
+		var cityObj = document.getElementsByName("cityZone");
+		var city_str = arr2str(cityObj);
+
+		// fee
+		// city
+
 		productList.innerHTML = "<img style='width:25px;' src='${context}/resources/image/loading.gif'><span>正在努力搜索中，请稍等，马上就好了。</span>";
 		var url = "${context}/custom/product/smart";
 		$
 				.post(
 						url,
 						{
-							startDate : startDate.value,
+							//startDate : startDate.value,
 							city : city_str,
-							fee : fee_str,
-							type : type_str,
+							//fee : fee_str,
+							type : type_str,//type_str,
+							attach : [],
+							scenics : []
 						},
 						function(result, status) {
 
@@ -320,11 +326,11 @@ width:20px;
 		var product_str = "";
 		var guideTmpl = document.getElementById("guideTmpl").innerHTML;
 		var productTmpl = document.getElementById("productTmpl").innerHTML;
-		for ( var i = 0; i < ps.length; i++) {
+		for (var i = 0; i < ps.length; i++) {
 			// 导游列表
 			var guideTmpl_str = "";
 
-			for ( var j = 0; ps[i].tour != null && j < ps[i].tour.length; j++) {
+			for (var j = 0; ps[i].tour != null && j < ps[i].tour.length; j++) {
 				//debugger;
 				var gTmpl_str = guideTmpl;
 				gTmpl_str = gTmpl_str
@@ -344,7 +350,7 @@ width:20px;
 			productTmpl_str = productTmpl_str.replace('$name',
 					decodeURIComponent(ps[i].name));
 			// 线路类型
-			var types =  ps[i].lineType;
+			var types = ps[i].lineType;
 			/*for ( var j = 0; ps[i].productType != null
 					&& j < ps[i].productType.length; j++) {
 				types += decodeURIComponent(ps[i].productType[j].catalogName)
@@ -366,7 +372,8 @@ width:20px;
 					ps[i].MediaID);
 			productTmpl_str = productTmpl_str.replace('$introduce',
 					decodeURIComponent(ps[i].introduce));
-			productTmpl_str = productTmpl_str.replace('$days', decodeURIComponent(ps[i].days));
+			productTmpl_str = productTmpl_str.replace('$days',
+					decodeURIComponent(ps[i].days));
 			productTmpl_str = productTmpl_str.replace(/\\$groupDate/g,
 					ps[i].groupDate);
 			productTmpl_str = productTmpl_str.replace('$guides', guideTmpl_str);
@@ -380,16 +387,17 @@ width:20px;
 		productList.innerHTML = product_str;
 	}
 	// 默认加载全部产品
-
+	debugger;
 	var url = "${context}/custom/product/smart";
 	$
 			.post(
 					url,
 					{
-						startDate : null,
 						city : txtSearchCity.value,
-						fee : null,
 						type : null,
+						attach : null,
+						scenics : null
+
 					},
 					function(result, status) {
 

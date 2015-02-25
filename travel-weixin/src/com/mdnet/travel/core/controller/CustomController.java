@@ -72,7 +72,7 @@ public class CustomController extends BaseController {
 
 	@Resource
 	ProcessEngine engine;
-	
+
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request) {
 		// return this.REDIRECT + "/" + this.preMobile(request) + "custom/book";
@@ -94,7 +94,7 @@ public class CustomController extends BaseController {
 				// 获取团期
 				String pid = code.substring(2, inx1);
 				List<GroupDate> gs = customService.getGroupList(
-						"where productId=" + pid, 10, 0);
+						"where productId=" + pid, 10, 0, 200);
 				String gList = "<table calss='table'>";
 				String tmpl = "<tr>";
 				// <!-- <h5 style='font-size: 20px; margin-top: 10px;'></h5> -->
@@ -572,7 +572,7 @@ public class CustomController extends BaseController {
 	public String groupList(HttpServletRequest request,
 			@RequestParam(value = "productID", required = true) int pid) {
 		List<GroupDate> gs = this.customService.getGroupList("where productId="
-				+ pid, 10, 0);
+				+ pid, 10, 0, 200);
 		if (gs != null) {
 			for (int i = 0; i < gs.size(); i++) {
 				try {
@@ -619,7 +619,8 @@ public class CustomController extends BaseController {
 		if (page != null)
 			pageNo = Integer.parseInt(page);
 
-		List<GroupDate> gd = this.customService.getGroupList("", 10, pageNo);
+		List<GroupDate> gd = this.customService.getGroupList("", 10, pageNo,
+				20);
 		List<GroupListBean> gb = new ArrayList<GroupListBean>();
 		for (int i = 0; gd != null && i < gd.size(); i++) {
 			GroupListBean g = new GroupListBean();
@@ -772,8 +773,7 @@ public class CustomController extends BaseController {
 			}
 		}
 
-		this.mav.addObject("comments", lineService
-				.getProductList(4));
+		this.mav.addObject("comments", lineService.getProductList(4));
 		return mav;
 	}
 
@@ -806,8 +806,7 @@ public class CustomController extends BaseController {
 		int totalCount = adultCount + childrenCount;
 		int childrenBedsCount = 0;
 		// 获取产品信息
-		ProductAllDetail pd = lineService.getById(
-				String.valueOf(productId));
+		ProductAllDetail pd = lineService.getById(String.valueOf(productId));
 		String productName = pd.getProductName();
 
 		// 获得团期，进一步获得价格信息
@@ -998,17 +997,26 @@ public class CustomController extends BaseController {
 
 	@RequestMapping(value = "/product/smart", method = RequestMethod.POST)
 	@ResponseBody
-	public String ProductSmart(
-			HttpServletRequest request,
-			@RequestParam(value = "city", required = true) String cities,
-			@RequestParam(value = "startDate", required = true) String startDate,
-			@RequestParam(value = "fee", required = true) String fee,
-			@RequestParam(value = "type", required = true) String pType) {
+	public String ProductSmart(HttpServletRequest request,
+
+	@RequestParam(value = "city", required = false) String city,
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "scenics", required = false) String scenic,
+			@RequestParam(value = "attach", required = false) String attach) {
 
 		// List<ShowProductInfo> ps = this.getProduct(cities, startDate, fee,
 		// pType, 0, 20);
-		List<ShowProductInfo> ps = lineService.getByCities(
-				cities, pType);
+		String[] cities = null;
+		if (city != null && city.length() > 0)
+			cities = city.split(",");
+		String[] types = null;
+		if (type != null && type.length() > 0)
+			types = type.split(",");
+		String[] scenics = null;
+		if (scenic != null && scenic.length() > 0)
+			scenics = scenic.split(",");
+		List<ShowProductInfo> ps = lineService.search(cities, scenics, types,
+				attach);
 
 		for (ShowProductInfo p : ps) {
 			// p.setTour(tour);
@@ -1025,7 +1033,7 @@ public class CustomController extends BaseController {
 				p.setTour(ts);
 				// 获得产品团期
 				List<GroupDate> gs = this.customService.getGroupList(
-						"where productId=" + p.getProductID(), 10, 0);
+						"where productId=" + p.getProductID(), 10, 0, 1);
 
 				p.setGroupDate((gs != null && gs.size() > 0) ? gs.get(0)
 						.getStartDate() : "");
@@ -1125,7 +1133,7 @@ public class CustomController extends BaseController {
 			// 获取城市列表ID
 			List<GroupDate> gds = this.customService.getGroupList(
 					" where substring(startDate, 1, 7) = '" + startDate + "'",
-					10, 0);
+					10, 0, 200);
 			String pIds = "";
 			for (GroupDate d : gds) {
 				pIds += d.getProductId() + ",";

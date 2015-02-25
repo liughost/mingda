@@ -230,7 +230,7 @@ public class DriveController extends BaseController {
 			@RequestParam(value = "t", required = false) String sType,
 			@RequestParam(value = "context", required = false) String sText) {
 		this.getMav(request);
-		List<GroupDate> gd = this.customService.getGroupList("", 45, 0);
+		List<GroupDate> gd = this.customService.getGroupList("", 45, 0, 20);
 		List<GroupListBean> glist = new ArrayList<GroupListBean>();
 		for (int i = 0; i < gd.size(); i++) {
 			GroupListBean gb = new GroupListBean();

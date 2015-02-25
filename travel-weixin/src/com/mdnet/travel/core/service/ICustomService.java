@@ -21,7 +21,7 @@ public interface ICustomService {
 	
 	List<PersonalCustom> findall(int page, int count, int sType, String context);
 
-	List<GroupDate> getGroupList(String where, int aheadDays, int page);
+	List<GroupDate> getGroupList(String where, int aheadDays, int page, int count);
 
 	List<PersonalCustom> getPersonalByMobile(String mobile, int page);
 

@@ -116,7 +116,7 @@ public class ShowSpecial extends BaseController {
 				// 获取团期
 				String pid = code.substring(2, inx1);
 				List<GroupDate> gs = customService.getGroupList(
-						" where productId=" + pid, 45, 0);
+						" where productId=" + pid, 45, 0, 20);
 				String gList = "";
 				String tmpl = "<div class='span12'>";
 				// <!-- <h5 style='font-size: 20px; margin-top: 10px;'></h5> -->
