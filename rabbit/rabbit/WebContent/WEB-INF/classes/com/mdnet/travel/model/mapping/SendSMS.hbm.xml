@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="net.zhinet.travel.pojo.basepojo">
+
+	<class name="net.zhinet.travel.pojo.basepojo.SendSMS" table="send_sms" optimistic-lock="version">
+		<id name="id">
+			<generator class="native" />
+		</id>
+
+		<property name="destNumber" type="string">
+			<column name="dest_number" length="16"  not-null="true">
+				<comment>短信目的号码</comment>
+			</column>
+		</property>
+		<property name="content" type="string">
+			<column name="sms_content" sql-type="text" length="512"  not-null="true">
+				<comment>短信发送内容</comment>
+			</column>
+		</property>
+		<property name="smsType" type="integer">
+			<column name="sms_type"  not-null="true">
+				<comment>短信应用类型,0:客户端；1：分销商；2：供应商；3：客户订单</comment>
+			</column>
+		</property>
+		<property name="smsState" type="integer">
+			<column name="sms_state"  not-null="true">
+				<comment>短信状态:0:请求发送；1：已经发送</comment>
+			</column>
+		</property>
+		<property name="sendTime" type="string" >
+			<column name="send_time" length="32" not-null="true">
+				<comment>发送时间</comment>
+			</column>
+		</property>
+		<property name="makeTime" type="string">
+			<column name="make_time" length="32"  not-null="true">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+
+	</class>
+
+</hibernate-mapping>

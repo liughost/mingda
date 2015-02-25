@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 指定Hibernate映射文件的DTD信息 Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.mdnet.travel.core.model">
+	<class name="TourOrder" table="tour_order">
+		<!-- 映射标识属性 -->
+		<id column="id" name="id">
+			<!-- 指定使用identity主键生成策略 -->
+			<generator class="identity" />
+		</id>
+		<!-- 映射普通属性 -->
+		<property generated="never" lazy="false" name="custId" type="int">
+			<column name="cust_id" not-null="false">
+				<comment>关联到客户表（customer_table）中的id字段</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="startDate" type="string">
+			<column name="start_date" length="32" not-null="false">
+				<comment>预订开始的日期</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="endDate" type="string">
+			<column name="end_date" length="32" not-null="false">
+				<comment>预订截止日期</comment>
+			</column>
+		</property>
+	
+		<property generated="never" lazy="false" name="linkPhone" type="string">
+			<column name="link_phone" length="32" not-null="false">
+				<comment>客人联系电话</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="linkName" type="string">
+			<column name="link_name" length="32" not-null="false">
+				<comment>客人姓名</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="memo"
+			type="string">
+			<column name="memo" not-null="false">
+				<comment>备注信息</comment>
+			</column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

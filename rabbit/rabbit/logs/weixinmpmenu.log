@@ -1,0 +1,2 @@
+[INFO ] 2015-02-05 14:18:52,035 org.apache.http.impl.client.DefaultRequestDirector     - I/O exception (org.apache.http.NoHttpResponseException) caught when processing request: The target server failed to respond
+[INFO ] 2015-02-05 14:18:52,048 org.apache.http.impl.client.DefaultRequestDirector     - Retrying request

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- 指定Hibernate映射文件的DTD信息 -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.mdnet.travel.core.model">
+	<class name="DriverCard" table="driver_card">
+		<!-- 映射标识属性 -->
+		<id name="id" column="id">
+			<!-- 指定使用identity主键生成策略 -->
+			<generator class="identity" />
+		</id>
+		<!-- 映射普通属性 -->
+		
+		<property name="custId" type="int">
+			<column name="cust_id" >
+				<comment>关联登录信息表的traveler_id</comment>
+			</column>
+		</property>
+		
+		<property name="userName" type="string">
+			<column name="user_name" not-null="false" length="20">
+				<comment>用户姓名</comment>
+			</column>
+		</property>
+		
+		<property name="identityCard" type="string">
+			<column name="identity_card" not-null="false" length="20">
+				<comment>身份证</comment>
+			</column>
+		</property>
+		
+		<property name="sexy" type="int">
+			<column name="sexy">
+				<comment>性别,0:男；1：女</comment>
+			</column>
+		</property>
+		
+		<property name="country" type="string">
+			<column name="country" not-null="false" length="20">
+				<comment>国籍</comment>
+			</column>
+		</property>
+		
+		<property name="address" type="string">
+			<column name="address" not-null="false" length="80">
+				<comment>地址</comment>
+			</column>
+		</property>
+		
+		<property name="birthday" type="timestamp">
+			<column name="birthday" sql-type="datetime" not-null="false" length="20">
+				<comment>出生日期</comment>
+			</column>
+		</property>
+		
+		<property name="firstDate" type="timestamp">
+			<column name="first_date" sql-type="datetime" not-null="false" length="20">
+				<comment>初次领证日期</comment>
+			</column>
+		</property>
+		
+		<property name="coveredVehicles" type="string">
+			<column name="covered_vehicles" not-null="false" length="8">
+				<comment>准驾车型</comment>
+			</column>
+		</property>
+		
+		<property name="validateDate" type="timestamp">
+			<column name="validate_date" sql-type="datetime" not-null="false" length="20">
+				<comment>有效期</comment>
+			</column>
+		</property>
+		
+		
+	</class>
+</hibernate-mapping>

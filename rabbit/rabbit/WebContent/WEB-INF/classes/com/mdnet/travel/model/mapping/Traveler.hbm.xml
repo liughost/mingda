@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- 指定Hibernate映射文件的DTD信息 -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.mdnet.travel.core.model">
+	<class name="Traveler" table="traveler_tab">
+		<!-- 映射标识属性 -->
+		<id name="travelerId" column="traveler_id">
+			<!-- 指定使用identity主键生成策略 -->
+			<generator class="identity" />
+		</id>
+		<!-- 映射普通属性 -->
+		
+		<property name="loginName" type="string">
+			<column name="loginname" unique="true" not-null="false" length="20">
+				<comment>登录名</comment>
+			</column>
+		</property>
+		<property name="passText" type="string">
+			<column name="pass_text" not-null="false" length="20">
+				<comment>密码明文</comment>
+			</column>
+		</property>
+		<property name="inviteCode" type="string">
+			<column name="invite_code" not-null="false" length="20">
+				<comment>邀请码</comment>
+			</column>
+		</property>
+		<property name="classLevel" type="int">
+			<column name="class_level" default="0" >
+				<comment>会员级别，0：为非会员；1：普通会员；2：友情会员；3：VIP会员</comment>
+			</column>
+		</property>
+		<property name="totalScore" type="int">
+			<column name="total_score" default="0" >
+				<comment>总积分</comment>
+			</column>
+		</property>
+		<property name="userName" type="string">
+			<column name="username" not-null="false" length="20">
+				<comment>用户姓名</comment>
+			</column>
+		</property>
+		
+		<property name="password" length="40"/>
+		<property name="mobile" length="13"/>
+		<property name="authority" length="15"/>
+		<property name="wxFromUserName" type="string">
+			<column name="wx_from_user_name" not-null="true" length="64">
+				<comment>用户从微信发消息时带上的用户识别码</comment>
+			</column>
+		</property>
+		<property name="wxOpenId" type="string">
+			<column name="wx_open_id" not-null="false" length="64">
+				<comment>用户从微信发消息时带上的openId</comment>
+			</column>
+		</property>
+		<property name="token" type="string">
+			<column name="token" not-null="false" length="64">
+				<comment>用户登录时token</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

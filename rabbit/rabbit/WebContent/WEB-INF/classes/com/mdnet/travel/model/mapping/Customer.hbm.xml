@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 指定Hibernate映射文件的DTD信息 Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.mdnet.travel.core.model">
+	<class name="Customer" table="customer_table">
+		<!-- 映射标识属性 -->
+		<id column="id" name="id">
+			<!-- 指定使用identity主键生成策略 -->
+			<generator class="identity" />
+		</id>
+		<!-- 映射普通属性 -->
+		<property column="from_username" generated="never" lazy="false"
+			length="32" name="fromUserName" />
+		<property column="subscribe_time" generated="never" lazy="false"
+			length="15" name="subscribeTime" />
+		<property column="unsubscribe_time" generated="never" lazy="false"
+			length="15" name="unSubscribeTime" />
+		<property column="last_visit" generated="never" lazy="false"
+			length="15" name="lastVisit" />
+		<property column="location_x" generated="never" lazy="false"
+			length="20" name="location_x" />
+		<property column="location_y" generated="never" lazy="false"
+			length="20" name="location_y" />
+		<property generated="never" lazy="false" name="label" />
+		<property generated="never" lazy="false" name="headImg" type="string">
+			<column name="head_img" not-null="false">
+				<comment>如果是领队则是领队的头像</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="nickName"
+			type="string">
+			<column name="nick_name" length="32" not-null="false">
+				<comment>领队的昵称</comment>
+			</column>
+		</property>
+		<property name="share" type="int">
+			<column name="share" default="0">
+				<comment>是否是共享消息，0：不共享，1：共享</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="status"
+			type="int">
+			<column name="customer_status" default="0" not-null="false">
+				<comment>0:一般状态，1：制作图文状态，此刻发送的消息都不参与共享显示，并且标记消息状态为1，制作中，其他消息为0，一般显示</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

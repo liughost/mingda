@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- 指定Hibernate映射文件的DTD信息 -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.mdnet.travel.core.model">
+	<class name="InviteCode" table="invite_code">
+		<!-- 映射标识属性 -->
+		<id name="id" column="id">
+			<!-- 指定使用identity主键生成策略 -->
+			<generator class="identity" />
+		</id>
+		<!-- 映射普通属性 -->
+		<!-- 
+		<property name="custId" type="int">
+			<column name="cust_id">
+				<comment>关联登录信息表的traveler_id</comment>
+			</column>
+		</property>
+		 -->
+		<property name="inviteCode" type="string">
+			<column name="invite_code" not-null="false" length="20">
+				<comment>邀请码</comment>
+			</column>
+		</property>
+		<property name="codeLevel" type="int">
+			<column name="code_level" default="0">
+				<comment>码级别，0：</comment>
+			</column>
+		</property>
+		<property name="codeStatus" type="int">
+			<column name="code_status" default="0">
+				<comment>码的状态，0：未使用；1：已使用；2：已禁用；3：已失效</comment>
+			</column>
+		</property>
+		<property name="offPrice" type="int">
+			<column name="off_price" default="0">
+				<comment>优惠幅度，单位元</comment>
+			</column>
+		</property>
+		<property name="policy" type="string">
+			<column name="policy" not-null="false">
+				<comment>优惠政策</comment>
+			</column>
+		</property>
+		<property name="codeType" type="int">
+			<column name="code_type" default="0">
+				<comment>码类型，0：注册邀请码；1：优惠码</comment>
+			</column>
+		</property>
+		<property name="dest_mobile" type="string">
+			<column name="dest_mobile">
+				<comment>被邀请者手机号码</comment>
+			</column>
+		</property>
+		<property name="score" type="int">
+			<column name="score" default="0">
+				<comment>本次积分</comment>
+			</column>
+		</property>
+		<property name="makeTime" type="timestamp">
+			<column name="make_time" default="0">
+				<comment>码生成时间</comment>
+			</column>
+		</property>
+		<property name="usedTime" type="timestamp">
+			<column name="used_time" default="0">
+				<comment>使用时间</comment>
+			</column>
+		</property>
+		<many-to-one lazy="false" name="member" class="Traveler"
+			column="cust_id" />
+	</class>
+</hibernate-mapping>

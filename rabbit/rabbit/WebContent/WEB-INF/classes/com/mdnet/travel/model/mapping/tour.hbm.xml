@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 指定Hibernate映射文件的DTD信息 Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.mdnet.travel.core.model">
+	<class name="Tour" table="tour_info">
+		<!-- 映射标识属性 -->
+		<id column="id" name="id">
+			<!-- 指定使用identity主键生成策略 -->
+			<generator class="identity" />
+		</id>
+		<!-- 映射普通属性 -->
+		<property generated="never" lazy="false" name="custId" type="int">
+			<column name="cust_id" not-null="false">
+				<comment>关联到客户表（customer_table）中的id字段</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="introImg" type="string">
+			<column name="intro_img" not-null="false">
+				<comment>领队介绍的大图，height: 380px;width: 1140px;</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="commentCount" type="int">
+			<column name="comment_count" default = "0" not-null="false">
+				<comment>评论数量</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="serviceLevel" type="int">
+			<column name="service_level" not-null="false">
+				<comment>服务水平，星级，从0-5级</comment>
+			</column>
+		</property>
+	
+		<property generated="never" lazy="false" name="signFooter" type="string">
+			<column name="sign_footer" sql-type="text" not-null="false">
+				<comment>页脚签名</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="headImg" type="string">
+			<column name="head_img" not-null="false">
+				<comment>领队的头像</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="nickName"
+			type="string">
+			<column name="nick_name" length="32" not-null="false">
+				<comment>领队的昵称</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="gender"
+			type="int">
+			<column name="gender" length="32" not-null="false">
+				<comment>性别，0：保密，1：男性；2：女性</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="introduce"
+			type="string">
+			<column name="introduce" sql-type="text" not-null="false">
+				<comment>个人简介</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="location"
+			type="string">
+			<column name="location" length="64" not-null="false">
+				<comment>所在地、常驻地</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="language"
+			type="string">
+			<column name="language" length="64" not-null="false">
+				<comment>语言能力</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="unitPrice"
+			type="int">
+			<column name="unit_price" length="64" not-null="false">
+				<comment>单价(元)</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="weixinId"
+			type="string">
+			<column name="weixinId" length="32" not-null="false">
+				<comment>微信号</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="QQ"
+			type="string">
+			<column name="QQ" length="32" not-null="false">
+				<comment>QQ号</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="EMail"
+			type="string">
+			<column name="EMail" length="32" not-null="false">
+				<comment>邮箱</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="Mobile"
+			type="string">
+			<column name="Mobile" length="32" not-null="false">
+				<comment>移动电话</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="weixinQR"
+			type="string">
+			<column name="weixin_QRCode" length="128" not-null="false">
+				<comment>微信二维码</comment>
+			</column>
+		</property>
+		
+		<property generated="never" lazy="false" name="feeDesc"
+			type="string">
+			<column name="fee_desc" not-null="false">
+				<comment>费用说明</comment>
+			</column>
+		</property>
+		
+		<property generated="never" lazy="false" name="feeExcept"
+			type="string">
+			<column name="fee_except"  not-null="false">
+				<comment>微费用不含</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="supplement"
+			type="string">
+			<column name="supplement" not-null="false">
+				<comment>补充说明</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

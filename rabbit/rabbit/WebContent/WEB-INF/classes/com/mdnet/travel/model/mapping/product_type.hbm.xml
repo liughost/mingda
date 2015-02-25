@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 指定Hibernate映射文件的DTD信息 Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.mdnet.travel.core.model">
+	<class name="ProductType" table="product_type">
+		<!-- 映射标识属性 -->
+		<id column="id" name="id">
+			<!-- 指定使用identity主键生成策略 -->
+			<generator class="identity" />
+		</id>
+
+		<property generated="never" lazy="false" name="catalogName"
+			type="string">
+			<column name="catalog_name" length="32" not-null="false">
+				<comment>旅游目的地类型名称</comment>
+			</column>
+		</property>
+		
+		<property generated="never" lazy="false" name="makeTime"
+			type="string">
+			<column name="make_time" length="32" not-null="false">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>
