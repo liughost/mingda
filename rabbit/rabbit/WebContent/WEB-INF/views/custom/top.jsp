@@ -3,21 +3,27 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+	<sec:authorize access="isAuthenticated()">
+	<sec:authentication var="username" property="principal.username" />
+</sec:authorize>
 <!-- 公用头部 STA -->
 <div class="headerk">
 	<div class="header-t">
 		<div class="header">
 			<!--登录前STA-->
-			<div class="header-go" style="display: none;">
+			<c:if test="${empty username}">
+			<div class="header-go">
 				<a class="modalLink" href="#modal1">登录</a><span>|</span><a
 					class="modalLink" href="#modal2">注册</a>
 			</div>
+			</c:if>
 			<!--登录前End-->
 
 			<!--登录后STA-->
-			<div class="header-back" style="display:;">
+			<c:if test="${not empty username}">
+			<div class="header-back">
 				<img src="${context }/resources/rabbit/images/head22-22.gif" alt="" />
-				<a href="javascript:;">柚子 leila</a>
+				<a href="javascript:;">${username }</a>
 				<div class="back-menu">
 					<div class="top-menuk">
 						<div class="top-menu">
@@ -34,6 +40,7 @@
 					</div>
 				</div>
 			</div>
+			</c:if>
 			<!--登录后End-->
 		</div>
 	</div>
@@ -42,13 +49,16 @@
 			<div class="navlist" id="navlist">
 				<div class="logo">
 					<a href="${context }/custom/book"><img
-						src="${context }/resources/rabbit/images/logo.gif" alt="" /></a>
+						src="${context }/resources/rabbit/images/logo.png" alt="" /></a>
 				</div>
 				<ul id="navfouce">
 					<li><a href="#" class="boxlist"><span class="nav1"></span>专车</a></li>
 					<li><a href="#" class="boxlist"><span class="nav2"></span>线路</a></li>
-					<li><a href="#" class="boxlist"><span class="nav3"></span>结伴同行</a></li>
-					<li><a href="${context }/custom/articles" class="boxlist"><span class="nav4"></span>旅行分享</a></li>
+					 
+					<li style="display:none;"><a href="#" class="boxlist"><span class="nav3"></span>结伴同行</a></li>
+					
+					<li><a href="${context }/custom/articles" class="boxlist"><span
+							class="nav4"></span>旅行分享</a></li>
 				</ul>
 			</div>
 			<div class="box" id="navbox"
@@ -74,9 +84,8 @@
 										<div id="tagContent">
 											<div id="tagContent0" class="tagContent selectTag">
 
-												<a href="${context}/custom/tour/search?city=?city=丹麦小镇"
-													class="on">丹麦小镇</a> <a
-													href="${context}/custom/tour/search?city=佩吉">佩吉</a> <a
+												<a href="${context}/custom/tour/search?city=?city=丹麦小镇">丹麦小镇</a>
+												<a href="${context}/custom/tour/search?city=佩吉">佩吉</a> <a
 													href="${context}/custom/tour/search?city=华盛顿">华盛顿</a> <a
 													href="${context}/custom/tour/search?city=卡梅尔小镇">卡梅尔小镇</a> <a
 													href="${context}/custom/tour/search?city=圣路易斯">圣路易斯</a> <a
@@ -152,9 +161,8 @@
 										<div id="tagContent">
 											<div id="tagContent0" class="tagContent selectTag">
 
-												<a href="${context}/custom/product/search?city=?city=丹麦小镇"
-													class="on">丹麦小镇</a> <a
-													href="${context}/custom/product/search?city=佩吉">佩吉</a> <a
+												<a href="${context}/custom/product/search?city=?city=丹麦小镇">丹麦小镇</a>
+												<a href="${context}/custom/product/search?city=佩吉">佩吉</a> <a
 													href="${context}/custom/product/search?city=华盛顿">华盛顿</a> <a
 													href="${context}/custom/product/search?city=卡梅尔小镇">卡梅尔小镇</a>
 												<a href="${context}/custom/product/search?city=圣路易斯">圣路易斯</a>

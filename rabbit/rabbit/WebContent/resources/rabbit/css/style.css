@@ -1,4 +1,4 @@
-/*********************************************** 专车 ***********************************************/
+/*********************************************** 涓撹溅 ***********************************************/
 .car{width:1136px; float:left; background:#fff; border-radius:8px; padding:25px 0 40px 24px;}
 .car-l{width:344px; float:left;}
 .car-lt,.car-lb,.car-lb li,.car-lb .cont,.cont-bar,.car-lb .word{width:320px; float:left;}
@@ -24,7 +24,7 @@
 .car-rb li{width:371px; height:400px; float:left; margin-top:20px; padding:0 23px 10px 0;}
 .car-rb .page{width:765px; text-align:right;}
 
-/*********************************************** 线路 ***********************************************/
+/*********************************************** 绾胯矾 ***********************************************/
 .groom-list{width:792px; float:left;}
 .groom-list li{width:396px; height:420px; float:left; margin-top:25px;}
 .glist,.glist-t{width:371px; float:left;}
@@ -36,7 +36,7 @@
 .glist-b{width:341px; float:left; padding:14px 15px 0; line-height:20px;}
 .glist-b .l span{font-size:22px;}
 .glist-b .r{background:url(../images/pic-2.gif) no-repeat 0 center; padding-left:30px; font-family:Arial; font-size:14px; color:#737373;}
-/*线路推荐*/
+/*绾胯矾鎺ㄨ崘*/
 .groom{width:1136px; float:left; background:#fff; border-radius:8px; margin-top:30px; padding:25px 0 22px 24px;}
 .groom-t,.groom-b{width:100%; float:left;}
 .groom-t{font-size:24px;}
@@ -48,7 +48,7 @@
 .groom-bb-t{height:32px; line-height:16px; overflow:hidden;}
 .groom-bb-b{padding:7px 0 0; color:#727272;}
 
-/*********************************************** 旅游分享 ***********************************************/
+/*********************************************** 鏃呮父鍒嗕韩 ***********************************************/
 .tour-k{width:1160px; float:left;}
 .tour-k li,.tour,.tour-t{width:270px; float:left;}
 .tour-k li{margin-top:35px; padding:0 10px;}
@@ -59,12 +59,12 @@
 .tour-b{color:#737373;}
 .tour-k .page{margin-top:20px; text-align:right;}
 
-/*********************************************** 旅游分享详细 ***********************************************/
+/*********************************************** 鏃呮父鍒嗕韩璇︾粏 ***********************************************/
 .t-det{width:1134px; float:left; background:#fff; margin-top:34px; padding:34px 0 40px 26px;}
 .t-detl{width:848px; min-height:1110px; float:left; border-right:1px solid #e4e4e4;}
 .t-detl-t,.t-detl-s,.t-detl-m,.t-detl-b{width:816px; float:left;}
 .t-detl-t{font-size:24px;}
-.t-detl-s{padding:15px 0 22px; border-bottom:1px solid #e4e4e4; line-height:22px; color:#737373;}
+.t-detl-s{vertical-align: top;padding:15px 0 22px; border-bottom:1px solid #e4e4e4; line-height:22px; color:#737373;}
 .t-detl-s a{display:inline-block; background:#cdcdcd url(../images/pic-3.gif) no-repeat 6px center; border-radius:10px; margin-left:18px; padding:0 10px 0 28px; color:#fff;}
 .t-detl-m{padding:15px 0; line-height:28px; font-size:14px;}
 .t-detl-b{padding:20px 0 0; line-height:30px;}
@@ -80,7 +80,7 @@
 .t-detr-brt{height:68px; line-height:17px; overflow:hidden;}
 .t-detr-brb{padding:10px 0 0; color:#7f7f7f;}
 
-/*********************************************** 导游详细 ***********************************************/
+/*********************************************** 瀵兼父璇︾粏 ***********************************************/
 .guide-t{width:1160px; float:left; position:relative; padding-bottom:150px;}
 .guide-tbox{width:1110px; padding:0 25px; position:absolute; top:332px;}
 .guide-tl{width:244px; float:left;}
@@ -92,7 +92,7 @@
 .guide-trb li span{color:#797979;}
 .guide-b{width:1160px; float:left;}
 .guide-bl{width:695px; float:left;}
-/*标签切换*/
+/*鏍囩鍒囨崲*/
 .guide{width:620px; height:40px; float:left; background:url(../images/bgk-2bg.gif) repeat-x; padding:0 25px;}
 .guide li{float:left; font-size:20px;}
 .guide li a{width:131px; float:left; line-height:40px; text-align:center; color:#6d6e6f;}
@@ -111,13 +111,13 @@
 .guide-jbr{width:512px; float:left; padding-left:18px;}
 .guide-jbr span{color:#737373;}
 .guide-jbr em{display:inline-block; margin-right:20px;}
-/*服务项目*/
+/*鏈嶅姟椤圭洰*/
 .g-cda,.g-cfc{float:left; padding:4px 9px 6px 0; line-height:23px; color:#fff;}
 .cda-l,.cfc-l{width:11px; height:23px; float:left; background:url(../images/bg-2.png) no-repeat 0 -103px;}
 .cfc-l{background-position:0 -136px;}
 .cad-r,.cfc-r{float:left; background:#24cda3; padding:0 12px; border-radius:0 3px 3px 0;}
 .cfc-r{background:#cfcd02;}
-/*评论*/
+/*璇勮*/
 .view-t,.view-t li,.view-b,.open{width:620px; float:left;}
 #briefInfo{width:620px; height:452px; overflow:hidden;}
 .view-t li{margin-top:28px; padding-bottom:22px; border-bottom:1px solid #e3e3e3;}
@@ -158,7 +158,7 @@
 .guide-brcont-l li.gu4{background-position:0 -151px;}
 .guide-brcont-r{width:190px; float:left; margin-top:25px;}
 .guide-brcont-r img{border:11px solid #f1f4f6;}
-/*在线预约*/
+/*鍦ㄧ嚎棰勭害*/
 .makebox{-webkit-border-radius:0; -moz-border-radius:0; border-radius:0;}
 .make,.make-t{width:436px; float:left;}
 .make-t{height:91px; background:url(../images/bg-4.gif) no-repeat;}
@@ -182,7 +182,7 @@
 .btn1 span{font-family:Arial;}
 .inputbg4{width:158px; height:68px; float:right; background:#f9e509; border:1px solid #f9e509; border-radius:6px; line-height:64px; text-align:center; font-size:24px; cursor:pointer;}
 
-/*********************************************** 线路详细 ***********************************************/
+/*********************************************** 绾胯矾璇︾粏 ***********************************************/
 .route-title,.route-t{width:1160px; float:left;}
 .route-title{padding:35px 0; font-size:24px; color:#000;}
 .route-tl{width:620px; float:left; background:#fff; padding:25px;}
@@ -191,7 +191,7 @@
 .route-tlzi{padding-left:20px; line-height:30px; font-size:14px;}
 .route-tlzi .l{width:70px; float:left;}
 .route-tlzi .r{width:184px; float:left; color:#737373;}
-/*日历*/
+/*鏃ュ巻*/
 .route-tr{width:465px; height:396px; float:right; background:#fff;}
 .route-tr td{text-align:center; padding:5px 0; line-height:16px; font-family:Arial; border-right:1px solid #fff;}
 .route-tr td table.line-table td{height:50px; line-height:50px; padding:0; font-size:18px; border:none;}
@@ -213,20 +213,20 @@
 .route-btitle{background:url(../images/icon.png) no-repeat; border-bottom:1px solid #e4e4e4; padding:0 35px 12px; font-size:20px; color:#333;}
 .route-btj .route-btitle{border:none;}
 .route-btj-cont{width:780px; float:left; background:#fefce1; border-radius:8px; margin:5px 0 30px; padding:22px; line-height:26px; color:#333;}
-/*费用说明*/
+/*璐圭敤璇存槑*/
 .route-bsm .route-btitle{background-position:0 -284px;}
 .route-bsm-cont{padding:10px 35px 20px; line-height:24px;}
-/*费用包含*/
+/*璐圭敤鍖呭惈*/
 .route-bbh .route-btitle{background-position:0 -355px;}
 .route-bbh-cont{padding:10px 35px 20px;}
 .route-bbh-cont li{width:740px; float:left; background:url(../images/dot.gif) no-repeat 0 center; padding-left:14px; line-height:30px;}
-/*费用不含*/
+/*璐圭敤涓嶅惈*/
 .route-bbu .route-btitle{background-position:0 -428px;}
-/*产品详情*/
+/*浜у搧璇︽儏*/
 .route-bcp .route-btitle{background-position:0 -69px;}
-/*产品特色*/
+/*浜у搧鐗硅壊*/
 .route-bts .route-btitle{background-position:0 -141px;}
-/*行程安排*/
+/*琛岀▼瀹夋帓*/
 .route-bxc .route-btitle{background-position:0 -214px;}
 .route-bxc-cont{width:789px; float:left; padding:10px 0 0 35px;}
 .route-bxc-cont-t{padding-bottom:30px; line-height:30px;}
@@ -254,8 +254,8 @@
 .plan-b p{margin:0; padding:0; color:#333;}
 .plan-img{width:729px; float:left; padding:16px 30px; float:left; font-size:16px; color:#24cda3;}
 
-/*********************************************** 个人中心 ***********************************************/
-/*个人中心首页*/
+/*********************************************** 涓汉涓績 ***********************************************/
+/*涓汉涓績棣栭〉*/
 .use{width:1160px; float:left; padding:30px 0 10px;}
 .use-l,.use-lhead,.use-lname{width:166px; float:left;}
 .use-l{min-height:748px; background:#fff; padding:30px 31px;}
@@ -275,7 +275,7 @@
 .use-info-r{width:588px; float:left; padding-left:28px;}
 .u-txt1,.use-vite-bt select{width:400px; height:28px; float:left; border:1px solid #e0e0e0; border-radius:6px; padding:4px 10px 0; line-height:22px;}
 .u-btn1,.u-btn2{width:160px; height:50px; float:left; background:#f9e509; border:1px solid #f9e509; border-radius:25px; margin:30px 0 0 70px; text-align:center; line-height:50px; font-size:20px; cursor:pointer;}
-/*我的邀请*/
+/*鎴戠殑閭�*/
 .use-vite-t{padding:30px 0 100px; line-height:34px;}
 .use-vite-t span{float:left; margin-left:10px;}
 .use-vite-t .u-btn1{width:100px; height:32px; margin:0 0 0 30px; line-height:30px; font-size:16px;}
@@ -288,7 +288,7 @@
 .use-vite-bb th{background:#f1f4f6;}
 .use-vite-bb td{color:#737373;}
 .use-vite-bb tbody tr:hover{background:#fffef3;}
-/*我的订单*/
+/*鎴戠殑璁㈠崟*/
 .use-order table{border:1px solid #ebebeb;}
 .use-order table thead th{background:#f1f4f6; line-height:34px;}
 .use-order table th,.use-order table td{padding-right:5px; font-size:12px;}
@@ -298,7 +298,7 @@
 th.tdbox input{margin-top:16px;}
 .use-order tr.trbg1{background:#fffef3;}
 .use-order tr.trbg2{background:#f1fdfa;}
-/*修改密码*/
+/*淇敼瀵嗙爜*/
 .use-pass{padding:30px 0;}
 .use-pass li{margin-top:37px; line-height:34px; font-size:14px;}
 .use-pass-l{width:224px; float:left; text-align:right;}

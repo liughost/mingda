@@ -1,9 +1,11 @@
 package com.mdnet.travel.core.service;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 
 import com.mdnet.travel.core.dao.ProductAllDetail;
+import com.mdnet.travel.core.dao.TourPriceCanlendar;
 import com.mdnet.travel.core.model.GroupDate;
 import com.mdnet.travel.core.model.GroupMonth;
 import com.mdnet.travel.core.model.PersonalCustom;
@@ -40,6 +42,8 @@ public interface ICustomService {
 	GroupMonth getGroupCanlendar(List<GroupDate> gs, String id, Calendar c);
 
 	List<GroupMonth> makeGroupCalendar(String id, int aheadDays);
+
+	List<GroupMonth> makeGroupCalendar(String tid, String tourName, List<TourPriceCanlendar> price) throws ParseException;
 
 	//ShowProductInfo[] getProductList(int type, int page);
 }

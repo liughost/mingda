@@ -47,11 +47,28 @@
 		}
 		document.getElementById(showContent).style.display = "block";
 	}
+	//导游详细
+	function guTag(showCont,guideObj){
+		// 操作标签
+		var guide = document.getElementById("guide").getElementsByTagName("li");
+		var guidelength = guide.length;
+		for(i=0; i<guidelength; i++){
+			guide[i].className = "";
+		}
+		guideObj.parentNode.className = "guTag";
+		// 操作内容
+		for(i=0; j=document.getElementById("guideCont"+i); i++){
+			j.style.display = "none";
+		}
+		document.getElementById(showCont).style.display = "block";
+	}
 </script>
 
 <!-- index -->
 <link href="${context }/resources/rabbit/css/index.css" rel="stylesheet"
 	type="text/css">
+<!-- style -->
+<link href="${context }/resources/rabbit/css/style.css" rel="stylesheet" type="text/css">
 
 <!-- banner -->
 <script type="text/javascript"

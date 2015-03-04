@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.mdnet.travel.core.dao.GroupDateDAO;
 import com.mdnet.travel.core.dao.PersonalCustomDAO;
 import com.mdnet.travel.core.dao.ProductAllDetail;
+import com.mdnet.travel.core.dao.TourPriceCanlendar;
 import com.mdnet.travel.core.dao.WeixinAccountDAO;
 import com.mdnet.travel.core.model.GroupDate;
 import com.mdnet.travel.core.model.GroupDay;
@@ -299,6 +300,59 @@ public class CustomServiceImpl implements ICustomService {
 		}
 
 		return this.monthDays(year, month);
+	}
+
+	@Override
+	public List<GroupMonth> makeGroupCalendar(String tid, String tourName, List<TourPriceCanlendar> price) throws ParseException {
+		List<GroupMonth> gms = new ArrayList<GroupMonth>();
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd"); 
+		List<GroupDate> gs = new ArrayList<GroupDate>();
+		for(TourPriceCanlendar p : price){
+			int adultPrice = p.getAdultPrice();
+			int childPrice = p.getChildPrice();
+			
+			long start = df.parse(p.getStartDate()).getTime()/1000;
+			long end = df.parse(p.getEndDate()).getTime()/1000;
+			for(long i=start; i<=end;){
+			//循环为每一天
+			GroupDate g = new GroupDate();
+			String day = df.format(new Date(i*1000));
+			g.setAdultPrice(adultPrice);
+			g.setBookCount(0);
+			g.setChildPrice(childPrice);
+			g.setGroupDate(day);
+			g.setHotelSpanPrice(0);
+			g.setTid(tid);
+			g.setProductName(tourName);
+			g.setStartDate(day);
+			g.setTotalCount(14);
+			gs.add(g);
+			i+=24*60*60;
+			}
+		}
+		int lastYear = 0;
+		int lastMonth = 0;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		for (GroupDate g0 : gs) {
+			Calendar c = Calendar.getInstance();
+			try {
+				Date d = sdf.parse(g0.getStartDate().substring(0, 7) + "-01");
+				c.setTime(d);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if (lastYear != c.get(Calendar.YEAR)
+					|| lastMonth != c.get(Calendar.MONTH) + 1) {
+				lastYear = c.get(Calendar.YEAR);
+				lastMonth = c.get(Calendar.MONTH) + 1;
+
+				GroupMonth gm = this.getGroupCanlendar(gs, tid, c);
+				gms.add(gm);
+			}
+		}
+		return gms;
 	}
 
 	@Override

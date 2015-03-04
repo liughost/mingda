@@ -2,269 +2,372 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script type="text/javascript"
-	src="${context }/resources/js/bootstrap-datetimepicker.zh-CN.js"
-	charset="UTF-8"></script>
-<link href="${context }/resources/css/bootstrap-datetimepicker.min.css"
-	rel="stylesheet">
 <style>
-.city {
-	border-bottom: 0px;
-	z-index: 10000;
-	position: absolute;
-	width: 280px;
-	background-color: white;
-	border: 1px solid lightgray;
+.word a {
+	min-width: 55px;
+}
+.car-lbr a {
+	min-width: 60px;
+	line-height: 30px;
+}
+.car-lb .word a {
+  width: 90px;
 }
 </style>
-<div class="container"
-	style="max-width: ${maxWidth}px;min-height: 400px;">
-	<div class="row">
-		<!-- 左侧选择栏  -->
-		<div class="span4 form-horizontal">
 
-			<div class="row">
-				<div class="span1">
-					<span style="color: gray">目的地:</span>
+<!-- banner STA -->
+<div class="bannerk">
+	<div class="banner">
+		<img src="${context }/resources/rabbit/images/banner-1.jpg" alt="" />
+	</div>
+</div>
+<!-- banner End -->
+
+<!-- 主体内容区 STA -->
+<div class="maink">
+	<div class="main">
+		<div class="car">
+			<div class="car-l">
+				<div class="car-lt">服务筛选</div>
+				<div class="car-lb">
+					<ul>
+						<li>
+							<div class="title">目的地</div>
+							<div class="cont">
+								<div class="cont-bar">
+									<div class="car-lbl">大洲</div>
+									<div class="car-lbr">
+										<a href="#">北美洲</a>
+										<!-- <a href="#">大洋洲</a>  -->
+									</div>
+								</div>
+								<div class="cont-bar">
+									<div class="car-lbl">国家</div>
+									<div class="car-lbr">
+										<a href="#" class="on">美国</a>
+										<!-- 
+										<a href="#">加拿大</a>
+										 -->
+									</div>
+								</div>
+								<div class="cont-bar">
+									<div class="car-lbl">目的地</div>
+									<div class="car-lbr" id="selCity">
+										<a href="javascript:void();"
+											onclick="javascript:sel_city(this,'拉斯维加斯')" class="">拉斯维加斯</a>
+										<a href="javascript:void();"
+											onclick="javascript:sel_city(this,'洛杉矶')" class="">洛杉矶</a> <a
+											href="javascript:void();"
+											onclick="javascript:sel_city(this,'旧金山')" class="">旧金山</a> <a
+											href="javascript:void();"
+											onclick="javascript:sel_city(this,'弗雷斯诺')" class="">弗雷斯诺</a>
+										<a href="javascript:void();"
+											onclick="javascript:sel_city(this,'佩吉')" class="">佩吉</a> <a
+											href="javascript:void();"
+											onclick="javascript:sel_city(this,'夏威夷')" class="">夏威夷</a> <a
+											href="javascript:void();"
+											onclick="javascript:sel_city(this,'奥兰多')" class="">奥兰多</a> <a
+											href="javascript:void();"
+											onclick="javascript:sel_city(this,'盐湖城')" class="">盐湖城</a> <a
+											href="javascript:void();"
+											onclick="javascript:sel_city(this,'蒙特利')" class="">蒙特利</a> <a
+											href="javascript:void();"
+											onclick="javascript:sel_city(this,'迈阿密')" class="">迈阿密</a> <a
+											href="javascript:void();"
+											onclick="javascript:sel_city(this,'芝加哥')" class="">芝加哥</a>
+
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="title">景点</div>
+							<div class="word" id="selScenic">
+								<a href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'17英里海岸')">17英里海岸</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'66号公路')">66号公路</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'一号公路')">一号公路</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'七哩桥')">七哩桥</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'大峡谷')">大峡谷</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'大提顿国家公园')">大提顿国家公园</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'大沼泽国家公园')">大沼泽国家公园</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'奥特莱斯')">奥特莱斯</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'好莱坞')">好莱坞</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'黄石公园')">黄石公园</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'布莱斯')">布莱斯</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'奥特莱斯')">奥特莱斯</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'拉斯维加斯大道')">拉斯维加斯大道</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_scenic(this,'拱门国家公园')">拱门国家公园</a>
+							</div>
+						</li>
+
+						<li>
+							<div class="title">语言能力</div>
+							<div class="word" id="selLang">
+								<a href="javascript:void();"
+									onclick="javascript:sel_lang(this,'普通话')">普通话</a><a
+									href="javascript:void();" class="on"
+									onclick="javascript:sel_lang(this,'英语')">英语</a>
+
+							</div>
+						</li>
+						<li>
+							<div class="title">其他服务</div>
+							<div class="word" id="selService">
+								<a href="javascript:void();"
+									onclick="javascript:sel_service(this, '接机')">接机</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_service(this, '人文历史')">熟悉人文历史</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_service(this, '体育')">熟悉体育项目</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_service(this, '音乐')">熟悉音乐</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_service(this, '科学')">熟悉自然科学</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_service(this, '红灯区')">熟悉红灯区</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_service(this, '美术')">熟悉美术</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_service(this, '建筑')">熟悉建筑</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_service(this, '美食')">熟悉当地美食</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_service(this, '酒店')">代订酒店</a> <a
+									href="javascript:void();"
+									onclick="javascript:sel_service(this, '票')">代订机票</a>
+							</div>
+						</li>
+					</ul>
 				</div>
-				<div class="span3">
-					<input type="hidden" class="span2" name="city" style=""
-						onclick="clickCitySearch()" id="txtSearchCity"
-						placeholder="请选择目的地城市" autocomplete="off" value="${cities}">
-
-					<div id="city_zone">
-
-						<div class="row" style="">
-							<ul class="nav nav-tabs span3" id="city_seller"
-								style="border-bottom: 0 solid black">
-
-								<c:forEach var="items" items="${city}">
-									<li style="text-align: left; width: 90px;"><label
-										class="checkbox "><input type="checkbox"
-											<c:if test="${fn:contains(cities,items.key) }">checked</c:if>
-											name="cityZone" onclick="sel_a_city('${items.key }')"
-											value="${items.key }"> ${items.key } </label></li>
-								</c:forEach>
-							</ul>
-						</div>
+			</div>
+			<div class="car-r">
+				<div class="car-rt">
+					<div class="car-rtl">
+						是否带车 <input type="radio" value="" name="" checked /> 是 <input
+							type="radio" value="" name="" /> 否
+					</div>
+					<div class="car-rtr">
+						<input type="text" class="inputstyle1" value="其它附加条件" /> <input
+							type="button" class="inputbg1" value="搜索" />
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="span1">
-					<span style="color: gray">出行时间:</span>
-				</div>
-				<div class="span3">
-					<div class="input-append date form_datetime">
-						<span class="add-on"> <i class="icon-calendar"></i></span><input
-							size="16" type="text" id="startDate" value="" name="startDate"
-							class="input-medium" readonly style="background-color: white;">
+				<div class="car-rb" id="tourList">
+					<ul>
+						<c:forEach var="tour" items="${tourList}" varStatus="status">
+							<li>
+								<div class="m-car">
+									<div class="m-car-img">
+										<a href="${context }/tour/detail?id=${tour.id }"><img
+											src="http://guantravel.com:5984/tours/${tour.id }/intro.jpg"
+											alt="" /></a>
+										<div class="icon">
+											<div class="icon-dy">导游</div>
+											<c:if test="${fn:length(tour.carType)>0}">
+												<div class="icon-zc">专车</div>
+											</c:if>
+										</div>
+									</div>
+									<div class="m-car-cont">
+										<div class="l">
+											<img
+												src="http://guantravel.com:5984/tours/${tour.id }/head.jpg"
+												alt="" />
+										</div>
+										<div class="r">
+											<div class="title">
+												<a href="${context }/tour/detail?id=${tour.id }">${tour.nickName }</a>
+											</div>
+											<div class="cont">${tour.introduce }</div>
+										</div>
+									</div>
+									<div class="m-car-bot">
+										<div class="l">
+											服务
+											<c:forEach var="i" begin="1" end="${tour.serviceLevel}"
+												step="1">
+												<span class="star"></span>
+											</c:forEach>
+											<c:forEach var="i" begin="${tour.serviceLevel}" end="4"
+												step="1">
+												<span class="star-no"></span>
+											</c:forEach>
+										</div>
+										<div class="r">
+											<em>￥${tour.unitPrice }</em>/小时
+										</div>
+									</div>
+								</div>
+							</li>
+						</c:forEach>
+					</ul>
+					<div class="page" style="display: none;">
+						<a href="#">&lt;</a><a href="#">1</a><a href="#">2</a><a href="#">3</a><a
+							href="#" class="on">4</a><a href="#">5</a><a href="#">6</a><a
+							href="#">…</a><a href="#">&gt;</a>
 					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="span1"></div>
-				<div class="span3">
-					<br />
-					<button class="btn btn-primary" onclick="searchTour()">搜索</button>
-				</div>
-			</div>
-		</div>
-		<!-- 右侧导游列  -->
-		<div class="span7" >
-			<!-- 导游列表  -->
-			<div class="row">
-				<div class="span7 text-center" id="tourList"
-					style="padding: 10px 10px 10px 10px; min-height: 400px;">
-					<img style='width: 25px;'
-						src='${context}/resources/image/loading.gif'><span>正在努力搜索中，请稍等，马上就好了。</span>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div style="height: 20px"></div>
-<!-- 右侧导游列表的模板 -->
-<div id="guideTmpl" style="display: none">
-	&nbsp;<a href="${context }/tour/detail?id=$id"><img src="$headImg"
-		class="leader_head img-circle" alt="$nickName" title="$nickName"
-		style="width: 30px;">$nickName</a>
-</div>
-<div id="tourTmpl" style="display: none">
-	<div class="row" style="height: 130px;">
-		<div class="span1" style="width: 95px;">
-			<a href="${context }/tour/detail?id=$tourId"><img
-				class="img-rounded"
-				style="width: 90px; height: 90px; margin-top: 10px;" src="$img"></a>
+<!-- 专车、导游模板定义 begin -->
+<div id="tmpl" style="display: none;">
+	<div class="m-car">
+		<div class="m-car-img">
+			<a href="${context }/tour/detail?id=$id"><img
+				src="http://guantravel.com:5984/tours/$id/intro.jpg" alt="" /></a>
+			<div class="icon">
+				<div class="icon-dy">导游</div>
+				<c:if test="${fn:length(tour.carType)>0}">
+					<div class="icon-zc">专车</div>
+				</c:if>
+			</div>
 		</div>
-		<div class="span4" style="color: gray">
-			<table style="height: 120px; width: 100%; text-align: left;">
-				<tr>
-					<td><h4 style="font-size: 18px; color: black;">
-							$name&nbsp;&nbsp; &nbsp;<span
-								style="color: gray; font-size: 14px">性别：&nbsp;$gender</span>
-							&nbsp;$serviceLevel
-						</h4></td>
-				</tr>
-				<!-- 
-				<tr>
-					<td><span style="color: gray;">$introduce</span></td>
-				</tr>
-				 -->
-				<tr>
-					<td><img style="height: 20px; padding: 0px 4px 0px 4px;"
-						src="${context }/resources/image/place_logo.png">&nbsp;服务城市：&nbsp;$cities</td>
-				</tr>
-				<tr>
-					<td><img style="height: 18px;"
-						src="${context }/resources/image/heart_logo.png">&nbsp;语言：&nbsp;$language</td>
-				</tr>
-				<tr>
-					<td>&nbsp;&nbsp;</td>
-				</tr>
-
-			</table>
+		<div class="m-car-cont">
+			<div class="l">
+				<img src="http://guantravel.com:5984/tours/$id/head.jpg" alt="" />
+			</div>
+			<div class="r">
+				<div class="title">
+					<a href="${context }/tour/detail?id=$id">$nickName</a>
+				</div>
+				<div class="cont">$introduce</div>
+			</div>
+		</div>
+		<div class="m-car-bot">
+			<div class="l">
+				服务
+				<c:forEach var="i" begin="1" end="${tour.serviceLevel}" step="1">
+					<span class="star"></span>
+				</c:forEach>
+				<c:forEach var="i" begin="${tour.serviceLevel}" end="4" step="1">
+					<span class="star-no"></span>
+				</c:forEach>
+			</div>
+			<div class="r">
+				<em>￥$unitPrice</em>/小时
+			</div>
 		</div>
 	</div>
-
 </div>
+<!-- 专车、导游模板定义  end -->
 <script type="text/javascript">
-	function clickTypeSearch() {
-		type_zone.style.display = "";
-	}
-	function clickCitySearch() {
-		city_zone.style.display = "";
-	}
-	function sel_a_city(cityName) {
-		var sel_city = "";
-		var cities = document.getElementsByName("cityZone");
-		for ( var i = 0; i < cities.length; i++) {
-			if (cities[i].checked)
-				sel_city += cities[i].value + ",";
+	var city = "";
+	var lang = "";
+	var scenic = "";
+	var service = "";
+	function get_a_str(divName) {
+		var div = document.getElementById(divName);
+		var tag_a = div.getElementsByTagName("a");
+		str = "";
+		for (var i = 0; i < tag_a.length; i++) {
+			if (tag_a[i].className.length > 0)
+				str += tag_a[i].innerHTML + ",";
 		}
-		//city_zone.style.display = "none";
-		txtSearchCity.value = sel_city;
+		return str;
 	}
-	function closeCityZone() {
-		city_zone.style.display = "none";
+	function sel_city(obj, cityName) {
+
+		if (obj.className.length == 0)
+			obj.className = "on";
+		else
+			obj.className = "";
+		//city = cityName;
+		city = get_a_str("selCity");
+		reload();
 	}
-	function searchTour() {
-		// type
-		/*var typeObj = document.getElementsByName("typeZone");
-		var type_str = "";
-		for ( var i = 0; i < typeObj.length; i++) {
-			if (typeObj[i].checked)
-				type_str += typeObj[i].value + ",";
-		}*/
-		// city
-		var cityObj = document.getElementsByName("cityZone");
-		var city_str = "";
-		for ( var i = 0; i < cityObj.length; i++) {
-			if (cityObj[i].checked)
-				city_str += cityObj[i].value + ",";
-		}
-		// fee
-		/*var feeObj = document.getElementsByName("sel_fee");
-		var fee_str = "";
-		for ( var i = 0; i < feeObj.length; i++) {
-			if (feeObj[i].checked) {
-				fee_str = feeObj[i].value;
-				break;
-			}
-		}*/
-		tourList.innerHTML = "<img style='width:25px;' src='${context}/resources/image/loading.gif'><span>找人陪进行时，马上到。</span>";
+	function sel_lang(obj, langName) {
+		if (obj.className.length == 0)
+			obj.className = "on";
+		else
+			obj.className = "";
+
+		lang = get_a_str("selLang");
+		reload();
+	}
+
+	function sel_scenic(obj, scenicName) {
+		if (obj.className.length == 0)
+			obj.className = "on";
+		else
+			obj.className = "";
+
+		scenic = get_a_str("selScenic");
+		reload();
+	}
+
+	function sel_service(obj, langName) {
+		if (obj.className.length == 0)
+			obj.className = "on";
+		else
+			obj.className = "";
+
+		service = get_a_str("selService");
+		reload();
+	}
+
+	function reload() {
+		var productList = document.getElementById("tourList");
+		debugger;
+		var tstr = "";
+		tourList.innerHTML = "正在努力获取数据中......";
 		var url = "${context}/custom/tour/smart";
-		$
-				.post(
-						url,
-						{
-							startDate : startDate.value,
-							city : city_str,
+		$.post(url, {
+			city : city,
+			scenic : scenic,
+			service : service,
+			lang : lang,
+			auto : false,
+			design : false,
+			startKey : null,
+			count : 50
+		}, function(result, status) {
 
-						},
-						function(result, status) {
-
-							if (status == 'success') {
-								// debugger;
-								var ps = eval(result);
-								if (ps != null && ps.length > 0)
-									fillPage(ps);
-								else
-									tourList.innerHTML = "<span>对不起，没有找到合适的导游，请放宽条件试一下。</span>";
-							} else {
-								tourList.innerHTML = "<span>对不起，访问失败，请刷新后重试！。</span>";
-							}
-
-						});
-	}
-	// 初始化时间
-	var now = new Date();
-	var year = now.getFullYear(); // 年
-	var month = now.getMonth() + 1; // 月
-	// 初始化日历
-	$(".form_datetime").datetimepicker({
-		initialDate : year + '-' + month,
-		// viewSelect : 'year',
-		format : 'yyyy-mm',
-		forceParse : 0,
-		todayHighlight : 1,
-		startView : 3,
-		minView : 3,
-		todayBtn : 1,
-		language : 'zh-CN',
-		autoclose : 1
-	});
-	function fillPage(ts) {
-		var tour_str = "";
-		//debugger;
-		var tourTmpl = document.getElementById("tourTmpl").innerHTML;
-		for ( var i = 0; i < ts.length; i++) {
-			// 导游列表
-			var tourTmpl_str = tourTmpl;
-			tourTmpl_str = tourTmpl_str.replace('$img', ts[i].headImg);
-			tourTmpl_str = tourTmpl_str.replace('$name',
-					decodeURIComponent(ts[i].nickName));
-			tourTmpl_str = tourTmpl_str.replace('$tourId', ts[i].custId);
-			var g = "保密";
-			if (parseInt(ts[i].gender) == 1)
-				g = '女';
-			else if (parseInt(ts[i].gender) == 2)
-				g = '男';
-			tourTmpl_str = tourTmpl_str.replace('$gender', g);
-			tourTmpl_str = tourTmpl_str.replace('$language',
-					decodeURIComponent(ts[i].language));
-			var star = '<img src="${context}/resources/image/red-star.png" style="width: 22px; margin-top: -5px;">';
-			var level = "";
-			//debugger;
-			for ( var n = 0; n < parseInt(ts[i].serviceLevel); n++) {
-				level += star;
+			if (status == 'success') {
+				debugger;
+				var ts = eval(result);
+				if (ts != null && ts.length > 0)
+					tourList.innerHTML = fill(ts);
+				else
+					tourList.innerHTML = "对不起，没有符合条件的产品，请放宽条件重新试一下。";
+			} else {
+				tourList.innerHTML = "对不起，访问失败，请刷新后重试！。";
 			}
-			tourTmpl_str = tourTmpl_str.replace('$serviceLevel', level);
-			tourTmpl_str = tourTmpl_str.replace('$cities',
-					decodeURIComponent(ts[i].cities));
 
-			tour_str += tourTmpl_str;
-		}
-		tourList.innerHTML = tour_str;
+		});
+
+		//tourList.innerHTML = "<ul>" + tstr + "</ul>";
 	}
-	// 默认加载全部产品
+	function fill(ts) {
+		var pstr = "";
+		var tmpl = document.getElementById("tmpl").innerHTML;
+		for (var i = 0; i < ts.length; i++) {
 
-	var url = "${context}/custom/tour/smart";
-	$.post(url, {
-		startDate : null,
-		city : null,
+			var gTmpl_str = tmpl;
+			gTmpl_str = gTmpl_str.replace(/\\$id/g, ts[i].id);
+			gTmpl_str = gTmpl_str.replace(/\\$nickName/g,
+					decodeURIComponent(ts[i].nickName));
+			gTmpl_str = gTmpl_str.replace(/\\$unitPrice/g, ts[i].unitPrice);
+			gTmpl_str = gTmpl_str.replace(/\\$introduce/g,
+					decodeURIComponent(ts[i].introduce));
 
-	}, function(result, status) {
-
-		if (status == 'success') {
-			// debugger;
-			var ts = eval(result);
-			if (ts != null && ts.length > 0)
-				fillPage(ts);
-			else
-				tourList.innerHTML = "<span>对不起，没有找到合适的人来陪，请放宽条件试一下。</span>";
+			pstr += "<li>" + gTmpl_str + "</li>";
 		}
-
-	});
+		return "<ul>" + pstr + "</ul>";
+	}
 </script>

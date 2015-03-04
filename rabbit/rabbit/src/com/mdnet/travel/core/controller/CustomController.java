@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.mdnet.travel.core.dao.ProductAllDetail;
+import com.mdnet.travel.core.dao.TourInfo;
 import com.mdnet.travel.core.model.CityDef;
 import com.mdnet.travel.core.model.GroupDate;
 import com.mdnet.travel.core.model.GroupDay;
@@ -169,10 +170,13 @@ public class CustomController extends BaseController {
 		for (SpecialBean s : sb) {
 			SpecialInfo[] si = g.fromJson(s.getSpecialBody(),
 					SpecialInfo[].class);
+			s.setImg("blank.png");
 			// 检索json字符串）中的第一个图片
 			for (SpecialInfo b : si) {
 				if (b.getSmart().length() > 0
-						&& !b.getSmart().contains("blank.png")) {
+						&& !b.getSmart().contains("blank.png")
+						&& !b.getSmart().contains(
+								"7945f640d6e94778e92653bff9ce9706")) {
 					s.setImg(b.getSmart());
 					break;
 				}
@@ -619,8 +623,8 @@ public class CustomController extends BaseController {
 		if (page != null)
 			pageNo = Integer.parseInt(page);
 
-		List<GroupDate> gd = this.customService.getGroupList("", 10, pageNo,
-				20);
+		List<GroupDate> gd = this.customService
+				.getGroupList("", 10, pageNo, 20);
 		List<GroupListBean> gb = new ArrayList<GroupListBean>();
 		for (int i = 0; gd != null && i < gd.size(); i++) {
 			GroupListBean g = new GroupListBean();
@@ -663,7 +667,10 @@ public class CustomController extends BaseController {
 		this.mav.addObject("standardList", ps1);
 		this.mav.setViewName(this.preMobile(request) + "custom/book");
 		this.mav.addObject("isMobile", CommonUtils.IsMobile(request));
-
+		// 导游列表
+		List<TourInfo> tours = this.tourService.search(null, null, null, null,
+				false, false, null, 6);
+		this.mav.addObject("tourLlist", tours);
 		// List<GroupDate> gs = this.customService.getGroupList("", 10, 0);
 		// for (int i = 0; gs != null && i < gs.size(); i++) {
 		// String startDate = gs.get(i).getStartDate();
@@ -691,8 +698,11 @@ public class CustomController extends BaseController {
 					SpecialInfo[].class);
 			// 检索json字符串）中的第一个图片
 			for (SpecialInfo b : si) {
+				System.out.println(b.getSmart());
 				if (b.getSmart().length() > 0
-						&& !b.getSmart().contains("blank.png")) {
+						&& !b.getSmart().contains("blank.png")
+						&& !b.getSmart().contains(
+								"7945f640d6e94778e92653bff9ce9706")) {
 					s.setImg(b.getSmart());
 					break;
 				}
@@ -941,7 +951,10 @@ public class CustomController extends BaseController {
 	@RequestMapping(value = "/product/search", method = { RequestMethod.POST,
 			RequestMethod.GET })
 	public ModelAndView ProductSearch(HttpServletRequest request,
-			@RequestParam(value = "city", required = false) String cities) {
+			@RequestParam(value = "city", required = false) String cities,
+			@RequestParam(value = "t", required = false) String lineType)
+			throws UnsupportedEncodingException {
+
 		if (cities == null)
 			cities = "";
 		this.getMav(request);
@@ -951,22 +964,63 @@ public class CustomController extends BaseController {
 		this.mav.addObject("city_list", all_cities);
 		List<ProductType> all_types = this.leaderService.findTypes();
 		this.mav.addObject("type_list", all_types);
+		// 加载默认的产品
+		List<ShowProductInfo> products = new ArrayList<ShowProductInfo>();
+		if (lineType != null) {
+			lineType = new String(lineType.getBytes("iso-8859-1"), "utf-8");
+			products = this.lineService.findProductsBycatalog(lineType,
+					request.getContextPath());
 
+		} else if (cities.length() > 0) {
+			cities = new String(cities.getBytes("iso-8859-1"), "utf-8");
+			String[] city_str = cities.split(",");
+			products = this.lineService.search(city_str, null, null, null);
+
+		}
+
+		// 获得产品团期
+		for (ShowProductInfo p : products) {
+			List<GroupDate> gs = this.customService.getGroupList(
+					"where productId=" + p.getProductID(), 10, 0, 1);
+
+			p.setGroupDate((gs != null && gs.size() > 0) ? gs.get(0)
+					.getStartDate() : "");
+			p.setLowPrice((gs != null && gs.size() > 0) ? gs.get(0)
+					.getAdultPrice() : 0);
+		}
+		this.mav.addObject("productList", products);
 		return this.mav;
 	}
 
 	@RequestMapping(value = "/tour/search", method = RequestMethod.GET)
-	public ModelAndView TourSearch(HttpServletRequest request) {
+	public ModelAndView TourSearch(HttpServletRequest request,
+			@RequestParam(value = "city", required = false) String cities)
+			throws UnsupportedEncodingException {
 		engine.getRepositoryService();
 		this.getMav(request);
-		this.mav.addObject("city", tourService.dataStatic("static/city"));
-		this.mav.addObject("lang", tourService.dataStatic("static/lang"));
-		this.mav.addObject("service", tourService.dataStatic("static/service"));
-		this.mav.addObject("scenic", tourService.dataStatic("static/scenic"));
+		/*
+		 * this.mav.addObject("city", tourService.dataStatic("static/city"));
+		 * this.mav.addObject("lang", tourService.dataStatic("static/lang"));
+		 * this.mav.addObject("service",
+		 * tourService.dataStatic("static/service"));
+		 * this.mav.addObject("scenic",
+		 * tourService.dataStatic("static/scenic"));
+		 */
+		if (cities == null)
+			cities = "";
 		this.mav.setViewName(this.preMobile(request) + "custom/tour/search");
-		// this.mav.addObject("cities", cities);
-		// List<CityDef> all_cities = this.leaderService.findCities();
-		// this.mav.addObject("city_list", all_cities);
+
+		List<TourInfo> tours = new ArrayList<TourInfo>();
+		if (cities.length() > 0) {
+			cities = new String(cities.getBytes("iso-8859-1"), "utf-8");
+			String[] city_str = cities.split(",");
+			this.mav.addObject("cities", city_str);
+			tours = this.tourService.search(city_str, null, null, null, false,
+					false, null, 50);
+
+		}
+
+		this.mav.addObject("tourList", tours);
 
 		return this.mav;
 	}
@@ -975,17 +1029,43 @@ public class CustomController extends BaseController {
 	@ResponseBody
 	public String TourSmart(
 			HttpServletRequest request,
-			@RequestParam(value = "city", required = false) String cities,
-			@RequestParam(value = "startDate", required = false) String startDate) {
+			@RequestParam(value = "city", required = false) String city,
+			@RequestParam(value = "scenic", required = false) String scenic,
+			@RequestParam(value = "service", required = false) String service,
+			@RequestParam(value = "lang", required = false) String lang,
+			@RequestParam(value = "auto", required = false) String auto,
+			@RequestParam(value = "design", required = false) String design,
+			@RequestParam(value = "startKey", required = false) String startKey,
+			@RequestParam(value = "count", required = false) String count
 
-		List<Tour> tours = this.leaderService.findTour(cities, startDate);
-		for (Tour t : tours) {
+	) {
+
+		String[] cities = null;
+		if (city != null && city.length() > 0)
+			cities = city.split(",");
+		String[] scenics = null;
+		if (scenic != null && scenic.length() > 0)
+			scenics = scenic.split(",");
+		String[] services = null;
+		if (service != null && service.length() > 0)
+			services = service.split(",");
+		String[] language = null;
+		if (lang != null && lang.length() > 0)
+			language = lang.split(",");
+		boolean isAuto = Boolean.valueOf(auto);
+		boolean isPlan = Boolean.valueOf(design);
+		int n = Integer.parseInt(count);
+		List<TourInfo> tours = this.tourService.search(cities, scenics,
+				services, language, isAuto, isPlan,
+				startKey.length() > 0 ? startKey : null, n);
+		for (TourInfo t : tours) {
 			try {
 				t.setNickName(java.net.URLEncoder.encode(t.getNickName(),
 						"UTF-8"));
-				t.setLanguage(java.net.URLEncoder.encode(t.getLanguage(),
+				t.setServiceCities(java.net.URLEncoder.encode(
+						t.getServiceCities(), "UTF-8"));
+				t.setIntroduce(java.net.URLEncoder.encode(t.getIntroduce(),
 						"UTF-8"));
-				t.setCities(java.net.URLEncoder.encode(t.getCities(), "UTF-8"));
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

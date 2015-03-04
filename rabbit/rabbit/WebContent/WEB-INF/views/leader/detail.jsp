@@ -3,454 +3,489 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script type="text/javascript"
-	src="${context }/resources/js/bootstrap-datetimepicker.zh-CN.js"
-	charset="UTF-8"></script>
-<link href="${context }/resources/css/bootstrap-datetimepicker.min.css"
-	rel="stylesheet">
-<script src="${context }/resources/custom/js/bootstrap-carousel.js"></script>
-<c:if test="${IsMobile==false }">
-	<div style="height: 0px;"></div>
-</c:if>
-<style>
-.leader {
-	position: absolute;
-	margin-top: -100px;
-	z-index: 55;
-	background-color: rgba(0, 0, 0, .55);
-	color: white;
-	height: 70px;
-	width: 1140px;
-	background-color: rgba(0, 0, 0, .55);
-	color: white;
-}
-
-.leader_head {
-	width: 200px;
-	height: 200px;
-	margin-top: -120px;
-	margin-left: 30px;
-}
-</style>
-<s:url var="orderURL" value="/custom/order?productID="></s:url>
-<c:choose>
-	<c:when test="${isMobile==true }">
-		<s:url var="detailURL" value="/show/spec?id="></s:url>
-	</c:when>
-	<c:otherwise>
-		<s:url var="detailURL" value="/custom/detail?id="></s:url>
-	</c:otherwise>
-</c:choose>
-
-<div class="container" style="max-width: ${maxWidth}px;">
-	<div>
-		<img src="${tour.introImg }" style="height: 380px; width: 1140px;" />
-		<div id="property" class="leader">
-			<div class="row">
-				<div class="span3">
-					<img src="${tour.headImg }"
-						class="leader_head img-circle img-polaroid" />
+<div class="maink">
+	<div class="main">
+		<div class="guide-t">
+			<img src="${context }/resources/rabbit/images/banner-4.jpg" alt="" />
+			<div class="guide-tbox">
+				<div class="guide-tl">
+					<img src="http://guantravel.com:5984/tours/${tour.id}/head.jpg"
+						alt="" />
 				</div>
-				<div class="span3">
-					<strong style="font-size: 36px; line-height: 44px;">${tour.nickName
-						}</strong><br /> <span style="line-height: 24px;">性别：<c:if
-							test="${tour.gender==2 }">男</c:if> <c:if
-							test="${tour.gender==1 }">女</c:if></span>
+				<div class="guide-tr">
+					<div class="guide-trt">
+						<em>${tour.nickName }</em>
 
-					<c:forEach var="i" begin="1" end="${tour.serviceLevel }" step="1">
-						<img src="${context }/resources/image/red-star.png"
-							style="width: 22px; margin-top: -5px;">
-					</c:forEach>
-				</div>
-				<div class="span3">
-					<span style="font-size: 22px; line-height: 36px;">基础导游服务价格</span>(每天)<br />
+						<c:forEach var="i" begin="1" end="${tour.serviceLevel}" step="1">
+							<span class="star"></span>
+						</c:forEach>
+						<c:forEach var="i" begin="${tour.serviceLevel}" end="4" step="1">
+							<span class="star-no"></span>
+						</c:forEach>
 
-
-					<strong style="font-size: 32px; line-height: 24px;">人民币￥：<c:choose>
-							<c:when test="${tour.unitPrice==0}">面议</c:when>
-							<c:otherwise>${tour.unitPrice}</c:otherwise>
-						</c:choose></strong>
-				</div>
-				<div class="span2 text-right">
-					<button class="btn btn-large btn-warning" type="button"
-						style="margin-top: 15px;" onclick="tourBook()">申请预约</button>
+					</div>
+					<ul class="guide-trb">
+						<li>常驻城市：<span>${tour.location }</span></li>
+						<li>服务城市：<span>${tour.serviceCities }</span></li>
+						<li>服务景点：<span>${tour.scenic }</span></li>
+					</ul>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row" style="height: 40px;"></div>
-	<div class="row">
-		<div class="span6">
-			<div class="nav nav-tabs" style="border: 0px solid">
-
-				<ul class="nav nav-tabs">
-					<li class="active"><a href="#A" data-toggle="tab">关于${tour.nickName
-							}</a></li>
-					<!-- 
-					<li class=""><a href="#B" data-toggle="tab">我提供的服务</a></li>
-					 -->
-					<li class=""><a href="#C" data-toggle="tab">关于我的评价(${tour.commentCount
-							})</a></li>
+		<div class="guide-b">
+			<div class="guide-bl">
+				<ul id="guide" class="guide">
+					<li class="guTag"><a onClick="guTag('guideCont0',this)"
+						href="javascript:;">导游简介</a></li>
+					<!-- <li><a onClick="guTag('guideCont1',this)" href="javascript:;">评论</a></li> -->
 				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="A">
-						<div class="row">
-							<!-- 
-					<div class="span3">
-						<img src="">
-					</div>
-				 -->
-							<div class="span5">
-								<div class="row">
-									<div class="span5">
-										<p>
-											<strong style="font-size: 22px; line-height: 36px;">导游简介</strong>
-										</p>
-										<p>您好，我是${tour.nickName }</p>
-										<p>提供服务的城市： ${tour.location }</p>
-										<p>语言能力： ${tour.language }</p>
-
-										<p>${tour.introduce }</p>
+				<div id="guideCont">
+					<div id="guideCont0" class="guideCont guTag">
+						<div class="guide-j">
+							<div class="guide-jt">
+								<p>${tour.introduce }</p>
+							</div>
+							<ul class="guide-jb">
+								<li>
+									<div class="guide-jbl">语言能力</div>
+									<div class="guide-jbr">
+										<em>母语：<span>${tour.language.motherLang }</span></em> <em>外语：
+											<span>${tour.language.foreignLang }</span>
+										</em>
 									</div>
-								</div>
-								<div class="row">
-									<div class="span6">
-										<strong style="font-size: 18px">服务等级</strong>
-										<c:forEach var="i" begin="1" end="${tour.serviceLevel }"
-											step="1">
-											<img src="${context }/resources/image/red-star.png"
-												style="width: 22px; margin-top: -5px;">
+								</li>
+								<li>
+									<div class="guide-jbl">车型</div>
+									<div class="guide-jbr">
+										<em>${tour.carType }</em>
+									</div>
+								</li>
+								<li>
+									<div class="guide-jbl">服务项目</div>
+									<div class="guide-jbr">
+										<c:forEach var="item" items="${tour.serviceItem}"
+											varStatus="status">
+											<div class="g-cda">
+												<div class="cda-l"></div>
+												<div class="cad-r">${item }</div>
+											</div>
 										</c:forEach>
-										<table class="table">
-											<tr>
-												<td style="width: 150px;">服务明细</td>
-												<td colspan="2"><div class="row" style="height: 45px;">
-														<div class="span1"
-															style="width:24px;height:24px;background:url(${context}/resources/image/service.png) 0 0px no-repeat">
-														</div>
-														<div class="span2"
-															style="width: 80px;<c:if test="${tourItems.accompany==0}">text-decoration: line-through;color: gray;</c:if>">伴游向导</div>
-														<div class="span1"
-															style="width:24px;height:24px;background:url(${context}/resources/image/service.png) 0 -58px no-repeat">
-														</div>
-														<div class="span2"
-															style="width: 80px;<c:if test="${tourItems.pathPlan==0}">text-decoration: line-through;color: gray;</c:if>">行程规划</div>
-													</div>
-													<div class="row" style="height: 45px;">
-														<div class="span1"
-															style="width:24px;height:24px;background:url(${context}/resources/image/service.png) -31px 0px no-repeat">
-														</div>
-														<div class="span2"
-															style="width: 80px;<c:if test="${tourItems.helpBook==0}">text-decoration: line-through;color: gray;</c:if>">代订服务</div>
-														<div class="span1"
-															style="width:24px;height:24px;background:url(${context}/resources/image/service.png) 0 -119px no-repeat">
-														</div>
-														<div class="span2"
-															style="width: 80px;<c:if test="${tourItems.camera==0}">text-decoration: line-through;color: gray;</c:if>">跟随摄像</div>
-													</div>
-													<div class="row" style="height: 45px;">
-														<div class="span1"
-															style="width:24px;height:24px;background:url(${context}/resources/image/service.png) 0 -178px no-repeat">
-														</div>
-														<div class="span2"
-															style="width: 80px;<c:if test="${tourItems.translate==0}">text-decoration: line-through;color: gray;</c:if>">陪同翻译</div>
-														<div class="span1"
-															style="width:24px;height:24px;background:url(${context}/resources/image/service.png) -31px -120px no-repeat">
-														</div>
-														<div class="span2"
-															style="width: 80px;<c:if test="${tourItems.drive==0}">text-decoration: line-through;color: gray;</c:if>">跟随驾车</div>
-													</div></td>
-											</tr>
 
-											<tr>
-												<td>服务位置</td>
-												<td colspan="2">${tour.location }</td>
+										<!-- 
+										<div class="g-cda">
+											<div class="cda-l"></div>
+											<div class="cad-r">纽约</div>
+										</div>
 
-											</tr>
-											<tr>
-												<td>费用说明</td>
-												<td colspan="2">${tour.feeDesc }</td>
+										<div class="g-cfc">
+											<div class="cfc-l"></div>
+											<div class="cfc-r">我是兼职导游</div>
+										</div>
+										 -->
 
-											</tr>
-											<tr>
-												<td>费用不含</td>
-												<td colspan="2">${tour.feeExcept }</td>
-											</tr>
-											<tr>
-												<td style="width: 150px;">补充说明</td>
-												<td colspan="3">${tour.supplement }</td>
-											</tr>
-										</table>
 									</div>
+								</li>
+								<li>
+									<div class="guide-jbl">费用包含</div>
+									<div class="guide-jbr">
+										${tour.feeDesc }
+										<!-- 每天服务时长：<span>9个小时</span><br /> 超时服务费：<span>CNY
+											100（1小时）</span><br /> 接待人数：<span>最多4人</span>
+											-->
+									</div>
+								</li>
+								<li>
+									<div class="guide-jbl">费用不含</div>
+									<div class="guide-jbr">
+										${tour.feeExcept }
+										<!-- 服务小费：<span>无</span><br /> 餐补费：<span>无</span><br /> 异地住宿补贴：<span>无</span>
+										-->
+									</div>
+								</li>
+								<li>
+									<div class="guide-jbl">其他说明</div>
+									<div class="guide-jbr">${tour.supplement }</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div id="guideCont1" class="guideCont">
+						<div class="view-t">
+							<div id="briefInfo">
+								<ul>
+									<li>
+										<div class="view-tl">
+											<a href="#"><img src="http://guantravel.com:5984/tours/${tour.id}/head.jpg" alt="" /></a>
+										</div>
+										<div class="view-tr">
+											<div class="view-trt">
+												<a href="#">Mariano张</a><span>2014-11-28 16:34</span>
+											</div>
+											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的</div>
+										</div>
+									</li>
+									<li>
+										<div class="view-tl">
+											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
+										</div>
+										<div class="view-tr">
+											<div class="view-trt">
+												<a href="#">王卯卯</a><span>2014-11-28 16:34</span>
+											</div>
+											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕</div>
+										</div>
+									</li>
+									<li>
+										<div class="view-tl">
+											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
+										</div>
+										<div class="view-tr active">
+											<div class="view-trt">
+												<a href="#">刘志军</a><span>2014-11-28 16:34</span>
+											</div>
+											<div class="view-trb">
+												<a href="#">@Mariano张</a>旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="view-tl">
+											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
+										</div>
+										<div class="view-tr">
+											<div class="view-trt">
+												<a href="#">Dana Parvan</a><span>2014-11-28 16:34</span>
+											</div>
+											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的</div>
+										</div>
+									</li>
+									<li>
+										<div class="view-tl">
+											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
+										</div>
+										<div class="view-tr">
+											<div class="view-trt">
+												<a href="#">Dana Parvan</a><span>2014-11-28 16:34</span>
+											</div>
+											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的</div>
+										</div>
+									</li>
+									<li>
+										<div class="view-tl">
+											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
+										</div>
+										<div class="view-tr">
+											<div class="view-trt">
+												<a href="#">Dana Parvan</a><span>2014-11-28 16:34</span>
+											</div>
+											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的</div>
+										</div>
+									</li>
+									<li>
+										<div class="view-tl">
+											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
+										</div>
+										<div class="view-tr">
+											<div class="view-trt">
+												<a href="#">Dana Parvan</a><span>2014-11-28 16:34</span>
+											</div>
+											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="open" id="expandMore">
+								<a href="javascript:;">展开</a>（234 条评论）
+							</div>
+							<script type="text/javascript">
+								$('#expandMore').click(function() {
+									$('#briefInfo').css({
+										'height' : 'auto',
+										'overflow' : 'none'
+									});
+									$('#expandMore').toggle();
+								});
+							</script>
+						</div>
+						<div class="view-b">
+							<textarea value="发表留言"
+								onfocus="if(this.value=='发表留言'){this.value=''}"
+								onblur="if(this.value==''){this.value='发表留言'}">发表留言</textarea>
+							<div class="view-bb">
+								<div class="l">注册登录后才可发表留言哦</div>
+								<div class="r">
+									<input type="button" class="inputbg2" value="确定" /> <input
+										type="button" class="inputbg3" value="去注册" />
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="tab-pane" id="B"></div>
-					<div class="tab-pane" id="C">
-						<strong style="font-size: 18px">游客评论</strong>
+				</div>
+			</div>
+			<div class="guide-br">
+				<div class="guide-brt">
+					<div class="guide-brtitle">
+						<div class="l">服务日历</div>
+					</div>
+					<div class="route-tr">
+						<c:forEach var="groupCanlendar" items="${groupCanlendars}"
+							varStatus="g">
+							<c:choose>
+								<c:when test="${g.index==0}">
+									<s:url var="show" value="" />
+								</c:when>
+								<c:otherwise>
+									<s:url var="show" value="none" />
+								</c:otherwise>
+							</c:choose>
+							<table width="100%" cellpadding="0" cellspacing="0" border="0"
+								id="can-${g.index}" style="display: ${show};">
+								<tbody>
+									<tr style="background: #f9e509;">
+										<td colspan="7">
+											<table class="line-table" width="100%" cellpadding="0"
+												cellspacing="0" border="0">
+												<tbody>
+													<tr>
+														<td class="last_mon" style="width: 56px;"
+															onclick="getGroup(0,${g.index})"></td>
+														<td>${groupCanlendar.year
+											}年${groupCanlendar.month }月</td>
+														<td class="next_mon" style="width: 56px;"
+															onclick="getGroup(1,${g.index})"></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr class="tdword">
+										<td width="14.2%" class="weekend">日</td>
+										<td width="14.2%">一</td>
+										<td width="14.2%">二</td>
+										<td width="14.2%">三</td>
+										<td width="14.2%">四</td>
+										<td width="14.2%">五</td>
+										<td class="weekend">六</td>
+									</tr>
+									<tr>
+										<c:forEach var="items" items="${groupCanlendar.days}"
+											varStatus="status">
 
-						<c:forEach var="items" items="${commentsList}" varStatus="status">
-							<div class="row"
-								style="background-color: #c4d6ec; line-height: 35px;">
-								<div class="span2">匿名[IP:${items.commentIP }]</div>
-								<div class="span4 text-right">${items.commentDate}&nbsp;发表</div>
-							</div>
-							<div class="row">
-								<div class="span6" style="line-height: 30px;">${items.context}
-								</div>
-							</div>
-							<div class="row">
-								<div class="span6 text-right">
-									<a href="javascript:approve(${items.id});"
-										id="approve_${items.id}">支持[${items.approveCount}]</a>
-								</div>
-							</div>
+											<c:choose>
+												<c:when test="${items.price != 0 }">
+													<td class="group_date" onmouseover="onPriceMouse('${items.date}',${items.price })"><a class="modalLink"
+														href="#modal9">${items.day}<br /> <span>￥${items.price }</span></a>
+													</td>
+												</c:when>
+												<c:otherwise>
+													<c:if test="${items.localMon }">
+														<td class="thismon">${items.day }</td>
+													</c:if>
+													<c:if test="${items.localMon == false }">
+														<td class="non_thismon">${items.day }</td>
+													</c:if>
+												</c:otherwise>
+											</c:choose>
+
+											<c:if test="${(status.index+1)%7==0 }">
+									</tr>
+									<tr>
+										</c:if>
+
+
+										</c:forEach>
+									</tr>
+									<tr></tr>
+								</tbody>
+							</table>
 						</c:forEach>
+
+
+
+						<script type="text/javascript">
+							function getGroup(t, inx) {
+								var oInx = inx;
+								if (t == 0) {
+									inx = parseInt(inx) - 1;
+								} else {
+									inx = parseInt(inx) + 1;
+								}
+								//alert(inx);
+								//设置新选择的日历出现
+								var canObj = document.getElementById("can-"
+										+ inx);
+								if (canObj != null) {
+									canObj.style.display = "";
+								} else {
+									//新日历显示失败，直接退回
+									return;
+								}
+								//隐藏原有日历
+								var canObj = document.getElementById("can-"
+										+ oInx);
+								if (canObj == null) {
+									return;
+								}
+								canObj.style.display = "none";
+							}
+						</script>
+					</div>
+				</div>
+				<div class="guide-brb">
+					<div class="guide-brtitle">
+						<div class="l">联系方式</div>
+					</div>
+					<div class="guide-brcont">
+						<ul class="guide-brcont-l">
+							<li class="gu1">${tour.mobile }</li>
+							<li class="gu2">${tour.QQ }</li>
+							<li class="gu3">${tour.EMail }</li>
+							<li class="gu4">${tour.weixinId }</li>
+						</ul>
+						<div class="guide-brcont-r">
+							<img
+								src="http://guantravel.com:5984/tours/${tour.id}/weixinQR.jpg"
+								alt="" />
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="span3" style="width: 100px;">&nbsp;</div>
-		<div class="span3">
-			<div style="height: 30px;"></div>
-
-			<div class="row">
-				<div class="span1"
-					style="height:36px;width:36px;background:url(${context }/resources/image/ico-m-u.png) 0 -157px no-repeat"></div>
-				<div class="span2" style="margin-left: 20px;">
-					<span style="line-height: 36px;">QQ：${tour.QQ}</span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span1"
-					style="height:36px;width:36px;background:url(${context }/resources/image/ico-m-u.png) 0 -229px no-repeat"></div>
-				<div class="span2" style="margin-left: 20px;">
-					<span style="line-height: 36px;">手机号：${tour.mobile}</span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span1"
-					style="height:36px;width:36px;background:url(${context }/resources/image/ico-m-u.png) 0 -198px no-repeat"></div>
-				<div class="span2" style="margin-left: 20px;">
-					<span style="line-height: 36px;">邮箱：<a
-						href="mailto:${tour.EMail}">${tour.EMail}</a></span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span1"
-					style="height:36px;width:36px;background:url(${context }/resources/image/ico-m-u.png) 0 -84px no-repeat"></div>
-				<div class="span2" style="margin-left: 20px;">
-					<span style="line-height: 36px;">微信：${tour.weixinId}</span>
-				</div>
-			</div>
-
-			<img src="${tour.weixinQR}" style="width: 150px; height: 150px">
-
-		</div>
-	</div>
-	<hr />
-	<div class="row">
-		<div class="span8">
-			<div class="row">
-				<div class="span2 text-center" style="width: 100px; height: 30px;">
-					<h4>网友评论</h4>
-				</div>
-				<div class="span6 text-right" style="line-height: 40px;">
-					<strong id="comment_count" style="color: red;">${tour.commentCount
-						}</strong>&nbsp;人评论
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span8">
-			<div class="row">
-				<div class="span2" style="width: 100px; height: 100px;">
-					<img src="${context }/resources/image/guanxing_logo.jpg"
-						style="width: 100px; height: 100px;">
-				</div>
-				<div class="span6">
-
-					<textarea id="commentText" placeholder="欢迎评论"
-						style="height: 100px; width: 100%"></textarea>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span8">
-			<div class="span2" style="width: 100px; height: 100px;"></div>
-			<div class="span4" style="margin-left: 0px;">
-				<input type="text" id="nickName" placeholder="昵称"
-					style="width: 100%">
-			</div>
-			<div class="span2  text-right">
-				<button class="btn btn-primary" id="btnAddComment"
-					onclick="addComment()">发送</button>
-			</div>
-		</div>
-	</div>
-
-
-</div>
-<div class="modal hide fade" id="tourBook">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"
-			aria-hidden="true">&times;</button>
-		<h3>导游预约</h3>
-	</div>
-	<div class="modal-body form-horizontal">
-
-		<div class="control-group">
-			<label class="control-label" for="inputEmail">预约起始日期</label>
-
-			<div class="input-append date form_datetime"
-				style="padding-left: 20px;">
-				<span class="add-on"> <i class="icon-calendar"></i></span><input
-					size="16" type="text" id="startDate" value="2014-07-25"
-					name="startDate" class="input-medium" readonly
-					style="background-color: white;">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="inputEmail">预约截止日期</label>
-
-			<div class="input-append date form_datetime"
-				style="padding-left: 20px;">
-				<span class="add-on"> <i class="icon-calendar"></i></span><input
-					size="16" type="text" id="endDate" value="2014-07-25"
-					name="endDate" class="input-medium" readonly
-					style="background-color: white;">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="inputEmail">联系电话</label>
-			<div class="controls">
-				<input type="text" id="linkPhone">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="inputEmail">联系人姓名</label>
-			<div class="controls">
-				<input type="text" id="linkName">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="inputEmail">备注信息</label>
-			<div class="controls">
-				<textarea id="memo"></textarea>
-			</div>
-		</div>
-
-	</div>
-	<div class="modal-footer">
-		<a href="#" onclick="javascript:tourBookClose();" class="btn">关闭</a>
-		<button id="freeBook" onclick="updateBook()" class="btn btn-warning">预约</button>
 	</div>
 </div>
-
+<!-- 预约弹框 STA -->
+<link rel="stylesheet"
+	href="${context }/resources/rabbit/css/jcDate.css" type="text/css" />
+<script src="${context }/resources/rabbit/js/jquery-jcDate.js"
+	type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-	function tourBook() {
-		$('#tourBook').modal("show");
-	}
-	function tourBookClose() {
-		$('#tourBook').modal("hide");
-	}
-	function updateBook() {
-		var custId = "${tour.custId}";
-
-		if (startDate.value > endDate.value) {
-			alert("对不起，起始日期不能晚于截止日期，请确认重新填写。");
-			return;
-		}
-		if (linkPhone.value.length > 11 || linkPhone.value.length == 0) {
-			alert("请填写正确的联系电话号码");
-			linkPhone.focus();
-			return;
-		}
-		if (linkName.value.length == 0 || linkName.value.length > 5) {
-			alert("请填写联系人姓名");
-			linkName.focus();
-			return;
-		}
-
-		var url = "${context}/tour/book";
-		$.post(url, {
-			custId : custId,
-			startDate : startDate.value,
-			endDate : endDate.value,
-			linkPhone : linkPhone.value,
-			linkName : linkName.value,
-			memo : memo.value
-		}, function(result, status) {
-			//debugger;
-			if (status == 'success') {
-				if (result == 0) {
-					alert("预约信息已经保存，领队会及时与您联系，谢谢！");
-					freeBook.disabled = true;
-				} else
-					alert("对不起，评论数据提交失败，请重新尝试！");
-			}
-
-		});
-	}
-
-	function addComment() {
-		if (commentText.value.length == 0) {
-			alert("请输入评论内容。");
-			return;
-		}
-		var url = "${context}/tour/addComments";
-		//debugger;
-		$.post(url, {
-			custId : "${tour.custId}",
-			nick : nickName.value,
-			context : commentText.value
-		}, function(result, status) {
-			//debugger;
-			if (status == 'success') {
-				if (result > 0) {
-					alert("您的评论数据已经提交，谢谢！");
-					btnAddComment.disabled = true;
-				} else
-					alert("对不起，预约失败，请重新尝试！");
-			}
-
-		});
-	}//end function addComment
-
-	function approve(id) {
-		var url = "${context}/tour/approve";
-		//debugger;
-		$.post(url, {
-			commentId : id
-		}, function(result, status) {
-			//debugger;
-			if (status == 'success') {
-				if (result > 0) {
-					var aObj = document.getElementById("approve_" + id);
-					aObj.innerHTML = "支持[" + result + "]";
-					aObj.href = "javascript:void(0)";
-				}
-			}
-
-		});
-	}//end function approve
-
-	$(".form_datetime").datetimepicker({
-		format : 'yyyy-mm-dd',
-		forceParse : 0,
-		todayHighlight : 1,
-		startView : 2,
-		minView : 2,
-		todayBtn : 1,
-		language : 'zh-CN',
-		autoclose : 1
-	});
-
-	startDate.value = CurentTime(1);
-	endDate.value = CurentTime(1);
-
-	
+    $(function (){
+        $("input.jcDate").jcDate({					       
+            IcoClass : "jcDateIco",
+            Event : "click",
+            Speed : 100,
+            Left : 0,
+            Top : 54,
+            format : "-",
+            Timeout : 100
+        });
+    });
+    </script>
+<div id="modal9" class="modal makebox"
+	style="top: 708px; left: 438.5px; display: none;">
+	<div class="make">
+		<div class="make-t">
+			<div class="l">在线预约</div>
+			<div class="r" id="divUnitPrice">
+				￥${tour.unitPrice}/小时<br>（每天10小时）
+			</div>
+		</div>
+		<div class="make-b">
+			<ul class="make-li">
+				<li>
+					<div class="l">
+						<!--  input type="radio" name="pick" value="pick"> --> <c:if test="${fn:length(tour.carType)==0 }">不</c:if>带车，最多6人
+					</div>
+					<!-- 
+					<div class="r">￥10880</div>
+					 -->
+				</li>
+				
+			</ul>
+			<div class="make-date">
+				<div class="date-zi">预约日期</div>
+				<input id="startDate" class="jcDate jcDateIco" value="2015-01-28">
+				<div class="on"></div>
+			</div>
+			<div class="make-sel">
+				<div class="l">
+					<div class="date-zi">旅客人数</div>
+					<select id="selPersons">
+						<option value="1">1人</option>
+						<option value="2">2人</option>
+						<option value="3">3人</option>
+						<option value="4">4人</option>
+						<option value="5">5人</option>
+						<option value="6">6人</option>
+						<option value="7">7人</option>
+						<option value="8">8人</option>
+						<option value="9">9人</option>
+						<option value="10">10人</option>
+						<option value="11">11人</option>
+						<option value="12">12人</option>
+						<option value="13">13人</option>
+						<option value="14">14人</option>
+						<option value="15">15人</option>
+						<option value="16">16人</option>
+						<option value="17">17人</option>
+						<option value="18">18人</option>
+						<option value="19">19人</option>
+						<option value="20">20人</option>
+					</select>
+					<div class="on"></div>
+				</div>
+				<div class="l">
+					<div class="date-zi">预约日期（每天10小时）</div>
+					<select id="selDays" onchange="calTotal()">
+						<option value="1">1天</option>
+						<option value="2">2天</option>
+						<option value="3">3天</option>
+						<option value="4">4天</option>
+						<option value="5">5天</option>
+						<option value="6">6天</option>
+						<option value="7">7天</option>
+						<option value="8">8天</option>
+						<option value="9">9天</option>
+						<option value="10">10天</option>
+						<option value="11">11天</option>
+						<option value="12">12天</option>
+						<option value="13">13天</option>
+						<option value="14">14天</option>
+						<option value="15">15天</option>
+					</select>
+					<div class="on"></div>
+				</div>
+			</div>
+			<div class="make-btn">
+				<div class="btn1">
+					费用总计：<br> <em>￥<span id="totalPrice">10880</span></em>
+				</div>
+				<em> <input type="button" onclick="order();" class="inputbg4" value="立即预定">
+				</em>
+			</div>
+			<em> </em>
+		</div>
+		<em> </em>
+	</div>
+	<em> </em>
+</div>
+<!-- 预约弹框 End -->
+<script type="text/javascript"
+	src="${context }/resources/rabbit/js/Validate.js"></script>
+<script type="text/javascript"
+	src="${context }/resources/rabbit/js/Validate.form.js"></script>
+<script type="text/javascript">
+var unitPrice = 0;
+function onPriceMouse(day, price)
+{
+	startDate.value = day;
+	divUnitPrice.innerHTML = '￥'+price+'/小时';
+	unitPrice = parseInt(price);
+	calTotal();
+}
+function calTotal()
+{
+	//debugger;
+	var days = selDays.options[selDays.selectedIndex].value;
+	var persons = selPersons.options[selPersons.selectedIndex].value;
+	var total = days*unitPrice*10;
+	totalPrice.innerHTML = total;
+	console.log({days:days, persons:persons, unitPrice:unitPrice, total:total});
+}
+function order()
+{
+	//判断是否登录
+	//下单
+	//支付
+}
 </script>

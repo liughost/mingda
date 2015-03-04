@@ -12,6 +12,14 @@ public class GroupDate {
 	private int adultPrice;//成人报价
 	private int childPrice;//儿童报价
 	private int hotelSpanPrice;//单房差价
+	private String tid;
+	
+	public String getTid() {
+		return tid;
+	}
+	public void setTid(String tid) {
+		this.tid = tid;
+	}
 	public int getHotelSpanPrice() {
 		return hotelSpanPrice;
 	}

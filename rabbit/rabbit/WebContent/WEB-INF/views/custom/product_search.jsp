@@ -2,413 +2,410 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script type="text/javascript"
-	src="${context }/resources/js/bootstrap-datetimepicker.zh-CN.js"
-	charset="UTF-8"></script>
-<link href="${context }/resources/css/bootstrap-datetimepicker.min.css"
-	rel="stylesheet">
-
-<style type="text/css">
-.city {
-	border-bottom: 0px;
-	z-index: 10000;
-	position: absolute;
-	width: 280px;
-	background-color: white;
-	border: 1px solid lightgray;
+<style>
+.word a {
+	min-width: 55px;
 }
-
-.price {
-	position: absolute;
-	margin-top: -45px;
-	background-color: rgba(0, 0, 0, 0.4);
-	line-height: 32px;
-	width: 270px;
+.car-lbr a {
+	min-width: 60px;
+	line-height: 30px;
 }
-
-a:hover {
-	text-decoration: none;
-}
-
-.place_item {
-	opacity: 0.6;
-	height: 20px;
-	width: auto;
-	padding-right: 8px;
-	margin-left: 4px;
-}
-
-.item {
-	padding-right: 5px;
-	opacity: 0.6;
-	width: 20px;
+.car-lb .word a {
+  width: 90px;
 }
 </style>
-<div class="container"
-	style="min-width: ${maxWidth}px;min-height: 400px;">
-	<div class="row">
-		<!-- 左侧选择栏  -->
-		<div class="span3 form-horizontal">
+<!-- banner STA -->
+<div class="bannerk">
+	<div class="banner">
+		<img src="${context }/resources/rabbit/images/banner-2.jpg" alt="" />
+	</div>
+</div>
+<!-- banner End -->
 
-			<div class="row" style="height: 50px;">
-				<div class="span1">
-					<span style="color: gray">目的地:</span>
-				</div>
-				<div class="span3">
-					<input type="text" class="span2" name="city" style=""
-						onclick="clickCitySearch()" id="txtSearchCity"
-						placeholder="请输入城市名称" autocomplete="off" value="${cities}">
-
-					<div id="city_zone" class="city" style="display: none;">
-						<div class="row">
-							<button type="button" class="close" onclick="closeCityZone()">&times;</button>
-						</div>
-						<div class="row" style="padding-left: 6px">
-							<ul class="nav nav-tabs span3" id="city_seller"
-								style="border-bottom: 0 solid black">
-
-								<c:forEach var="items" items="${city_list}">
-									<li style="text-align: left; width: 90px;"><label
-										class="checkbox "><input type="checkbox"
-											<c:if test="${fn:contains(cities,items.cityName) }">checked</c:if>
-											name="cityZone" onclick="sel_a_city('${items.cityName }')"
-											value="${items.cityName }"> ${items.cityName } </label></li>
-								</c:forEach>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row" style="height: 50px; display: none;">
-				<div class="span1">
-					<span style="color: gray">出行时间:</span>
-				</div>
-				<div class="span3">
-					<div class="input-append date form_datetime">
-						<span class="add-on"> <i class="icon-calendar"></i></span><input
-							size="16" type="text" id="startDate" value="" name="startDate"
-							class="input-medium" readonly style="background-color: white;">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span1">
-					<span style="color: gray">线路类型:</span>
-				</div>
-				<div class="span3">
-
-					<div id="type_zone">
-
-						<div class="row" style="padding-left: 6px">
-							<ul class="nav nav-tabs span3" id="type_seller"
-								style="border-bottom: 0 solid black">
-
-								<c:forEach var="items" items="${type_list}">
-									<li style="text-align: left; width: 90px;"><label
-										class="checkbox "><input type="checkbox"
-											name="typeZone" value="${items.catalogName }">
-											${items.catalogName } </label></li>
-								</c:forEach>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row" style="display: none">
-				<div class="span1">
-					<span style="color: gray">出行预算:</span>
-				</div>
-				<div class="span3">
-
-					<ul class="nav nav-tabs" style="border-bottom: 0px;">
-						<li style="text-align: left; width: 100px;"><label
-							class="radio "><input type="radio" name="sel_fee"
-								value="0" checked /> 不限制 </label></li>
-						<li style="text-align: left; width: 100px;"><label
-							class="radio "><input type="radio" name="sel_fee"
-								value="1" /> 1万以下 </label></li>
-						<li style="text-align: left; width: 100px;"><label
-							class="radio "><input type="radio" name="sel_fee"
-								value="2" /> 1万-2万 </label></li>
-						<li style="text-align: left; width: 100px;"><label
-							class="radio "><input type="radio" name="sel_fee"
-								value="3" /> 2万-3万 </label></li>
-						<li style="text-align: left; width: 100px;"><label
-							class="radio "><input type="radio" name="sel_fee"
-								value="5" /> 3万-5万 </label></li>
-						<li style="text-align: left; width: 100px;"><label
-							class="radio "><input type="radio" name="sel_fee"
-								value="10" /> 5万-10万 </label></li>
-						<li style="text-align: left; width: 100px;"><label
-							class="radio "><input type="radio" name="sel_fee"
-								value="11" /> 10万上 </label></li>
+<!-- 主体内容区 STA -->
+<div class="maink">
+	<div class="main">
+		<div class="car">
+			<div class="car-l">
+				<div class="car-lt">服务筛选</div>
+				<div class="car-lb">
+					<ul>
+						<li>
+							<div class="title">目的地</div>
+							<div class="cont">
+								<div class="cont-bar">
+									<div class="car-lbl">大洲</div>
+									<div class="car-lbr">
+										<a href="javascript:void();" class="on">北美洲</a>
+										<!-- <a href="javascript:void();">大洋洲</a> -->
+									</div>
+								</div>
+								<div class="cont-bar">
+									<div class="car-lbl">国家</div>
+									<div class="car-lbr">
+										<a href="javascript:void();" class="on">美国</a>
+										<!-- <a href="javascript:void();">加拿大</a>  -->
+									</div>
+								</div>
+								<div class="cont-bar">
+									<div class="car-lbl">目的地</div>
+									<div class="car-lbr" id="selCity">
+									<a href="javascript:void();" onclick="javascript:sel_city(this,'拉斯维加斯')"
+											class="">拉斯维加斯</a>
+									<a href="javascript:void();" onclick="javascript:sel_city(this,'洛杉矶')" class="">洛杉矶</a>
+									<a href="javascript:void();" onclick="javascript:sel_city(this,'旧金山')" class="">旧金山</a>
+									
+									<a
+											href="javascript:void();" onclick="javascript:sel_city(this,'弗雷斯诺')" class="">弗雷斯诺</a>
+									 <a href="javascript:void();"
+											onclick="javascript:sel_city(this,'佩吉')" class="">佩吉</a>
+													
+									<a href="javascript:void();" onclick="javascript:sel_city(this,'夏威夷')" class="">夏威夷</a>
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'奥兰多')" class="">奥兰多</a>
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'盐湖城')" class="">盐湖城</a>
+										<a
+											href="javascript:void();" onclick="javascript:sel_city(this,'蒙特利')" class="">蒙特利</a>
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'迈阿密')" class="">迈阿密</a>
+										<a href="javascript:void();"
+											onclick="javascript:sel_city(this,'芝加哥')" class="">芝加哥</a>		
+									<!--
+									<a href="javascript:void();" onclick="javascript:sel_city(this,'丹麦小镇')"
+											class="">丹麦小镇</a>
+									<a href="javascript:void();" onclick="javascript:sel_city(this,'卡梅尔小镇')"
+											class="">卡梅尔小镇</a>
+									<a href="javascript:void();" onclick="javascript:sel_city(this,'都柏林')" class="">都柏林</a>
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'隆波克')" class="">隆波克</a> 		
+										 <a
+											href="javascript:void();" onclick="javascript:sel_city(this,'华盛顿')" class="">华盛顿</a>
+										 <a href="javascript:void();"
+											onclick="javascript:sel_city(this,'圣路易斯')" class="">圣路易斯</a>
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'埃尔克城')"
+											class="">埃尔克城</a> <a href="javascript:void();"
+											onclick="javascript:sel_city(this,'基韦斯特')" class="">基韦斯特</a>
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'塔尔萨')" class="">塔尔萨</a>
+										
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'威廉姆斯')"
+											class="">威廉姆斯</a> <a href="javascript:void();"
+											onclick="javascript:sel_city(this,'布莱斯')" class="">布莱斯</a> 
+										 <a href="javascript:void();"
+											onclick="javascript:sel_city(this,'摩押')" class="">摩押</a> <a
+											href="javascript:void();" onclick="javascript:sel_city(this,'文图拉')" class="">文图拉</a>
+										
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'檀香山')" class="">檀香山</a>
+										
+										
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'科特斯')" class="">科特斯</a>
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'纽约')" class="">纽约</a>
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'罗德岱堡')"
+											class="">罗德岱堡</a>  
+										
+										<a href="javascript:void();" onclick="javascript:sel_city(this,'雷顿')" class="">雷顿</a>
+ 									-->
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="title">景点</div>
+							<div class="word" id="selScenic">
+							<a href="javascript:void();" onclick="javascript:sel_scenic(this,'17英里海岸')">17英里海岸</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'66号公路')">66号公路</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'一号公路')">一号公路</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'七哩桥')">七哩桥</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'大峡谷')">大峡谷</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'大提顿国家公园')">大提顿国家公园</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'大沼泽国家公园')">大沼泽国家公园</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'奥特莱斯')">奥特莱斯</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'好莱坞')">好莱坞</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'黄石公园')">黄石公园</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'布莱斯')">布莱斯</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'奥特莱斯')">奥特莱斯</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'拉斯维加斯大道')">拉斯维加斯大道</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'拱门国家公园')">拱门国家公园</a>
+							<!-- 
+								
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'中国剧院')">中国剧院</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'丹麦小镇')">丹麦小镇</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'九曲花街')">九曲花街</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'优胜美地')">优胜美地</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'侏罗纪公园')">侏罗纪公园</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'冒险岛')">冒险岛</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'千禧公园')">千禧公园</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'华丽一英里')">华丽一英里</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'华盛顿纪念碑')">华盛顿纪念碑</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'卡拉卡瓦大道')">卡拉卡瓦大道</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'卡梅尔小镇')">卡梅尔小镇</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'双峰山')">双峰山</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'史密森协会')">史密森协会</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'哈利波特主题乐园')">哈利波特主题乐园</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'唐人街')">唐人街</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'国会山庄')">国会山庄</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'西部遗产博物馆')">西部遗产博物馆</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'圆石滩')">圆石滩</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'圣路易斯大拱门')">圣路易斯大拱门</a>
+								
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'大盐湖')">大盐湖</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'大稜镜彩泉')">大稜镜彩泉</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'大苏尔')">大苏尔</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'大赛普里斯沼泽地')">大赛普里斯沼泽地</a>
+								
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'威基基海滩')">威基基海滩</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'威廉姆斯小镇')">威廉姆斯小镇</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'宰恩国家公园')">宰恩国家公园</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'小哈瓦那')">小哈瓦那</a>
+								
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'星光大道')">星光大道</a>
+								<a href="javascript:void();" onclick="javascript:sel_scenic(this,'曼哈顿')">曼哈顿</a>
+								 -->
+							</div>
+						</li>
+						<li>
+							<div class="title">
+								旅行目的<a href="">X</a>
+							</div>
+							<div class="word" id="selType">
+								<a href="javascript:void();" onclick="javascript:sel_type(this,'亲子')">亲子</a><a
+									href="javascript:void();" onclick="javascript:sel_type(this,'购物')">购物</a><a
+									href="javascript:void();" onclick="javascript:sel_type(this,'休闲')">休闲</a><a
+									href="javascript:void();" onclick="javascript:sel_type(this,'摄影')">摄影</a><a
+									href="javascript:void();" onclick="javascript:sel_type(this,'美食')">美食</a><a
+									href="javascript:void();" onclick="javascript:sel_type(this,'度假')">度假</a><a
+									href="javascript:void();" onclick="javascript:sel_type(this,'自驾')">自驾</a>
+							</div>
+						</li>
 					</ul>
 				</div>
 			</div>
-			<div class="row">
-				<div class="span1"></div>
-				<div class="span3">
-					<button class="btn btn-primary" onclick="searchProduct()">搜索</button>
+			<div class="car-r">
+				<div class="car-rt">
+					<div class="car-rtr">
+						<input type="text" class="inputstyle1" id="attach"
+							placeholder="其它附加条件" /> <input type="button" onclick="reload()"
+							class="inputbg1" value="搜索" />
+					</div>
+				</div>
+				<div class="groom-list" id="productList">
+					<ul>
+						<c:forEach var="product" items="${productList}" varStatus="status">
+							<li>
+								<div class="glist">
+									<div class="glist-t">
+										<a
+											href="${context }/custom/detail_all?id=${product.productID}"><img
+											src="${product.img }" alt=""
+											style="width: 371px; height: 371px;" /></a>
+										<div class="icon">
+											<div class="icon-xl">线路</div>
+										</div>
+										<div class="gbg-k">
+											<div class="gbg">
+												<a
+													href="${context }/custom/detail_all?id=${product.productID}">${product.name }</a>
+											</div>
+										</div>
+									</div>
+									<div class="glist-b">
+										<div class="l">
+											<span>￥${product.lowPrice }</span>/人
+										</div>
+										<div class="r">56</div>
+									</div>
+								</div>
+							</li>
+						</c:forEach>
+
+					</ul>
+					<div class="page" style="display: none;">
+						<a href="javascript:void();">&lt;</a><a href="javascript:void();">1</a><a href="javascript:void();">2</a><a href="javascript:void();">3</a><a
+							href="javascript:void();" class="on">4</a><a href="javascript:void();">5</a><a href="javascript:void();">6</a><a
+							href="javascript:void();">…</a><a href="javascript:void();">&gt;</a>
+					</div>
 				</div>
 			</div>
 		</div>
-		<!-- 右侧产品列  -->
-		<div class="span8" style="background-color: #f5f5f5;">
-			<!-- 产品列表  -->
-			<div class="row">
-				<div class="span7 text-center" id="productList"
-					style="padding: 10px 10px 10px 40px; min-height: 400px;">
-					<img style='width: 25px;'
-						src='${context}/resources/image/loading.gif'><span>正在努力搜索中，请稍等，马上就好了。</span>
+
+		<!-- 线路推荐 STA -->
+		<div class="groom">
+			<div class="groom-t">线路推荐</div>
+			<div class="groom-b">
+				<ul>
+					<li>
+						<div class="groom-bt">
+							<a target="_blank" href="${context }/custom/detail_all?id=10"><img src="${context}/resources/rabbit/images/photo-5.jpg" alt="" /></a>
+						</div>
+						<div class="groom-bb">
+							<div class="groom-bb-t">
+								<a target="_blank" href="${context }/custom/detail_all?id=10">城市：芝加哥、圣路易斯、塔尔萨、埃尔克城、雷顿、科特斯、佩吉、威廉姆斯、拉斯维加斯、洛杉矶</a>
+							</div>
+							<div class="groom-bb-b">出行天数：14天12晚</div>
+						</div>
+					</li>
+					<li>
+						<div class="groom-bt">
+							<a target="_blank" href="${context }/custom/detail_all?id=15"><img src="${context}/resources/rabbit/images/photo-6.jpg" alt="" /></a>
+						</div>
+						<div class="groom-bb">
+							<div class="groom-bb-t">
+								<a target="_blank" href="${context }/custom/detail_all?id=15">城市：洛杉矶、拉斯维加斯、布莱斯、摩押、科特斯、佩吉</a>
+							</div>
+							<div class="groom-bb-b">出行天数：12天10晚</div>
+						</div>
+					</li>
+					<li>
+						<div class="groom-bt">
+							<a target="_blank" href="${context }/custom/detail_all?id=9"><img src="${context}/resources/rabbit/images/photo-07.jpg" alt="" /></a>
+						</div>
+						<div class="groom-bb">
+							<div class="groom-bb-t">
+								<a target="_blank" href="${context }/custom/detail_all?id=9">城市：洛杉矶、拉斯维加斯、弗雷斯诺、都柏林、旧金山、蒙特利、卡梅尔小镇、隆波克、丹麦小镇</a>
+							</div>
+							<div class="groom-bb-b">出行天数：12天10晚</div>
+						</div>
+					</li>
+					<li>
+						<div class="groom-bt">
+							<a target="_blank" href="${context }/custom/detail_all?id=4"><img src="${context}/resources/rabbit/images/photo-08.jpg" alt="" /></a>
+						</div>
+						<div class="groom-bb">
+							<div class="groom-bb-t">
+								<a target="_blank" href="${context }/custom/detail_all?id=4">城市：拉斯维加斯、盐湖城、洛杉矶、怀俄明、犹他州</a>
+							</div>
+							<div class="groom-bb-b">出行天数：12天10晚</div>
+						</div>
+					</li>
+					<li>
+						<div class="groom-bt">
+							<a target="_blank" href="${context }/custom/detail_all?id=22"><img src="${context}/resources/rabbit/images/photo-9.jpg" alt="" /></a>
+						</div>
+						<div class="groom-bb">
+							<div class="groom-bb-t">
+								<a target="_blank" href="${context }/custom/detail_all?id=22">城市：奥兰多、罗德岱堡、迈阿密、基韦斯特、拉斯维加斯、洛杉矶</a>
+							</div>
+							<div class="groom-bb-b">出行天数：12天10晚</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- 线路推荐 End -->
+	</div>
+</div>
+<!-- 主体内容区 End -->
+<div id="tmpl" style="display: none;">
+	<li>
+		<div class="glist">
+			<div class="glist-t">
+				<a href="${context }/custom/detail_all?id=$productID"><img
+					src="$img" alt="" style="width: 371px; height: 371px;" /></a>
+				<div class="icon">
+					<div class="icon-xl">线路</div>
+				</div>
+				<div class="gbg-k">
+					<div class="gbg">
+						<a href="${context }/custom/detail_all?id=$productID">$name</a>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-<div style="height: 20px"></div>
-<div id="guideTmpl" style="display: none">
-	&nbsp;<a href="${context }/tour/detail?id=$id"><img src="$headImg"
-		class="leader_head img-circle" alt="$nickName" title="$nickName"
-		style="width: 30px;">$nickName</a>
-</div>
-<div id="productTmpl" style="display: none">
-	<div class="row" style="height: 190px;">
-		<div class="span3">
-			<a href="${context }/custom/detail_all?id=$productId"><img
-				class="img-rounded" style="width: 270px; height: 179px" src="$img">
-			</a>
-			<div class="price">
-				<a
-					href="${context }/custom/order?productID=$productId&gdate=$groupDate"
-					title="在线报名"><span style="color: white; font-size: 20px">￥$lowPrice/</span><span
-					style="color: white">人起 </span></a>
+			<div class="glist-b">
+				<div class="l">
+					<span>￥$lowPrice</span>/人
+				</div>
+				<div class="r">56</div>
 			</div>
 		</div>
-		<div class="span4" style="color: gray">
-			<table style="height: 180px; width: 100%; text-align: left;">
-				<tr>
-					<td><span style="font-size: 16px; color: black;">$name</span></td>
-				</tr>
-				<!-- 
-				<tr>
-					<td><span style="color: gray;">$introduce</span></td>
-				</tr>
-				 -->
-				<tr>
-					<td><img class="place_item"
-						src="${context }/resources/image/place_logo.png">&nbsp;城市:&nbsp;&nbsp;$cities</td>
-				</tr>
-
-				<tr>
-					<td><img style="height: 18px;" class="item"
-						src="${context }/resources/image/heart_logo.png">&nbsp;线路类型:&nbsp;&nbsp;$types</td>
-				</tr>
-
-				<tr>
-					<td><img class="item"
-						src="${context }/resources/image/days_logo.png">&nbsp;出行天数:&nbsp;&nbsp;$days<!-- <img
-						style="height: 20px;"
-						src="${context }/resources/image/type_logo.png"> &nbsp;导游：$guides --></td>
-				</tr>
-				<tr>
-					<td>
-						<table style="width: 100%">
-							<tr>
-								<td><img class="item"
-									src="${context }/resources/image/groupdate_logo.png"><span>&nbsp;最近团期：$groupDate&nbsp;<a
-										href="${context }/custom/detail_all?id=$productId">更多</a></span> <a
-									href="${context }/custom/order?productID=$productId&gdate=$groupDate"
-									style="text-decoration: none; display: none;" title="在线报名"><span
-										style="color: rgb(255, 145, 0); font-size: 20px">￥$lowPrice/</span><span
-										style="color: rgb(255, 145, 0)">人起 </span></a></td>
-								<td style="text-align: right;"><a
-									href="${context }/custom/order?productID=$productId&gdate=$groupDate"
-									style="margin-right: 20px; margin-top: 0px; display:;"
-									class="btn btn-warning pull-right">报名</a></td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-
+	</li>
 </div>
+
 <script type="text/javascript">
-	function clickTypeSearch() {
-		type_zone.style.display = "";
-	}
-	function clickCitySearch() {
-		city_zone.style.display = "";
-	}
-	function sel_a_city(cityName) {
-		var sel_city = "";
-		var cities = document.getElementsByName("cityZone");
-		for (var i = 0; i < cities.length; i++) {
-			if (cities[i].checked)
-				sel_city += cities[i].value + ",";
-		}
-		city_zone.style.display = "none";
-		txtSearchCity.value = sel_city;
-	}
-	function closeCityZone() {
-		city_zone.style.display = "none";
-	}
-	function arr2str(Obj) {
-		var _str = '';
-		for (var i = 0; i < Obj.length; i++) {
-			if (Obj[i].checked) {
-				_str += Obj[i].value;
-				if (i < Obj.length - 1)
-					_str += ',';
-			}
-		}
-		return _str;
-	}
-	function searchProduct() {
-		debugger;
-		// type
-		var typeObj = document.getElementsByName("typeZone");
-		var type_str = arr2str(typeObj);
-		// city
-		var cityObj = document.getElementsByName("cityZone");
-		var city_str = arr2str(cityObj);
+	var city = "";
+	var type = "";
+	var scenic = "";
+	function sel_scenic(obj, scenicName) {
+		var div = document.getElementById("selScenic");
+		var scenic_a = div.getElementsByTagName("a");
 
-		// fee
-		// city
+		scenic = "";
+		if (obj.className.length == 0)
+			obj.className = "on";
+		else
+			obj.className = "";
+		for (var i = 0; i < scenic_a.length; i++) {
+			if (scenic_a[i].className.length > 0)
+				scenic += scenic_a[i].innerHTML + ",";
+		}
+		reload();
+	}
+	function sel_type(obj, typeName) {
+		var div = document.getElementById("selType");
+		var type_a = div.getElementsByTagName("a");
 
-		productList.innerHTML = "<img style='width:25px;' src='${context}/resources/image/loading.gif'><span>正在努力搜索中，请稍等，马上就好了。</span>";
+		if (obj.className.length == 0)
+			obj.className = "on";
+		else
+			obj.className = "";
+		type = "";
+		for (var i = 0; i < type_a.length; i++) {
+			if (type_a[i].className.length > 0)
+				type += type_a[i].innerHTML + ",";
+		}
+		reload();
+	}
+	function sel_city(obj, cityName) {
+		var div = document.getElementById("selCity");
+		var city_a = div.getElementsByTagName("a");
+
+		if (obj.className.length == 0)
+			obj.className = "on";
+		else
+			obj.className = "";
+		//city = cityName;
+		city = "";
+		for (var i = 0; i < city_a.length; i++) {
+			if (city_a[i].className.length > 0)
+				city += city_a[i].innerHTML + ",";
+		}
+		reload();
+	}
+	function reload() {
+		var productList = document.getElementById("productList");
+
+		var pstr = "";
+		productList.innerHTML = "正在努力获取数据中......";
 		var url = "${context}/custom/product/smart";
-		$
-				.post(
-						url,
-						{
-							//startDate : startDate.value,
-							city : city_str,
-							//fee : fee_str,
-							type : type_str,//type_str,
-							attach : [],
-							scenics : []
-						},
-						function(result, status) {
+		$.post(url, {
+			city : city,
+			type : type,
+			attach : attach.value,
+			scenics : scenic
+		}, function(result, status) {
 
-							if (status == 'success') {
-								// debugger;
-								var ps = eval(result);
-								if (ps != null && ps.length > 0)
-									fillPage(ps);
-								else
-									productList.innerHTML = "<span>对不起，没有符合条件的产品，请放宽条件重新试一下。</span>";
-							} else {
-								productList.innerHTML = "<span>对不起，访问失败，请刷新后重试！。</span>";
-							}
-
-						});
-	}
-	// 初始化时间
-	var now = new Date();
-	var year = now.getFullYear(); // 年
-	var month = now.getMonth() + 1; // 月
-	// 初始化日历
-	$(".form_datetime").datetimepicker({
-		initialDate : year + '-' + month,
-		// viewSelect : 'year',
-		format : 'yyyy-mm',
-		forceParse : 0,
-		todayHighlight : 1,
-		startView : 3,
-		minView : 3,
-		todayBtn : 1,
-		language : 'zh-CN',
-		autoclose : 1
-	});
-	function fillPage(ps) {
-		var product_str = "";
-		var guideTmpl = document.getElementById("guideTmpl").innerHTML;
-		var productTmpl = document.getElementById("productTmpl").innerHTML;
-		for (var i = 0; i < ps.length; i++) {
-			// 导游列表
-			var guideTmpl_str = "";
-
-			for (var j = 0; ps[i].tour != null && j < ps[i].tour.length; j++) {
-				//debugger;
-				var gTmpl_str = guideTmpl;
-				gTmpl_str = gTmpl_str
-						.replace("$headImg", ps[i].tour[j].headImg);
-				gTmpl_str = gTmpl_str.replace("$id", ps[i].tour[j].custId);
-				//alert("abcabcabc".replace(/\a/g,"ad"));
-				gTmpl_str = gTmpl_str.replace(/\\$nickName/g,
-						decodeURIComponent(ps[i].tour[j].nickName));
-				//gTmpl_str = gTmpl_str.replace("$nickName",
-				//		decodeURIComponent(ps[i].tour[j].nickName));
-				guideTmpl_str += gTmpl_str;
-				//break;//显示第一个
+			if (status == 'success') {
+				debugger;
+				var ps = eval(result);
+				if (ps != null && ps.length > 0)
+					productList.innerHTML = fill(ps);
+				else
+					productList.innerHTML = "对不起，没有符合条件的产品，请放宽条件重新试一下。";
+			} else {
+				productList.innerHTML = "对不起，访问失败，请刷新后重试！。";
 			}
-			// 产品列表
-			var productTmpl_str = productTmpl;
-			productTmpl_str = productTmpl_str.replace('$img', ps[i].img);
-			productTmpl_str = productTmpl_str.replace('$name',
-					decodeURIComponent(ps[i].name));
-			// 线路类型
-			var types = ps[i].lineType;
-			/*for ( var j = 0; ps[i].productType != null
-					&& j < ps[i].productType.length; j++) {
-				types += decodeURIComponent(ps[i].productType[j].catalogName)
-						+ "&nbsp;";
-			}*/
-			productTmpl_str = productTmpl_str.replace('$types',
-					decodeURIComponent(types));
-			// 城市
-			var cities = ps[i].cities_str;
-			/*for ( var j = 0; ps[i].cities != null && j < ps[i].cities.length; j++) {
-				cities += decodeURIComponent(ps[i].cities[j].cityName)
-						+ "&nbsp;";
-			}*/
-			//alert(cities);
-			productTmpl_str = productTmpl_str.replace('$cities',
-					decodeURIComponent(cities));
 
-			productTmpl_str = productTmpl_str.replace('$detailId',
-					ps[i].MediaID);
-			productTmpl_str = productTmpl_str.replace('$introduce',
-					decodeURIComponent(ps[i].introduce));
-			productTmpl_str = productTmpl_str.replace('$days',
-					decodeURIComponent(ps[i].days));
-			productTmpl_str = productTmpl_str.replace(/\\$groupDate/g,
-					ps[i].groupDate);
-			productTmpl_str = productTmpl_str.replace('$guides', guideTmpl_str);
-			productTmpl_str = productTmpl_str.replace('$lowPrice',
-					ps[i].lowPrice);
-			productTmpl_str = productTmpl_str.replace(/\\$productId/g,
-					ps[i].productID);
+		});
 
-			product_str += productTmpl_str;
-		}
-		productList.innerHTML = product_str;
+		//productList.innerHTML = "<ul>" + pstr + "</ul>";
 	}
-	// 默认加载全部产品
-	debugger;
-	var url = "${context}/custom/product/smart";
-	$
-			.post(
-					url,
-					{
-						city : txtSearchCity.value,
-						type : null,
-						attach : null,
-						scenics : null
-
-					},
-					function(result, status) {
-
-						if (status == 'success') {
-							// debugger;
-							var ps = eval(result);
-							if (ps != null && ps.length > 0)
-								fillPage(ps);
-							else
-								productList.innerHTML = "<span>对不起，没有符合条件的产品，请放宽条件重新试一下。</span>";
-						}
-
-					});
+	function fill(ps) {
+		var pstr = "";
+		var tmpl = document.getElementById("tmpl").innerHTML;
+		for (var i = 0; i < ps.length; i++) {
+			var gTmpl_str = tmpl;
+			gTmpl_str = gTmpl_str.replace(/\\$productID/g, ps[i].productID);
+			gTmpl_str = gTmpl_str.replace(/\\$lowPrice/g, ps[i].lowPrice);
+			gTmpl_str = gTmpl_str.replace(/\\$img/g, ps[i].img);
+			gTmpl_str = gTmpl_str.replace(/\\$name/g,
+					decodeURIComponent(ps[i].name));
+			pstr += gTmpl_str;
+		}
+		return "<ul>" + pstr + "</ul>";
+	}
 </script>

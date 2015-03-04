@@ -72,6 +72,7 @@
             }else{
                 currentModal = $('.modal');
             }
+            
             openModal();
         });
         

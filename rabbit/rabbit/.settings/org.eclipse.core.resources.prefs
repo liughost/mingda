@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/views/custom/default_footer.jsp=UTF-8
 encoding//WebContent/WEB-INF/views/custom/product_search.jsp=UTF-8
+encoding//WebContent/resources/rabbit/css/style.css=UTF-8
 encoding//src/com/mdnet/travel/core/controller/AdminController.java=UTF-8
 encoding//src/com/mdnet/travel/core/controller/ComplaintController.java=UTF-8
 encoding//src/com/mdnet/travel/core/controller/EventController.java=UTF-8

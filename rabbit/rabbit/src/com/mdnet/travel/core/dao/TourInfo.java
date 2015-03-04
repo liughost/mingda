@@ -11,8 +11,8 @@ import org.jcouchdb.document.ValueRow;
 import org.jcouchdb.document.ViewResult;
 
 public class TourInfo extends MyBaseDocument {
-	//protected static TourInfo _tourInfo = null;
-	
+	// protected static TourInfo _tourInfo = null;
+
 	// 图片
 	protected String headImg;// 头像图片名称
 	protected String introImg;// 领队介绍的大图;
@@ -47,6 +47,14 @@ public class TourInfo extends MyBaseDocument {
 	protected String supplement;// 其他说明
 
 	protected List<String> serviceItem = new ArrayList<String>();
+
+	public TourInfo() {
+
+	}
+
+	public TourInfo(Database db) {
+		this.db = db;
+	}
 
 	public int getPlanning() {
 		return planning;
@@ -240,22 +248,20 @@ public class TourInfo extends MyBaseDocument {
 		this.supplement = supplement;
 	}
 
-	//public TourInfo() {
-		//db = new Database("guantravel.com", 5984, "tours");
-		// db = new Database("deanx.cn", 5984, "mydatabase");
-		// AuthScope authScope = new AuthScope("guantravel.com", 5984);
-		// Credentials credentials = new UsernamePasswordCredentials("mingda",
-		// "mingdaNET");
-		// db.getServer().setCredentials(authScope, credentials);
-		// className = this.getClass().getName();
-	//}
+	// public TourInfo() {
+	// db = new Database("guantravel.com", 5984, "tours");
+	// db = new Database("deanx.cn", 5984, "mydatabase");
+	// AuthScope authScope = new AuthScope("guantravel.com", 5984);
+	// Credentials credentials = new UsernamePasswordCredentials("mingda",
+	// "mingdaNET");
+	// db.getServer().setCredentials(authScope, credentials);
+	// className = this.getClass().getName();
+	// }
 
 	/*
-	public static TourInfo instance() {
-		if (TourInfo._tourInfo == null)
-			TourInfo._tourInfo = new TourInfo();
-		return TourInfo._tourInfo;
-	}*/
+	 * public static TourInfo instance() { if (TourInfo._tourInfo == null)
+	 * TourInfo._tourInfo = new TourInfo(); return TourInfo._tourInfo; }
+	 */
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public TourInfo Unseriable(ValueRow<Map> result) {
@@ -321,16 +327,14 @@ public class TourInfo extends MyBaseDocument {
 				null, null);
 		System.out.println(ret.toString());
 	}
-	
-	
-
-	
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TourInfo Unseriable(Map result) {
 		this.price.clear();
 		this.serviceItem.clear();
 
+		this.setId((String) result.get("_id"));
+		this.setRevision((String) result.get("_rev"));
 		Field[] fields = this.getClass().getDeclaredFields();// 反射类字段
 		for (Field field : fields) {
 			String vName = field.getName();
@@ -383,8 +387,6 @@ public class TourInfo extends MyBaseDocument {
 		return this;
 	}
 
-	
-
 	public int Add() {
 		String mapFunc = "{\"map\":\"function(doc) {if(doc.mobile != null && doc.mobile == "
 				+ this.mobile + "){emit(doc._rev, null);}}\"}";
@@ -404,6 +406,4 @@ public class TourInfo extends MyBaseDocument {
 		return 0;
 	}
 
-	
-	
 }

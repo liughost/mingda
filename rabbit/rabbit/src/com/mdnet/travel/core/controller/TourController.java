@@ -1,6 +1,8 @@
 package com.mdnet.travel.core.controller;
 
 import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,29 +14,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mdnet.travel.core.dao.TourInfo;
+import com.mdnet.travel.core.model.GroupMonth;
 import com.mdnet.travel.core.model.Tour;
 import com.mdnet.travel.core.model.TourItems;
 import com.mdnet.travel.core.model.TourOrder;
+import com.mdnet.travel.core.service.ICustomService;
 import com.mdnet.travel.core.service.ILeaderService;
+import com.mdnet.travel.core.service.impl.TourService;
 
 @Controller
 @RequestMapping("/tour")
 public class TourController extends BaseController {
 	@Resource(name = ILeaderService.SERVICE_NAME)
 	private ILeaderService leaderService;
+	@Resource(name = TourService.SERVICE_NAME)
+	private TourService tourService;
+	@Resource(name = ICustomService.SERVICE_NAME)
+	protected ICustomService customService;
 
 	@RequestMapping(value = { "detail" }, method = RequestMethod.GET)
 	public ModelAndView leaderDetail(HttpServletRequest request,
-			@RequestParam(value = "id", required = true) String custId) {
+			@RequestParam(value = "id", required = true) String id) throws ParseException {
 		this.getMav(request);
 		this.mav.setViewName(this.preMobile(request) + "leader/detail");
-		Tour tour = leaderService.findTour(Integer.parseInt(custId));
-		TourItems tourItems = leaderService.findTourItems(Integer
-				.parseInt(custId));
+		TourInfo tour = this.tourService.takeTour(id);
+		tour.setFeeDesc(tour.getFeeDesc().replace("\n", "<br/>"));
+		tour.setFeeExcept(tour.getFeeExcept().replace("\n", "<br/>"));
+		tour.setSupplement(tour.getSupplement().replace("\n", "<br/>"));
 		this.mav.addObject("tour", tour);
-		this.mav.addObject("tourItems", tourItems);
-		this.mav.addObject("commentsList",
-				this.leaderService.findComments(Integer.parseInt(custId), 0));
+		
+		List<GroupMonth> gms = customService.makeGroupCalendar(tour.getId(), tour.getNickName(), tour.getPrice());
+
+		this.mav.addObject("groupCanlendars", gms);
+//		this.mav.addObject("commentsList",
+//				this.leaderService.findComments(Integer.parseInt(custId), 0));
 		return this.mav;
 	}
 

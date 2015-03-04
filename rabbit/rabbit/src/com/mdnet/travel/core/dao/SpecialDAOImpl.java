@@ -19,7 +19,7 @@ public class SpecialDAOImpl extends BasicDAOImpl<Special> implements SpecialDAO 
 
 	@Override
 	public Special getNext(int id, String wxAccount) {
-		String where = "toUserName='" + wxAccount + "' and  id>" + id;
+		String where = "toUserName='" + wxAccount + "' and  id>" + id + " order by id asc";
 		List<Special> list = this.findAll(where, 0, 1);
 		if (list != null && list.size() > 0)
 			return (Special) list.get(0);
