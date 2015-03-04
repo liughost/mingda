@@ -17,6 +17,14 @@ public class ShowProductInfo {
 	private List<CityDef> cities;
 	private String cities_str;
 	private String lineType;
+	private String couchId;
+	
+	public String getCouchId() {
+		return couchId;
+	}
+	public void setCouchId(String couchId) {
+		this.couchId = couchId;
+	}
 	public String getLineType() {
 		return lineType;
 	}

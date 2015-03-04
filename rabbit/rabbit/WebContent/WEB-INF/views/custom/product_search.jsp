@@ -161,7 +161,7 @@
 						</li>
 						<li>
 							<div class="title">
-								旅行目的<a href="">X</a>
+								旅行目的
 							</div>
 							<div class="word" id="selType">
 								<a href="javascript:void();" onclick="javascript:sel_type(this,'亲子')">亲子</a><a
@@ -190,17 +190,17 @@
 							<li>
 								<div class="glist">
 									<div class="glist-t">
-										<a
-											href="${context }/custom/detail_all?id=${product.productID}"><img
-											src="${product.img }" alt=""
+										<a target="_blank" 
+											href="${context }/custom/detail_all?id=${product.couchId}"><img
+											src="http://guantravel.com:5984/travel/${product.couchId }/intro.jpg" alt=""
 											style="width: 371px; height: 371px;" /></a>
 										<div class="icon">
 											<div class="icon-xl">线路</div>
 										</div>
 										<div class="gbg-k">
 											<div class="gbg">
-												<a
-													href="${context }/custom/detail_all?id=${product.productID}">${product.name }</a>
+												<a target="_blank" 
+													href="${context }/custom/detail_all?id=${product.couchId}">${product.name }</a>
 											</div>
 										</div>
 									</div>
@@ -231,55 +231,55 @@
 				<ul>
 					<li>
 						<div class="groom-bt">
-							<a target="_blank" href="${context }/custom/detail_all?id=10"><img src="${context}/resources/rabbit/images/photo-5.jpg" alt="" /></a>
+							<a target="_blank" href="${context }/custom/detail_all?id=618c84ab493269bc0ac54fa0c70056e3"><img src="${context}/resources/rabbit/images/photo-5.jpg" alt="" /></a>
 						</div>
 						<div class="groom-bb">
 							<div class="groom-bb-t">
-								<a target="_blank" href="${context }/custom/detail_all?id=10">城市：芝加哥、圣路易斯、塔尔萨、埃尔克城、雷顿、科特斯、佩吉、威廉姆斯、拉斯维加斯、洛杉矶</a>
+								<a target="_blank" href="${context }/custom/detail_all?id=618c84ab493269bc0ac54fa0c70056e3">城市：芝加哥、圣路易斯、塔尔萨、埃尔克城、雷顿、科特斯、佩吉、威廉姆斯、拉斯维加斯、洛杉矶</a>
 							</div>
 							<div class="groom-bb-b">出行天数：14天12晚</div>
 						</div>
 					</li>
 					<li>
 						<div class="groom-bt">
-							<a target="_blank" href="${context }/custom/detail_all?id=15"><img src="${context}/resources/rabbit/images/photo-6.jpg" alt="" /></a>
+							<a target="_blank" href="${context }/custom/detail_all?id=618c84ab493269bc0ac54fa0c7002c7b"><img src="${context}/resources/rabbit/images/photo-6.jpg" alt="" /></a>
 						</div>
 						<div class="groom-bb">
 							<div class="groom-bb-t">
-								<a target="_blank" href="${context }/custom/detail_all?id=15">城市：洛杉矶、拉斯维加斯、布莱斯、摩押、科特斯、佩吉</a>
+								<a target="_blank" href="${context }/custom/detail_all?id=618c84ab493269bc0ac54fa0c7002c7b">城市：洛杉矶、拉斯维加斯、布莱斯、摩押、科特斯、佩吉</a>
 							</div>
 							<div class="groom-bb-b">出行天数：12天10晚</div>
 						</div>
 					</li>
 					<li>
 						<div class="groom-bt">
-							<a target="_blank" href="${context }/custom/detail_all?id=9"><img src="${context}/resources/rabbit/images/photo-07.jpg" alt="" /></a>
+							<a target="_blank" href="${context }/custom/detail_all?id=618c84ab493269bc0ac54fa0c7004acd"><img src="${context}/resources/rabbit/images/photo-07.jpg" alt="" /></a>
 						</div>
 						<div class="groom-bb">
 							<div class="groom-bb-t">
-								<a target="_blank" href="${context }/custom/detail_all?id=9">城市：洛杉矶、拉斯维加斯、弗雷斯诺、都柏林、旧金山、蒙特利、卡梅尔小镇、隆波克、丹麦小镇</a>
+								<a target="_blank" href="${context }/custom/detail_all?id=618c84ab493269bc0ac54fa0c7004acd">城市：洛杉矶、拉斯维加斯、弗雷斯诺、都柏林、旧金山、蒙特利、卡梅尔小镇、隆波克、丹麦小镇</a>
 							</div>
 							<div class="groom-bb-b">出行天数：12天10晚</div>
 						</div>
 					</li>
 					<li>
 						<div class="groom-bt">
-							<a target="_blank" href="${context }/custom/detail_all?id=4"><img src="${context}/resources/rabbit/images/photo-08.jpg" alt="" /></a>
+							<a target="_blank" href="${context }/custom/detail_all?id=618c84ab493269bc0ac54fa0c700654c"><img src="${context}/resources/rabbit/images/photo-08.jpg" alt="" /></a>
 						</div>
 						<div class="groom-bb">
 							<div class="groom-bb-t">
-								<a target="_blank" href="${context }/custom/detail_all?id=4">城市：拉斯维加斯、盐湖城、洛杉矶、怀俄明、犹他州</a>
+								<a target="_blank" href="${context }/custom/detail_all?id=618c84ab493269bc0ac54fa0c700654c">城市：拉斯维加斯、盐湖城、洛杉矶、怀俄明、犹他州</a>
 							</div>
 							<div class="groom-bb-b">出行天数：12天10晚</div>
 						</div>
 					</li>
 					<li>
 						<div class="groom-bt">
-							<a target="_blank" href="${context }/custom/detail_all?id=22"><img src="${context}/resources/rabbit/images/photo-9.jpg" alt="" /></a>
+							<a target="_blank" href="${context }/custom/detail_all?id=618c84ab493269bc0ac54fa0c700ac15"><img src="${context}/resources/rabbit/images/photo-9.jpg" alt="" /></a>
 						</div>
 						<div class="groom-bb">
 							<div class="groom-bb-t">
-								<a target="_blank" href="${context }/custom/detail_all?id=22">城市：奥兰多、罗德岱堡、迈阿密、基韦斯特、拉斯维加斯、洛杉矶</a>
+								<a target="_blank" href="${context }/custom/detail_all?id=618c84ab493269bc0ac54fa0c700ac15">城市：奥兰多、罗德岱堡、迈阿密、基韦斯特、拉斯维加斯、洛杉矶</a>
 							</div>
 							<div class="groom-bb-b">出行天数：12天10晚</div>
 						</div>
@@ -295,14 +295,14 @@
 	<li>
 		<div class="glist">
 			<div class="glist-t">
-				<a href="${context }/custom/detail_all?id=$productID"><img
+				<a target="_blank" href="${context }/custom/detail_all?id=$couchId"><img
 					src="$img" alt="" style="width: 371px; height: 371px;" /></a>
 				<div class="icon">
 					<div class="icon-xl">线路</div>
 				</div>
 				<div class="gbg-k">
 					<div class="gbg">
-						<a href="${context }/custom/detail_all?id=$productID">$name</a>
+						<a target="_blank" href="${context }/custom/detail_all?id=$productID">$name</a>
 					</div>
 				</div>
 			</div>
@@ -399,9 +399,9 @@
 		var tmpl = document.getElementById("tmpl").innerHTML;
 		for (var i = 0; i < ps.length; i++) {
 			var gTmpl_str = tmpl;
-			gTmpl_str = gTmpl_str.replace(/\\$productID/g, ps[i].productID);
+			gTmpl_str = gTmpl_str.replace(/\\$couchId/g, ps[i].couchId);
 			gTmpl_str = gTmpl_str.replace(/\\$lowPrice/g, ps[i].lowPrice);
-			gTmpl_str = gTmpl_str.replace(/\\$img/g, ps[i].img);
+			gTmpl_str = gTmpl_str.replace(/\\$img/g, 'http://guantravel.com:5984/travel/'+ps[i].couchId+'/intro.jpg');
 			gTmpl_str = gTmpl_str.replace(/\\$name/g,
 					decodeURIComponent(ps[i].name));
 			pstr += gTmpl_str;

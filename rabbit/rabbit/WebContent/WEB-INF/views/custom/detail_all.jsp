@@ -10,7 +10,7 @@
 		<div class="route-t">
 			<div class="route-tl">
 				<div class="route-tlimg">
-					<img style="width: 346px; height: 346px;" src="${info.images[0] }"
+					<img style="width: 346px; height: 346px;" src="http://guantravel.com:5984/travel/${info.id }/intro.jpg"
 						alt="" />
 				</div>
 				<ul class="route-tlzi">
@@ -318,3 +318,6 @@
 	</div>
 </div>
 <!-- 主体内容区 End -->
+<script type="text/javascript">
+document.title = '兔子旅行-${info.productName }';
+</script>

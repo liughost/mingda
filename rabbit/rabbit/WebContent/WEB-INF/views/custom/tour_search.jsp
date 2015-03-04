@@ -6,12 +6,14 @@
 .word a {
 	min-width: 55px;
 }
+
 .car-lbr a {
 	min-width: 60px;
 	line-height: 30px;
 }
+
 .car-lb .word a {
-  width: 90px;
+	width: 90px;
 }
 </style>
 
@@ -106,8 +108,6 @@
 									onclick="javascript:sel_scenic(this,'黄石公园')">黄石公园</a> <a
 									href="javascript:void();"
 									onclick="javascript:sel_scenic(this,'布莱斯')">布莱斯</a> <a
-									href="javascript:void();"
-									onclick="javascript:sel_scenic(this,'奥特莱斯')">奥特莱斯</a> <a
 									href="javascript:void();"
 									onclick="javascript:sel_scenic(this,'拉斯维加斯大道')">拉斯维加斯大道</a> <a
 									href="javascript:void();"
@@ -233,9 +233,7 @@
 				src="http://guantravel.com:5984/tours/$id/intro.jpg" alt="" /></a>
 			<div class="icon">
 				<div class="icon-dy">导游</div>
-				<c:if test="${fn:length(tour.carType)>0}">
-					<div class="icon-zc">专车</div>
-				</c:if>
+				$car
 			</div>
 		</div>
 		<div class="m-car-cont">
@@ -250,15 +248,7 @@
 			</div>
 		</div>
 		<div class="m-car-bot">
-			<div class="l">
-				服务
-				<c:forEach var="i" begin="1" end="${tour.serviceLevel}" step="1">
-					<span class="star"></span>
-				</c:forEach>
-				<c:forEach var="i" begin="${tour.serviceLevel}" end="4" step="1">
-					<span class="star-no"></span>
-				</c:forEach>
-			</div>
+			<div class="l">服务 $service</div>
 			<div class="r">
 				<em>￥$unitPrice</em>/小时
 			</div>
@@ -365,6 +355,20 @@
 			gTmpl_str = gTmpl_str.replace(/\\$unitPrice/g, ts[i].unitPrice);
 			gTmpl_str = gTmpl_str.replace(/\\$introduce/g,
 					decodeURIComponent(ts[i].introduce));
+			if (ts[i].carType.length > 0)
+				gTmpl_str = gTmpl_str.replace(/\\$car/g,
+						'<div class="icon-zc">专车</div>');
+			else
+				gTmpl_str = gTmpl_str.replace(/\\$car/g, "");
+
+			var s = '';
+			for (var n = 1; n <= ts[i].serviceLevel; n++) {
+				s += '<span class="star"></span>';
+			}
+			for (var n = ts[i].serviceLevel; n <= 4; n++) {
+				s += '<span class="star-no"></span>';
+			}
+			gTmpl_str = gTmpl_str.replace(/\\$service/g, s);
 
 			pstr += "<li>" + gTmpl_str + "</li>";
 		}

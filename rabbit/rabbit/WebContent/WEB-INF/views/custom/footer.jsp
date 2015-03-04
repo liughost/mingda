@@ -117,63 +117,27 @@
 	<div class="modal-body">
 		<ul class="modal-nav nav-tabs" style="border-bottom: 0px;">
 			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="丹麦小镇">丹麦小镇</label></li>
+					type="checkbox" value="拉斯维加斯">拉斯维加斯</label></li>
 			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="佩吉">佩吉</label></li>
+					type="checkbox" value="洛杉矶">洛杉矶</label></li>
 			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="华盛顿">华盛顿</label></li>
+					type="checkbox" value="旧金山">旧金山</label></li>
 			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="卡梅尔小镇">卡梅尔小镇</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="圣路易斯">圣路易斯</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="埃尔克城">埃尔克城</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="基韦斯特">基韦斯特</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="塔尔萨">塔尔萨</label></li>
+					type="checkbox" value="弗雷斯诺">弗雷斯诺</label></li>
 			<li><label class="checkbox"><input name="sel_city"
 					type="checkbox" value="夏威夷">夏威夷</label></li>
 			<li><label class="checkbox"><input name="sel_city"
 					type="checkbox" value="奥兰多">奥兰多</label></li>
 			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="威廉姆斯">威廉姆斯</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="布莱斯">布莱斯</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="弗雷斯诺">弗雷斯诺</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="拉斯维加斯">拉斯维加斯</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="摩押">摩押</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="文图拉">文图拉</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="旧金山">旧金山</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="檀香山">檀香山</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="洛杉矶">洛杉矶</label></li>
-			<li><label class="checkbox"><input name="sel_city"
 					type="checkbox" value="盐湖城">盐湖城</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="科特斯">科特斯</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="纽约">纽约</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="罗德岱堡">罗德岱堡</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="芝加哥">芝加哥</label></li>
 			<li><label class="checkbox"><input name="sel_city"
 					type="checkbox" value="蒙特利">蒙特利</label></li>
 			<li><label class="checkbox"><input name="sel_city"
 					type="checkbox" value="迈阿密">迈阿密</label></li>
 			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="都柏林">都柏林</label></li>
+					type="checkbox" value="芝加哥">芝加哥</label></li>
 			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="隆波克">隆波克</label></li>
-			<li><label class="checkbox"><input name="sel_city"
-					type="checkbox" value="雷顿">雷顿</label></li>
+					type="checkbox" value="摩押">摩押</label></li>
 		</ul>
 	</div>
 	<div class="modal-footer">

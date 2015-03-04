@@ -83,7 +83,18 @@
 										</ul>
 										<div id="tagContent">
 											<div id="tagContent0" class="tagContent selectTag">
-
+<a href="${context}/custom/tour/search?city=拉斯维加斯">拉斯维加斯</a>
+<a href="${context}/custom/tour/search?city=洛杉矶">洛杉矶</a>
+<a href="${context}/custom/tour/search?city=旧金山">旧金山</a>
+<a href="${context}/custom/tour/search?city=弗雷斯诺">弗雷斯诺</a>
+<a href="${context}/custom/tour/search?city=佩吉">佩吉</a>
+<a href="${context}/custom/tour/search?city=夏威夷">夏威夷</a>
+<a href="${context}/custom/tour/search?city=奥兰多">奥兰多</a>
+<a href="${context}/custom/tour/search?city=盐湖城">盐湖城</a>
+<a href="${context}/custom/tour/search?city=蒙特利">蒙特利</a>
+<a href="${context}/custom/tour/search?city=迈阿密">迈阿密</a>
+<a href="${context}/custom/tour/search?city=芝加哥">芝加哥</a>
+<!-- 
 												<a href="${context}/custom/tour/search?city=?city=丹麦小镇">丹麦小镇</a>
 												<a href="${context}/custom/tour/search?city=佩吉">佩吉</a> <a
 													href="${context}/custom/tour/search?city=华盛顿">华盛顿</a> <a
@@ -113,6 +124,7 @@
 													href="${context}/custom/tour/search?city=都柏林">都柏林</a> <a
 													href="${context}/custom/tour/search?city=隆波克">隆波克</a> <a
 													href="${context}/custom/tour/search?city=雷顿">雷顿</a>
+													 -->
 											</div>
 											<div id="tagContent1" class="tagContent">
 												<a href="#">摩押</a><a href="#">科特斯</a><a href="#">佩吉</a>

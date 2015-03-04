@@ -170,7 +170,7 @@ public class TourService extends BaseCouchService {
 		t.setHeadImg("head.jpg");// 头像图片名称
 		t.setIntroImg("intro.jpg");// 领队介绍的大图;
 																										// 基本信息
-		t.setNickName("刘瑜");// 领队的昵称
+		t.setNickName("赵亮");// 领队的昵称
 		t.setGender(1);// 性别，0：保密，1：男性；2：女性
 		t.setLocation("北京");// 所在地，常驻城市
 		t.setServiceLevel(5);// 服务水平，星级，从0-5级
@@ -186,10 +186,10 @@ public class TourService extends BaseCouchService {
 		t.setCareer("专业导游");
 
 		// 联系方式
-		t.setWeixinId("LIUYUABC");// 微信号
-		t.setQQ("1439883591");// QQ号
-		t.setEMail("1439883591@qq.com");// 邮箱
-		t.setMobile("18600027261");// 移动电话,手机号码作为唯一的标识
+		t.setWeixinId("angryfire");// 微信号
+		t.setQQ("6619284");// QQ号
+		t.setEMail("6619284@qq.com");// 邮箱
+		t.setMobile("0000002");// 移动电话,手机号码作为唯一的标识
 		t.setWeixinQR("QR.jpg");// 二维码
 
 		// 服务说明

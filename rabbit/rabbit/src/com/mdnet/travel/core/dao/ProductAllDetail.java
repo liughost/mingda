@@ -251,12 +251,11 @@ public class ProductAllDetail extends MyBaseDocument {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ProductAllDetail Unseriable(ValueRow<Map> result) {
-		// TODO Auto-generated method stub
-		// List<ValueRow<Map>> rr = result.getRows();
-		// m = rr.get(0);
-		// ProductAllDetail p = new ProductAllDetail();
+		
 		this.journey.clear();
 		Field[] fields = this.getClass().getDeclaredFields();// 反射类字段
+		this.setId((String) result.getValue().get("_id"));
+		this.setRevision((String) result.getValue().get("_rev"));
 		for (Field field : fields) {
 			String vName = field.getName();
 			if (result.getValue().get(vName) == null)
@@ -325,6 +324,57 @@ public class ProductAllDetail extends MyBaseDocument {
 			db.updateDocument(this);
 		}
 		return 0;
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ProductAllDetail Unseriable(Map result) {
+		this.journey.clear();
+		Field[] fields = this.getClass().getDeclaredFields();// 反射类字段
+		this.setId((String) result.get("_id"));
+		this.setRevision((String) result.get("_rev"));
+		for (Field field : fields) {
+			String vName = field.getName();
+			if (result.get(vName) == null)
+				continue;
+			String value = result.get(vName).toString();
+			if (field.getType() == String.class) {
+				try {
+					field.set(this, value);
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else if (field.getType() == int.class) {
+				try {
+					field.setInt(this, Integer.parseInt(value));
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else if (field.getType() == List.class
+					&& vName.compareTo("journey") == 0) {
+				List<Map> js = (List<Map>) result.get(vName);
+				for (Map j : js) {
+					Journey jo = Journey.Unseriable(j);
+					this.journey.add(jo);
+				}
+			} else if (field.getType() == List.class
+					&& vName.compareTo("images") == 0) {
+				// String img = (String) ;
+				this.images = (List<String>) result.get(vName);
+
+			}
+
+		}
+		return this;
 	}
 
 	

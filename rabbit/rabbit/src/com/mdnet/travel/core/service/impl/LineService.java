@@ -20,6 +20,7 @@ import com.mdnet.travel.core.dao.GroupDateDAO;
 import com.mdnet.travel.core.dao.Journey;
 import com.mdnet.travel.core.dao.Meal;
 import com.mdnet.travel.core.dao.ProductAllDetail;
+import com.mdnet.travel.core.dao.TourInfo;
 import com.mdnet.travel.core.dao.Traffic;
 import com.mdnet.travel.core.model.GroupDate;
 import com.mdnet.travel.core.vo.ShowProductInfo;
@@ -90,6 +91,7 @@ public class LineService extends BaseCouchService {
 		for (@SuppressWarnings("rawtypes")
 		ValueRow vr : result.getRows()) {
 			ShowProductInfo e = new ShowProductInfo();
+			
 			e.setProductID(Integer.parseInt(vr.getKey().toString()));
 			String[] v = (String[]) vr.getValue();
 			e.setName(v[0]);
@@ -97,6 +99,7 @@ public class LineService extends BaseCouchService {
 			e.setCities_str(v[2] == null ? "" : v[2]);
 			e.setDays(v[3] == null ? "" : v[3]);
 			e.setLineType(v[4] == null ? "" : v[4]);
+			e.setCouchId(v[5] == null ? "" : v[5]);
 			list.add(e);
 		}
 		return list;
@@ -144,7 +147,7 @@ public class LineService extends BaseCouchService {
 				+ " return false;}	}" + "return true;	}";
 
 		mapFunc += "function output(doc){"
-				+ "emit(doc.pid, [doc.productName,doc.images[0], doc.destCity, doc.settle, doc.lineType]);}";
+				+ "emit(doc.pid, [doc.productName,doc.images[0], doc.destCity, doc.settle, doc.lineType, doc._id]);}";
 
 		mapFunc += "\"}";
 		return mapFunc;
@@ -281,6 +284,7 @@ public class LineService extends BaseCouchService {
 			ProductAllDetail p = new ProductAllDetail();
 			p.Unseriable(vr);
 			ShowProductInfo s = new ShowProductInfo();
+			s.setCouchId(p.getId());
 			s.setName(p.getProductName());
 			if (p.getImages().size() <= 0)
 				s.setImg(contextPath + "/resources/rabbit/images/photo-4.jpg");
@@ -759,6 +763,14 @@ public class LineService extends BaseCouchService {
 		p.setJourney(journey);
 
 		p.Add();
+	}
+
+	public ProductAllDetail takeLine(String id) {
+		Map result = db.getDocument(Map.class, id);
+		ProductAllDetail p = new ProductAllDetail();
+		// result.getProperty("price");
+
+		return p.Unseriable(result);
 	}
 
 }

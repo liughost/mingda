@@ -241,7 +241,13 @@ public class CustomController extends BaseController {
 			@RequestParam(value = "id", required = false) String id) {
 		this.getMav(request);
 		this.mav.setViewName(this.preMobile(request) + "custom/detail_all");
-		ProductAllDetail pad = this.lineService.getProductInfo(id);
+		ProductAllDetail pad = new ProductAllDetail();
+		if (id.length() < 10)
+			pad = this.lineService.getProductInfo(id);
+		else {
+			pad = this.lineService.takeLine(id);
+			id = String.valueOf(pad.getPid());
+		}
 		this.mav.addObject("info", pad);
 		List<SpecialBean> sb = getMoreArticle();
 		this.mav.addObject("articleList", sb);
