@@ -170,26 +170,26 @@ public class TourService extends BaseCouchService {
 		t.setHeadImg("head.jpg");// 头像图片名称
 		t.setIntroImg("intro.jpg");// 领队介绍的大图;
 																										// 基本信息
-		t.setNickName("赵亮");// 领队的昵称
+		t.setNickName("李世涛");// 领队的昵称
 		t.setGender(1);// 性别，0：保密，1：男性；2：女性
 		t.setLocation("北京");// 所在地，常驻城市
 		t.setServiceLevel(5);// 服务水平，星级，从0-5级
 		t.setServiceCities("拉斯维加斯、洛杉矶、旧金山、弗雷斯诺、佩吉、夏威夷、奥兰多、盐湖城、蒙特利、迈阿密、芝加哥");// 服务的城市
 		t.setScenic("17英里海岸、66号公路、一号公路、七哩桥、大峡谷、大提顿国家公园、大沼泽国家公园、奥特莱斯、好莱坞、黄石公园、布莱斯、拉斯维加斯、拱门国家公园");
-		t.setIntroduce("无所不能的超级地陪冠行是北京青年旅行社股份有限公司旗下的自驾游品牌,我们出行的方式是小团体自驾游或半自驾游（巴士与自驾车结合），具有行程自由化与个性化、灵活性与舒适性等特点。我们的客户是不愿意受拘束,追求人格独立和心性自由的旅行者。");// 个人简介
+		t.setIntroduce("李世涛 86年出生 从事涉外旅游8年 纯正美式英语交流无障碍,热衷于美国西部文化.美国自驾7万公里以上,对加州,亚利桑那州,犹他州及西部国家公园等线路非常熟悉.本人性格豪爽,喜欢旅行,喜欢交友。美国,不见不散!");// 个人简介
 		LangCapability lang = new LangCapability();
 		lang.setForeignLang("英语");
 		lang.setMotherLang("汉语");
 		t.setLanguage(lang);// 语言能力 t.setCareer("学生");
-		t.setCarType("全尺寸越野车9座");
+		t.setCarType("全尺寸越野车");
 		t.setPlanning(1);
 		t.setCareer("专业导游");
 
 		// 联系方式
-		t.setWeixinId("angryfire");// 微信号
-		t.setQQ("6619284");// QQ号
-		t.setEMail("6619284@qq.com");// 邮箱
-		t.setMobile("0000002");// 移动电话,手机号码作为唯一的标识
+		t.setWeixinId("lishitao4945");// 微信号
+		t.setQQ("470071864");// QQ号
+		t.setEMail("470071864@qq.com");// 邮箱
+		t.setMobile("18614089389");// 移动电话,手机号码作为唯一的标识
 		t.setWeixinQR("QR.jpg");// 二维码
 
 		// 服务说明

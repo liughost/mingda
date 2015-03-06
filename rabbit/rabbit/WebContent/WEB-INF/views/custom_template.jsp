@@ -19,6 +19,10 @@
 	content="兔子旅游(guantravel.com)，为你提供全球最精彩的自驾游，没有跟团游的匆忙和自助游的盲目，4人以上即可成团，带你体验更加自由的旅程；我们的口号是：我的旅行我做主！">
 <meta name="baidu-site-verification" content="XROhNHMZGM" />
 <meta name="author" content="程序员老刘">
+<link rel="icon" href="${context}/resources/rabbit/images/fav.ico"
+	type="image/x-icon" />
+<link rel="shortcut icon" href="${context }/resources/rabbit/images/fav.ico"
+	type="image/x-icon" />
 <meta name="Keywords" content="${metaKeys }">
 <!--[if lt IE 9]>
 <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>

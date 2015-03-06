@@ -15,10 +15,14 @@
 	<definition name="leader/detail" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/leader/detail.jsp" />
 	</definition>
+	<definition name="mobile/leader/detail" extends="custom_template">
+		<put-attribute name="content" value="/WEB-INF/views/leader/detail.jsp" />
+	</definition>
+	<!-- 
 	<definition name="mobile/leader/detail" extends="mobile_custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/leader/mobile_detail.jsp" />
 	</definition>
-	
+	 -->
 	<definition name="leader/orderList" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/leader/order_list.jsp" />
 	</definition>

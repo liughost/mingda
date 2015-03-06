@@ -982,6 +982,8 @@ public class CustomController extends BaseController {
 			String[] city_str = cities.split(",");
 			products = this.lineService.search(city_str, null, null, null);
 
+		} else {
+			products = this.lineService.search(null, null, null, null);
 		}
 
 		// 获得产品团期
@@ -1017,14 +1019,15 @@ public class CustomController extends BaseController {
 		this.mav.setViewName(this.preMobile(request) + "custom/tour/search");
 
 		List<TourInfo> tours = new ArrayList<TourInfo>();
+		String[] city_str = null;
 		if (cities.length() > 0) {
 			cities = new String(cities.getBytes("iso-8859-1"), "utf-8");
-			String[] city_str = cities.split(",");
+			city_str = cities.split(",");
 			this.mav.addObject("cities", city_str);
-			tours = this.tourService.search(city_str, null, null, null, false,
-					false, null, 50);
-
 		}
+
+		tours = this.tourService.search(city_str, null, null, null, false,
+				false, null, 50);
 
 		this.mav.addObject("tourList", tours);
 
