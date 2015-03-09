@@ -741,6 +741,7 @@ public class CustomController extends BaseController {
 			@RequestParam(value = "code", required = true) String code) {
 
 		List<InviteCode> codes = this.travelerService.validateCode(code);
+		System.out.println(code + ":" + codes.size());
 		if (codes != null && codes.size() > 0) {
 			Gson g = new Gson();
 			return "[" + g.toJson(codes.get(0)) + "]";

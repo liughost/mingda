@@ -23,7 +23,7 @@
 	<div class="main">
 		<div class="m-car-t">
 			<div class="l">
-				<a href="${context }/custom/tour/search">专车&导游</a>
+				<a href="${context }/custom/tour/search">包车&导游</a>
 			</div>
 		</div>
 		<div class="m-car-b">
@@ -38,7 +38,7 @@
 								<div class="icon">
 									<div class="icon-dy">导游</div>
 									<c:if test="${fn:length(tour.carType)>0}">
-										<div class="icon-zc">专车</div>
+										<div class="icon-zc">包车</div>
 									</c:if>
 								</div>
 							</div>
@@ -235,7 +235,7 @@
 				<li>
 					<div class="m-fine-img"
 						onclick="javascript:location.href='${context }/custom/product/search?t=大美加州';">
-						<img src="${context }/resources/rabbit/images/photo-sy9.jpg"
+						<img src="${context }/resources/rabbit/images/photo-sy11.jpg"
 							alt="" />
 						<p>大美加州</p>
 					</div>
@@ -251,7 +251,7 @@
 				<li>
 					<div class="m-fine-img"
 						onclick="javascript:location.href='${context }/custom/product/search?t=美国最南端';">
-						<img src="${context }/resources/rabbit/images/photo-sy11.jpg"
+						<img src="${context }/resources/rabbit/images/photo-sy9.jpg"
 							alt="" />
 						<p>美国最南端</p>
 					</div>

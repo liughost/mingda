@@ -268,7 +268,9 @@
 	</div>
 </div>
 <!-- 忘记密码 End -->
+<!-- 
 <script type="text/javascript"
 	src="${context }/resources/rabbit/js/Validate.js"></script>
 <script type="text/javascript"
 	src="${context }/resources/rabbit/js/Validate.form.js"></script>
+ -->

@@ -53,7 +53,7 @@
 				</div>
 				<ul id="navfouce">
 					<li><a href="${context }/custom/tour/search" class="boxlist"><span
-							class="nav1"></span>专车</a></li>
+							class="nav1"></span>包车</a></li>
 					<li><a href="${context }/custom/product/search"
 						class="boxlist"><span class="nav2"></span>线路</a></li>
 

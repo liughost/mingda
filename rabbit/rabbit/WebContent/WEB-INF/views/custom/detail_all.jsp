@@ -3,6 +3,19 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<style>
+.inText {
+	background: #fff;
+	width: 130px;
+	padding: 0px 0 0 0;
+	margin-top: 8px;
+}
+
+.make-sel,.make-btn {
+	margin-top: 6px;
+}
+</style>
+
 <!-- 主体内容区 STA -->
 <div class="maink" style="background-color: #f1f4f6;">
 	<div class="main">
@@ -10,7 +23,8 @@
 		<div class="route-t">
 			<div class="route-tl">
 				<div class="route-tlimg">
-					<img style="width: 346px; height: 346px;" src="http://guantravel.com:5984/travel/${info.id }/intro.jpg"
+					<img style="width: 346px; height: 346px;"
+						src="http://guantravel.com:5984/travel/${info.id }/intro.jpg"
 						alt="" />
 				</div>
 				<ul class="route-tlzi">
@@ -83,11 +97,13 @@
 
 									<c:choose>
 										<c:when test="${items.price != 0 }">
+											<!-- onclick="group_detail(${info.pid},'${items.date}')"  -->
 											<td class="group_date"
-												onclick="group_detail(${info.pid},'${items.date}')">${items.day
+												onmouseover="onPriceMouse('${items.date}','${info.pid}', ${items.price },${items.childrenPrice}, ${items.hotelSpanPrice})"><a
+												class="modalLink" href="#modal9">${items.day
 										}<br />
-												<span>￥${items.price }</span>
-											</td>
+													<span>￥${items.price }</span>
+											</a></td>
 										</c:when>
 										<c:otherwise>
 											<c:if test="${items.localMon }">
@@ -318,6 +334,249 @@
 	</div>
 </div>
 <!-- 主体内容区 End -->
+<!-- 预订弹出窗口 Begin -->
+<div id="modal9" class="modal makebox"
+	style="top: 708px; left: 438.5px; display: none;">
+	<div class="make">
+		<div class="make-t">
+			<div class="l">在线预约</div>
+			<div class="r" id="divUnitPrice">
+				成人:￥<br>儿童:￥
+			</div>
+		</div>
+		<div class="make-b">
+			<div class="make-date" style="margin-top: 5px;">
+				<div class="date-zi">预约日期</div>
+				<input readonly id="startDate" class="jcDate jcDateIco"
+					value="2015-01-28">
+				<div class="on"></div>
+			</div>
+			<div class="make-sel">
+				<div class="l" style="width: 123px;">
+					<div class="date-zi">旅客成人数</div>
+					<select id="selPersons" onchange="priceChange()">
+						<option value="1">1人</option>
+						<option value="2" selected>2人</option>
+						<option value="3">3人</option>
+						<option value="4">4人</option>
+						<option value="5">5人</option>
+						<option value="6">6人</option>
+						<option value="7">7人</option>
+						<option value="8">8人</option>
+						<option value="9">9人</option>
+						<option value="10">10人</option>
+						<option value="11">11人</option>
+						<option value="12">12人</option>
+						<option value="13">13人</option>
+						<option value="14">14人</option>
+						<option value="15">15人</option>
+						<option value="16">16人</option>
+						<option value="17">17人</option>
+						<option value="18">18人</option>
+						<option value="19">19人</option>
+						<option value="20">20人</option>
+					</select>
+					<div class="on"></div>
+				</div>
+				<div class="l" style="float:right;">
+					<div class="date-zi">旅客儿童数</div>
+					<select id="selChildren" onchange="priceChange()">
+						<option value="0" selected>0人</option>
+						<option value="1">1人</option>
+						<option value="2">2人</option>
+						<option value="3">3人</option>
+						<option value="4">4人</option>
+						<option value="5">5人</option>
+						<option value="6">6人</option>
+						<option value="7">7人</option>
+						<option value="8">8人</option>
+						<option value="9">9人</option>
+
+					</select>
+					<div class="on"></div>
+				</div>
+
+			</div>
+			<div class="make-sel">
+				<div class="l" style="width: 123px;">
+					<div class="date-zi">旅客姓名</div>
+					<input id="nickName" onkeyup="nickNameChange()" placeholder="旅客姓名"
+						class="inText" value="" style="">
+					<div id="nickResult" class=""></div>
+				</div>
+				<div class="l" style="float:right;">
+					<div class="date-zi">联系电话</div>
+					<input id="linkMobile" onkeyup="mobileChange()" placeholder="联系电话"
+						class="inText" value="" style="">
+					<div id="mobileResult" class=""></div>
+				</div>
+
+			</div>
+
+			<div class="make-date" style="margin-top: 10px;">
+				<div class="date-zi">优惠码</div>
+				<input id="inviteCode" placeholder="优惠码" class=jcDate value=""
+					style="background: #fff;" onkeyup="validateInviteCode()"
+					onBlur="validateInviteCode()"> <input type="hidden"
+					id="offPriceValue" value="0">
+				<div id="inviteCodeResult" class=""></div>
+			</div>
+			<ul class="make-li">
+				<li style="margin-top:5px;">
+					<div class="l">
+						<input onchange="priceChange()" type="radio" name="agreeShare"
+							value="1" checked><span onclick="agreeChange(1)">同意拼房；</span><input
+							onchange="priceChange()" type="radio" name="agreeShare" value="0"><span
+							onclick="agreeChange(0)">不同意拼房；</span>
+					</div>
+					<div class="r" id="hotelSpan">房差:￥0</div>
+
+				</li>
+				<li  style="margin-top:5px;">
+					<div class="l">
+						<span style="color: red;" id="warnningText"></span>
+					</div> <!-- 
+					<div class="r">￥10880</div>
+					 -->
+				</li>
+
+			</ul>
+			<div class="make-btn">
+				<div class="btn1">
+					费用总计：<br> <em>￥<span id="totalPrice"></span></em>
+				</div>
+				<em> <input type="button" onclick="order();" class="inputbg4"
+					value="立即预定">
+				</em>
+			</div>
+			<em> </em>
+		</div>
+		<em> </em>
+	</div>
+	<em> </em>
+</div>
+<!-- 预订弹出窗 end -->
 <script type="text/javascript">
-document.title = '兔子旅行-${info.productName }';
+window.onload = function() {document.title = '兔子旅行-${info.productName }';};
+var aPrice = 0;
+var cPrice = 0;
+var hPrice = 0;
+function nickNameChange()
+{
+	if(nickName.value.length>=2)
+		nickResult.setAttribute("class", "on");
+	else
+		nickResult.setAttribute("class", "off");
+}
+function mobileChange()
+{
+	if(linkMobile.value.length==11)
+		mobileResult.setAttribute("class", "on");
+	else
+		mobileResult.setAttribute("class", "off");
+}
+function agreeChange(a)
+{
+	var aObj = document.getElementsByName("agreeShare");
+	for (var i = 0; i < aObj.length; i++) {
+		if (aObj[i].value == a) {
+			aObj[i].checked = true;
+		}
+		else{
+			aObj[i].checked = false;
+		}
+	}
+	priceChange();
+}
+function agreeValue() {
+	var aObj = document.getElementsByName("agreeShare");
+	for (var i = 0; i < aObj.length; i++) {
+		if (aObj[i].checked) {
+			if (aObj[i].value == 1)
+				return false;
+		}
+	}
+	return true;
+}
+
+function priceChange() {
+	
+	debugger;
+
+	//计算标间数量
+	var aCount = parseInt(selPersons.options[selPersons.selectedIndex].value);
+	var cCount = parseInt(selChildren.options[selChildren.selectedIndex].value);
+	
+	//var h = adultCount.value / 2;
+	//计算占用的床数量
+	var beds = aCount;
+	var s = 0;
+	debugger;
+	var selAgree = agreeValue();
+	if (aCount % 2 != 0 && selAgree) {
+		//占用了多余的标间
+		s = hPrice;
+	}
+	//儿童房差，默认儿童不单独住
+	//s += cCount * hPrice;
+
+	//hotelSpan
+	debugger;
+	var total = aCount * aPrice + cCount * cPrice + s
+			- parseInt(offPriceValue.value);
+	totalPrice.innerHTML = total + "元";
+}
+
+function validateInviteCode() {
+	if(inviteCode.value.length<3)
+		return;
+	//debugger;
+	var url = "${context}/custom/inviteCodeValidate";
+	$.post(url, {
+		code : inviteCode.value
+	}, function(result, status) {
+		//debugger;
+		if (status == 'success') {
+
+			console.log(inviteCode.value + ":"+result);
+			var codeObj = eval(result);
+
+			if (codeObj != null && codeObj.length > 0) {
+
+				if (codeObj[0].codeStatus == 0) {
+					inviteCode.disabled = true;
+					inviteCodeResult.setAttribute("class", "on")
+					offPriceValue.value = codeObj[0].offPrice;
+					warnningText.innerHTML = "优惠：￥" + codeObj[0].offPrice
+							+ "元";
+					priceChange();
+				} else {
+					warnningText.innerHTML = "对不起，此优惠码已经使用或者过期，请确认后重试！";
+				}
+
+			} else {
+				//count.innerHTML = 0;
+				offPriceValue.value = 0;
+				warnningText.innerHTML = "对不起，此优惠码已经不存在，请确认后输入！";;
+
+			}
+		} else {
+			offPriceValue.value = 0;
+			warnningText.innerHTML = "对不起，访问失败，请刷新后重试！。";
+		}
+
+	});
+}
+function onPriceMouse(gDate, couchId, adultPrice, childrenPrice, hotelSpanPrice)
+{
+	debugger;
+	aPrice = parseInt(adultPrice);
+	cPrice = parseInt(childrenPrice);
+	hPrice = parseInt(hotelSpanPrice);
+	startDate.value = gDate;
+	divUnitPrice.innerHTML = "成人:￥"+adultPrice+"<br>儿童:￥"+childrenPrice;
+	hotelSpan.innerHTML = "单房差:￥"+hotelSpanPrice;
+	//重新计算总价
+	priceChange();
+}
 </script>

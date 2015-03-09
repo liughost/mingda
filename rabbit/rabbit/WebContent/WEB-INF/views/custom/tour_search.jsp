@@ -178,7 +178,7 @@
 										<div class="icon">
 											<div class="icon-dy">导游</div>
 											<c:if test="${fn:length(tour.carType)>0}">
-												<div class="icon-zc">专车</div>
+												<div class="icon-zc">包车</div>
 											</c:if>
 										</div>
 									</div>
@@ -208,7 +208,7 @@
 											</c:forEach>
 										</div>
 										<div class="r">
-											<em>￥${tour.unitPrice }</em>/小时
+											<em>￥${tour.unitPrice }</em>/天
 										</div>
 									</div>
 								</div>
@@ -225,7 +225,7 @@
 		</div>
 	</div>
 </div>
-<!-- 专车、导游模板定义 begin -->
+<!-- 包车、导游模板定义 begin -->
 <div id="tmpl" style="display: none;">
 	<div class="m-car">
 		<div class="m-car-img">
@@ -250,12 +250,12 @@
 		<div class="m-car-bot">
 			<div class="l">服务 $service</div>
 			<div class="r">
-				<em>￥$unitPrice</em>/小时
+				<em>￥$unitPrice</em>/天
 			</div>
 		</div>
 	</div>
 </div>
-<!-- 专车、导游模板定义  end -->
+<!-- 包车、导游模板定义  end -->
 <script type="text/javascript">
 	var city = "";
 	var lang = "";
@@ -357,7 +357,7 @@
 					decodeURIComponent(ts[i].introduce));
 			if (ts[i].carType.length > 0)
 				gTmpl_str = gTmpl_str.replace(/\\$car/g,
-						'<div class="icon-zc">专车</div>');
+						'<div class="icon-zc">包车</div>');
 			else
 				gTmpl_str = gTmpl_str.replace(/\\$car/g, "");
 

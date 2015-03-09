@@ -377,7 +377,7 @@
 		<div class="make-t">
 			<div class="l">在线预约</div>
 			<div class="r" id="divUnitPrice">
-				￥${tour.unitPrice}/小时<br>（每天10小时）
+				￥${tour.unitPrice}/天<br>（每天10小时）
 			</div>
 		</div>
 		<div class="make-b">
@@ -424,8 +424,8 @@
 					</select>
 					<div class="on"></div>
 				</div>
-				<div class="l">
-					<div class="date-zi">预约日期（每天10小时）</div>
+				<div class="l" style="float:right;">
+					<div class="date-zi">预约天数（每天10小时）</div>
 					<select id="selDays" onchange="calTotal()">
 						<option value="1">1天</option>
 						<option value="2">2天</option>
@@ -460,16 +460,18 @@
 	<em> </em>
 </div>
 <!-- 预约弹框 End -->
+<!-- 
 <script type="text/javascript"
 	src="${context }/resources/rabbit/js/Validate.js"></script>
 <script type="text/javascript"
 	src="${context }/resources/rabbit/js/Validate.form.js"></script>
+ -->	
 <script type="text/javascript">
 var unitPrice = 0;
 function onPriceMouse(day, price)
 {
 	startDate.value = day;
-	divUnitPrice.innerHTML = '￥'+price+'/小时';
+	divUnitPrice.innerHTML = '￥'+price+'/天<br/>每天10小时';
 	unitPrice = parseInt(price);
 	calTotal();
 }
@@ -478,7 +480,7 @@ function calTotal()
 	//debugger;
 	var days = selDays.options[selDays.selectedIndex].value;
 	var persons = selPersons.options[selPersons.selectedIndex].value;
-	var total = days*unitPrice*10;
+	var total = days*unitPrice;
 	totalPrice.innerHTML = total;
 	console.log({days:days, persons:persons, unitPrice:unitPrice, total:total});
 }
