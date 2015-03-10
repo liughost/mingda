@@ -3,100 +3,106 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<style>
-.info_left {
-	text-align: right;
-	width: 120px;
-}
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication var="username" property="principal.username" />
+</sec:authorize>
+<!-- 主体内容区 STA -->
+<div class="maink">
+	<div class="main">
+		<div class="use">
+			<div class="use-l">
+				<div class="use-lhead">
+					<img src="${context }/resources/rabbit/images/head166-166.jpg"
+						alt="" />
+				</div>
+				<div class="use-lname">${username }</div>
+				<ul class="use-lul">
+					<li><a href="${context }/member/info">我的信息</a></li>
+					<li class="active"><a href="#">我的邀请</a></li>
+					<!-- active为当前状态 -->
+					<li><a href="${context }/member/order/list">我的订单</a></li>
+					<li><a href="#">我的旅伴</a></li>
+					<li><a class="modalLink" href="#modal4">修改密码</a></li>
+				</ul>
+			</div>
+			<div class="use-r">
+				<div class="use-rt">邀请码信息</div>
+				<div class="use-vite-t" style="padding: 20px 0 10px;">
+					<input type="text" class="u-txt1" id="invitedMobile" /> <span><input
+						type="checkbox" value="vite" name="vite" checked id="isBind" />
+						此手机专用</span> <input type="button" class="u-btn1"
+						onclick="javascript:sendCode()" value="发码" />
+				</div>
+				<div class="use-rt">发送历史</div>
+				<div class="use-vite-b">
 
-.info_right {
-	width: 220px;
-}
+					<div class="use-vite-bt">
+						<form id="frmInvite" action="${context }/member/invite/send"
+							method="get">
+							<select id="sType" name="sType">
+								<option value="0" selected="">全部</option>
+								<option value="3">受邀手机</option>
+								<option value="1">邀请码</option>
+							</select> <input type="text" class="u-txt1" value="${sText }" id="sText"
+								name="sText" /> <input type="button" class="inputbg1"
+								value="搜索" title="搜索" onclick="javascript:codeSearch()" />
+						</form>
+					</div>
+					<div class="use-vite-bb">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0">
+							<thead>
+								<tr>
+									<th width="50" align="left"><input type="checkbox"
+										onclick="sel_all(this);" /> 全选</th>
+									<th width="120">邀请码</th>
+									<th width="120">受邀手机</th>
+									<th width="70">状态</th>
+									<th>发送时间</th>
+									<th>使用时间</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="items" items="${inviteList}">
+									<tr>
+										<td><input type="checkbox" name="sel_invite"
+											value="${items.id}"></td>
+										<td>${items.inviteCode}</td>
+										<td>${items.dest_mobile}</td>
+										<td><c:choose>
+												<c:when test="${items.codeStatus==0}">未使用</c:when>
+												<c:otherwise>已使用</c:otherwise>
+											</c:choose></td>
+										<td>${items.makeTime}</td>
+										<td><c:choose>
+												<c:when test="${items.codeStatus==0}">--</c:when>
+												<c:otherwise>
+												${items.usedTime }</c:otherwise>
+											</c:choose></td>
+									</tr>
+								</c:forEach>
 
-.table td {
-	border-top: 0px;
-	border-bottom: 1px solid #dddddd;
-}
-
-input[type="checkbox"] {
-	margin: 0;
-}
-</style>
-<c:if test="${IsMobile }">
-	<div style="height: 20px;"></div>
-</c:if>
-<div class="container" style="max-width: 960px; text-align: left;">
-	<legend>邀请码信息</legend>
-	<form id="frmInvite" action="${context }/member/invite/send"
-		method="get">
-		<input type="hidden" name="page" id="page" value="${page }">
-		<div class="control-group">
-			<label class="control-label"></label>
-			<div class="controls">
-				<input type="text" id="invitedMobile" maxlength="11"
-					required="required" name="invitedMobile" value=""
-					placeholder="受邀者手机号码"> <input type="checkbox" id="isBind"
-					name="isBind">此手机专用
-				<button type="button" name="send" onclick="javascript:sendCode()"
-					class="btn btn-primary" style="margin-top: -8px;" value="0">发码</button>
+							</tbody>
+						</table>
+						 <input
+							type="button" class="u-btn1" value="重新发送" onclick="sendAgain()"
+							style="margin: 10px 0 0 0px; height: 40px; line-height: 40px;">
+							<br/>
+							<label style="color: red" id="sendAgain_error"></label>
+					</div>
+				</div>
 			</div>
 		</div>
-
-
-	</form>
-	<legend>发送历史</legend>
-	<table>
-		<tr>
-			<td><select id="sType" name="sType">
-					<option value="0" <c:if test="${sType==0}">selected</c:if>>全部</option>
-					<option value="3" <c:if test="${sType==1}">selected</c:if>>受邀手机</option>
-					<option value="1" <c:if test="${sType==3}">selected</c:if>>邀请码</option>
-			</select></td>
-			<td><input type="text" id="sText" value="${sText }" name="sText"></td>
-			<td><button type="button" name="search"
-					onclick="javascript:codeSearch()" class="btn btn-primary" value="1"
-					style="margin-top: -8px;">搜索</button></td>
-
-		</tr>
-	</table>
-	<table class="table table-striped table-bordered" id="inviteCodeList">
-
-		<tr>
-			<th style="width: 50px;"><input type="checkbox">全选</th>
-			<th>邀请码</th>
-			<th>受邀手机</th>
-			<th>状态</th>
-			<th>发送时间</th>
-			<th>使用时间</th>
-		</tr>
-		<c:forEach var="items" items="${inviteList}">
-			<tr>
-				<td><input type="checkbox" name="sel_invite"
-					value="${items.id}"></td>
-				<td>${items.inviteCode}</td>
-				<td>${items.dest_mobile}</td>
-				<td><c:if test="${items.codeStatus==0}">未使用</c:if>
-					<c:if test="${items.codeStatus!=0}">已使用</c:if></td>
-				<td>${items.makeTime}</td>
-				<td><c:if test="${items.codeStatus==0}">--</c:if>
-					<c:if test="${items.codeStatus!=0}">${items.usedTime }</c:if></td>
-			</tr>
-		</c:forEach>
-	</table>
-	<button class="btn btn-primary" onclick="sendAgain()">重新发送</button>
-
-	<div class="pagination">
-		<ul id="pageZone">
-
-		</ul>
 	</div>
 </div>
+<!-- 主体内容区 End -->
 <script>
-
-showPage(0, ${fn:length(inviteList)});
+	//window.onload=function(){showPage(0, ${fn:length(inviteList)});};
 	function sendAgain() {
 		var url = "${context}/member/invite/resend";
 		debugger;
+
 		var objs = document.getElementsByName("sel_invite");
 		for (var i = 0; i < objs.length; i++) {
 			if (!objs[i].checked)
@@ -105,26 +111,27 @@ showPage(0, ${fn:length(inviteList)});
 				id : objs[i].value
 			}, function(result, status) {
 				debugger;
+				var msg = $("#sendAgain_error").text();
 				if (status == 'success') {
+					result = eval(result);
+					if (result[0] == 1) {
 
-					if (result == 1) {
-						alert('邀请码已经成功发送。');
-						location.href = "${context}/member/invite/send";
-					}
-					else if (result == -2)
-						{
-						alert('对不起，邀请码不能发送给自己。');
-						}
-					else {
+						msg += '邀请码：' + result[1] + '邀请码已经成功发送。';
+
+						//location.href = "${context}/member/invite/send";
+					} else if (result == -2) {
+						msg += '邀请码' + result[1] + '不能发送给自己。';
+					} else {
 						//count.innerHTML = 0;
-						alert('邀请码发送失败。');
+						msg += '邀请码' + result[1] + '已经过期或者被使用，发送失败。';
 					}
 				} else {
-					alert('网络异常，或者未登录，请重试。');
+					msg += '网络异常，或者未登录，请重试。';
 				}
-
+				$("#sendAgain_error").text(msg);
 			});
-		}
+		}//end for
+
 	}
 	function IsNum(s) {
 		if (s != null) {
@@ -181,18 +188,23 @@ showPage(0, ${fn:length(inviteList)});
 		}
 		pageZone.innerHTML = page_str;
 	}
-	function codeSearch()
-	{
+	function codeSearch() {
 		debugger;
 		frm = document.getElementById("frmInvite");
-		page.value = 0;
+		//page.value = 0;
 		frm.submit();
 	}
-	function getList(p)
-	{
+	function getList(p) {
 		debugger;
 		frm = document.getElementById("frmInvite");
-		page.value = p;
+		//page.value = p;
 		frm.submit();
+	}
+	function sel_all(chkObj) {
+		debugger;
+		var chks = document.getElementsByName("sel_invite");
+		for (var i = 0; i < chks.length; i++) {
+			chks[i].checked = chkObj.checked;
+		}
 	}
 </script>

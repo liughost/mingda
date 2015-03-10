@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+	//debugger;
     $('.modalLink').modal({
         trigger: '.modalLink',          // id or class of link or button to trigger modal
         olay:'div.overlay',             // id or class of overlay

@@ -22,18 +22,19 @@ img{max-width:100%;}
 .header-go a:hover{color:#c8b804;}
 .header-go span{font-family:'SimSun'; display:inline-block; padding:0 22px;}
 /*登录后*/
-.header-back{float:right;}
+.header-back{float:right; position:relative; z-index:9999;}
 .header-back,.header-back a{color:#fff;}
 .header-back img{width:22px; height:22px; border-radius:22px; margin-right:5px;}
+.header-back a{height:24px;}
 .back-menu{width:160px; float:left; position:relative;}
 .back-arw{width:16px; height:13px; float:left; background:url(../images/top-arw2.gif) no-repeat;}
 .header-back span{width:30px; height:4px; float:right; background:url(../images/top-arw1.gif) no-repeat top right; position:relative; top:11px;}
 .header-back span.subhover{background-position:center bottom; cursor:pointer;}   
-.header-back .back-menu{width:100%; position:absolute; right:0; display:none; z-index:999;}
+.header-back .back-menu{width:auto; position:absolute; right:0; display:none; z-index:999;}
 .header-back .back-menu li{width:130px; float:left; border-top:1px solid #4b4b4b; line-height:36px; font-size:14px; text-align:center;}
-.header-back .back-menu li a{color:#fff;}
+.header-back .back-menu li a{height:auto; color:#fff;}
 .header-back .back-menu li a:hover{color:#ffee06;}
-.top-menuk{width:1160px; margin:0 auto;}
+.top-menuk{/*width:1160px; margin:0 auto;*/}
 .top-menu{width:160px; float:right; position:relative;}
 .back-arw{width:14px; height:13px; background:url(../images/top-arw2.png) no-repeat; position:absolute; right:20px; top:0; z-index:4;}
 .subnav{width:130px; float:left; background:url(../images/top-bg.png) repeat; border:1px solid #e4c916; margin-top:11px; border-radius:7px; padding:0 14px;}

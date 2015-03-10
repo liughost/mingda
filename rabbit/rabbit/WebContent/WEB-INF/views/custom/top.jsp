@@ -22,19 +22,21 @@
 			<!--登录后STA-->
 			<c:if test="${not empty username}">
 				<div class="header-back">
-					<img src="${context }/resources/rabbit/images/head22-22.gif" alt="" />
+					<img src="${context }/resources/rabbit/images/head22-22.jpg" alt="" />
 					<a href="javascript:;">${username }</a>
 					<div class="back-menu">
 						<div class="top-menuk">
 							<div class="top-menu">
 								<div class="back-arw"></div>
 								<ul class="subnav">
-									<li><a href="#">我的信息</a></li>
-									<li><a href="#">我的邀请</a></li>
-									<li><a href="#">我的订单</a></li>
+									<li><a href="${context }/member/info">我的信息</a></li>
+									<li><a href="${context }/member/invite/send">我的邀请</a></li>
+									<li><a href="${context }/member/order/list">我的订单</a></li>
+									<!-- 
 									<li><a href="#">我的旅伴</a></li>
-									<li><a href="#">修改密码</a></li>
-									<li><a href="javascript:;">退出</a></li>
+									 -->
+									<li><a class="modalLink" href="#modal4">修改密码</a></li>
+									<li><a href="${context }/static/j_spring_security_logout">退出</a></li>
 								</ul>
 							</div>
 						</div>

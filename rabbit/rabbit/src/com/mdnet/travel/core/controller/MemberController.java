@@ -93,9 +93,9 @@ public class MemberController extends BaseController {
 				&& this.sendInviteSMS(uname, code.getCodeType() == 1 ? "true"
 						: "false", code.getInviteCode(), code.getDest_mobile(),
 						code.getOffPrice()) > 0)
-			return "1";
+			return "['1','" + code.getInviteCode() + "']";
 		else
-			return "0";
+			return "['0','" + code.getInviteCode() + "']";
 	}
 
 	protected int sendInviteSMS(String uname, String isBind, String inviteCode,
