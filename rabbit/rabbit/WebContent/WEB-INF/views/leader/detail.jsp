@@ -147,158 +147,105 @@
 								</ul>
 							</div>
 							<div class="open" id="expandMore"
-								<c:if test="${empty nextKey }">style="display:none;"</c:if></div>
-							<a href="javascript:;">更多</a>（${commentCount} 条评论）
+								<c:if test="${empty nextKey }">style="display:none;"</c:if>>
+								<a href="javascript:;">更多</a>（${commentCount} 条评论）
+							</div>
+
 						</div>
-						<script type="text/javascript">
-								var nextKey = "${nextKey}";
-								var pageCount = "${pageCount}";
-								function addComment(headImg, nickName, context, commentDate)
-								{
-									var liNode = document.createElement("li");
-									if(headImg.length == 0) headImg="${context }/resources/rabbit/images/head22-22.jpg";
-									liNode.innerHTML = '<div class="view-tl"><img src="'+headImg+'" alt="" /> </div>'
-								+ '<div class="view-tr"> <div class="view-trt"> <a href="#">'+nickName+'</a><span>'+commentDate+'</span>	</div>'
-								+ '<div class="view-trb">'+context +'</div></div>';
-									commentList.appendChild(liNode);
-								}
-								function loadMore()
-								{
-									var url = "${context}/tour/comment/more";
-									
-									$.post(url, {
-										id: '${tour.id}',
-										startKey: nextKey
-										
-									}, function(result, status) {
-										debugger;
-										
-										if (status == 'success') {
-											
-											var comments = eval(result);
-											for(var i=0; i<comments.length; i++){
-												if(i==comments.length-1){
-													//最后一个不显示，作为下一页的索引
-													if(comments.length>=pageCount)
-														nextKey = comments[i].id;
-													else{
-														nextKey = "";
-														expandMore.style.display = "none";
-													}
-												}
-												
-												//不是最后一个 或者 总数小于pageCount
-												if(i!=comments.length-1 || comments.length<pageCount){
-													addComment(comments[i].headImg, decodeURIComponent(comments[i].nickName), decodeURIComponent(comments[i].context), comments[i].commentDate);
-												}
-												
-												
-											}	
-										} else {
-											msg += '网络异常，或者未登录，请重试。';
-										}
-									
-									});
-								}
-								$('#expandMore').click(function() {
-									loadMore();
-								});
-							</script>
-					</div>
-					<div class="view-b">
-						<textarea placeholder="发表留言" id="commentText"></textarea>
-						<div class="view-bb">
-							<div class="l" id="send_error" style="color: red;">别忘了发表留言哦</div>
-							<div class="r">
-								<input type="button" class="inputbg2" value="确定"
-									onclick="javascript:sendComment();" /> <a href="#modal2"
-									class="modalLink inputbg3">去注册</a>
+						<div class="view-b">
+							<textarea placeholder="发表留言" id="commentText"></textarea>
+							<div class="view-bb">
+								<div class="l" id="send_error" style="color: red;">别忘了发表留言哦</div>
+								<div class="r">
+									<input type="button" class="inputbg2" value="确定"
+										onclick="javascript:sendComment();" /> <a href="#modal2"
+										class="modalLink inputbg3">去注册</a>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="guide-br">
-			<div class="guide-brt">
-				<div class="guide-brtitle">
-					<div class="l">服务日历</div>
-				</div>
-				<div class="route-tr">
-					<c:forEach var="groupCanlendar" items="${groupCanlendars}"
-						varStatus="g">
-						<c:choose>
-							<c:when test="${g.index==0}">
-								<s:url var="show" value="" />
-							</c:when>
-							<c:otherwise>
-								<s:url var="show" value="none" />
-							</c:otherwise>
-						</c:choose>
-						<table width="100%" cellpadding="0" cellspacing="0" border="0"
-							id="can-${g.index}" style="display: ${show};">
-							<tbody>
-								<tr style="background: #f9e509;">
-									<td colspan="7">
-										<table class="line-table" width="100%" cellpadding="0"
-											cellspacing="0" border="0">
-											<tbody>
-												<tr>
-													<td class="last_mon" style="width: 56px;"
-														onclick="getGroup(0,${g.index})"></td>
-													<td>${groupCanlendar.year
+			<div class="guide-br">
+				<div class="guide-brt">
+					<div class="guide-brtitle">
+						<div class="l">服务日历</div>
+					</div>
+					<div class="route-tr">
+						<c:forEach var="groupCanlendar" items="${groupCanlendars}"
+							varStatus="g">
+							<c:choose>
+								<c:when test="${g.index==0}">
+									<s:url var="show" value="" />
+								</c:when>
+								<c:otherwise>
+									<s:url var="show" value="none" />
+								</c:otherwise>
+							</c:choose>
+							<table width="100%" cellpadding="0" cellspacing="0" border="0"
+								id="can-${g.index}" style="display: ${show};">
+								<tbody>
+									<tr style="background: #f9e509;">
+										<td colspan="7">
+											<table class="line-table" width="100%" cellpadding="0"
+												cellspacing="0" border="0">
+												<tbody>
+													<tr>
+														<td class="last_mon" style="width: 56px;"
+															onclick="getGroup(0,${g.index})"></td>
+														<td>${groupCanlendar.year
 											}年${groupCanlendar.month }月</td>
-													<td class="next_mon" style="width: 56px;"
-														onclick="getGroup(1,${g.index})"></td>
-												</tr>
-											</tbody>
-										</table>
-									</td>
-								</tr>
-								<tr class="tdword">
-									<td width="14.2%" class="weekend">日</td>
-									<td width="14.2%">一</td>
-									<td width="14.2%">二</td>
-									<td width="14.2%">三</td>
-									<td width="14.2%">四</td>
-									<td width="14.2%">五</td>
-									<td class="weekend">六</td>
-								</tr>
-								<tr>
-									<c:forEach var="items" items="${groupCanlendar.days}"
-										varStatus="status">
+														<td class="next_mon" style="width: 56px;"
+															onclick="getGroup(1,${g.index})"></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr class="tdword">
+										<td width="14.2%" class="weekend">日</td>
+										<td width="14.2%">一</td>
+										<td width="14.2%">二</td>
+										<td width="14.2%">三</td>
+										<td width="14.2%">四</td>
+										<td width="14.2%">五</td>
+										<td class="weekend">六</td>
+									</tr>
+									<tr>
+										<c:forEach var="items" items="${groupCanlendar.days}"
+											varStatus="status">
 
-										<c:choose>
-											<c:when test="${items.price != 0 }">
-												<td class="group_date"
-													onmouseover="onPriceMouse('${items.date}',${items.price })"><a
-													class="modalLink" href="#modal9">${items.day}<br /> <span>￥${items.price }</span></a>
-												</td>
-											</c:when>
-											<c:otherwise>
-												<c:if test="${items.localMon }">
-													<td class="thismon">${items.day }</td>
-												</c:if>
-												<c:if test="${items.localMon == false }">
-													<td class="non_thismon">${items.day }</td>
-												</c:if>
-											</c:otherwise>
-										</c:choose>
+											<c:choose>
+												<c:when test="${items.price != 0 }">
+													<td class="group_date"
+														onmouseover="onPriceMouse('${items.date}',${items.price })"><a
+														class="modalLink" href="#modal9">${items.day}<br /> <span>￥${items.price }</span></a>
+													</td>
+												</c:when>
+												<c:otherwise>
+													<c:if test="${items.localMon }">
+														<td class="thismon">${items.day }</td>
+													</c:if>
+													<c:if test="${items.localMon == false }">
+														<td class="non_thismon">${items.day }</td>
+													</c:if>
+												</c:otherwise>
+											</c:choose>
 
-										<c:if test="${(status.index+1)%7==0 }">
-								</tr>
-								<tr>
-								</c:if>
-					</c:forEach>
-					</tr>
-					<tr></tr>
-					</tbody>
-					</table>
-					</c:forEach>
+											<c:if test="${(status.index+1)%7==0 }">
+									</tr>
+									<tr>
+									</c:if>
+						</c:forEach>
+						</tr>
+						<tr></tr>
+						</tbody>
+						</table>
+						</c:forEach>
 
 
 
-					<script type="text/javascript">
+						<script type="text/javascript">
 							function getGroup(t, inx) {
 								var oInx = inx;
 								if (t == 0) {
@@ -325,29 +272,29 @@
 								canObj.style.display = "none";
 							}
 						</script>
+					</div>
 				</div>
-			</div>
-			<div class="guide-brb">
-				<div class="guide-brtitle">
-					<div class="l">联系方式</div>
-				</div>
-				<div class="guide-brcont">
-					<ul class="guide-brcont-l">
-						<li class="gu1">${tour.mobile }</li>
-						<li class="gu2">${tour.QQ }</li>
-						<li class="gu3">${tour.EMail }</li>
-						<li class="gu4">${tour.weixinId }</li>
-					</ul>
-					<div class="guide-brcont-r">
-						<img
-							src="http://guantravel.com:5984/tours/${tour.id}/weixinQR.jpg"
-							alt="" />
+				<div class="guide-brb">
+					<div class="guide-brtitle">
+						<div class="l">联系方式</div>
+					</div>
+					<div class="guide-brcont">
+						<ul class="guide-brcont-l">
+							<li class="gu1">${tour.mobile }</li>
+							<li class="gu2">${tour.QQ }</li>
+							<li class="gu3">${tour.EMail }</li>
+							<li class="gu4">${tour.weixinId }</li>
+						</ul>
+						<div class="guide-brcont-r">
+							<img
+								src="http://guantravel.com:5984/tours/${tour.id}/weixinQR.jpg"
+								alt="" />
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 <!-- 预约弹框 STA -->
 <link rel="stylesheet"
@@ -512,7 +459,11 @@ function sendComment()
 		if (status == 'success') {
 			
 			if (result.length>0) {
-
+				var now = new Date();
+				var s = now.getFullYear()+'-'+now.getMonth()+'-'+now.getDay();
+				s += ' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds();
+				//now.
+				addComment("", '${username}', $("#commentText").val(), s, true);
 				$("#send_error").text('评论发送成功');
 				$("#commentText").text("");
 			} else {
@@ -524,4 +475,63 @@ function sendComment()
 	});
 	
 }
+
+var nextKey = "${nextKey}";
+var pageCount = "${pageCount}";
+function addComment(headImg, nickName, context, commentDate, pos)
+{
+	if(headImg.length == 0) headImg = "${context }/resources/rabbit/images/head22-22.jpg";
+	if(nickName.length==0) nickName = "匿名";
+	var liNode = document.createElement("li");
+	if(headImg.length == 0) headImg="${context }/resources/rabbit/images/head22-22.jpg";
+	liNode.innerHTML = '<div class="view-tl"><img src="'+headImg+'" alt="" /> </div>'
++ '<div class="view-tr"> <div class="view-trt"> <a href="#">'+nickName+'</a><span>'+commentDate+'</span>	</div>'
++ '<div class="view-trb">'+context +'</div></div>';
+if(pos != null && pos )
+	commentList.insertBefore(liNode, commentList.firstChild);
+else
+	commentList.appendChild(liNode);
+}
+function loadMore()
+{
+	var url = "${context}/tour/comment/more";
+	
+	$.post(url, {
+		id: '${tour.id}',
+		startKey: nextKey
+		
+	}, function(result, status) {
+		debugger;
+		
+		if (status == 'success') {
+			
+			var comments = eval(result);
+			for(var i=0; i<comments.length; i++){
+				if(i==comments.length-1){
+					//最后一个不显示，作为下一页的索引
+					if(comments.length>=pageCount)
+						nextKey = comments[i].id;
+					else{
+						nextKey = "";
+						expandMore.style.display = "none";
+					}
+				}
+				
+				//不是最后一个 或者 总数小于pageCount
+				if(i!=comments.length-1 || comments.length<pageCount){
+					addComment(comments[i].headImg, decodeURIComponent(comments[i].nickName), decodeURIComponent(comments[i].context), comments[i].commentDate);
+				}
+				
+				
+			}	
+		} else {
+			msg += '网络异常，或者未登录，请重试。';
+		}
+	
+	});
+}
+$('#expandMore').click(function() {
+	loadMore();
+});
+
 </script>

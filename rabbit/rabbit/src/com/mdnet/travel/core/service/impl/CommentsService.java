@@ -29,17 +29,35 @@ public class CommentsService extends BaseCouchService {
 		return new TourComments(db);
 	}
 
+	public int test() {
+		String mapFunc = "{\"map\":\"function(doc) {if(doc.tourKey == 'e2a0b070c8d540ea8b672114cd000ea7' ) emit(doc.tourKey, 1);}\",\"reduce\":\"function (key,value){return sum(value);}\"}";
+		//List<TourComments> list = new ArrayList<TourComments>();
+		Options options = new Options();
+
+		options.descending(true);
+		options.groupLevel(1);
+		options.reduce(true);
+		@SuppressWarnings("rawtypes")
+		ViewResult<Map> result = db.queryAdHocView(Map.class, mapFunc, options,
+				null);	
+
+		for (int i = 0; i < result.getRows().size(); i++) {
+			System.out.println(result.getRows().get(0).getValue());
+		}
+		return 0;
+	}
+
 	public int commentsCount(String tourKey) {
-		
+
 		Options options = new Options();
 
 		options.groupLevel(1);
 		options.reduce(true);
 		options.startKey(tourKey);
 
-		ViewResult<String> result =  db.queryView("static/count", String.class, options,
-				null);
-		
+		ViewResult<String> result = db.queryView("static/count", String.class,
+				options, null);
+
 		int count = 0;
 		if (result.getRows().size() > 0) {
 			ValueRow<String> ret = result.getRows().get(0);
@@ -83,8 +101,9 @@ public class CommentsService extends BaseCouchService {
 
 	public static void main(String[] args) {
 		CommentsService cs = new CommentsService();
-		cs.commentsCount("e2a0b070c8d540ea8b672114cd000ea7");
-		//cs.search("e2a0b070c8d540ea8b672114cd000ea7", "", 1);
+		cs.test();
+		//cs.commentsCount("e2a0b070c8d540ea8b672114cd000ea7");
+		// cs.search("e2a0b070c8d540ea8b672114cd000ea7", "", 1);
 		// TourComments c = cs.newComment();
 		// c.setCommentDate("2015-03-19 12:34:56");
 		// c.setCommentIP("127.0.0.1");
