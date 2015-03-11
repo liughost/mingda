@@ -1,41 +1,64 @@
 package com.mdnet.travel.core.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
+import com.google.gson.Gson;
+import com.mdnet.travel.core.dao.TourComments;
 import com.mdnet.travel.core.dao.TourInfo;
 import com.mdnet.travel.core.model.GroupMonth;
 import com.mdnet.travel.core.model.Tour;
-import com.mdnet.travel.core.model.TourItems;
 import com.mdnet.travel.core.model.TourOrder;
+import com.mdnet.travel.core.model.Traveler;
 import com.mdnet.travel.core.service.ICustomService;
 import com.mdnet.travel.core.service.ILeaderService;
+import com.mdnet.travel.core.service.impl.CommentsService;
 import com.mdnet.travel.core.service.impl.TourService;
 
 @Controller
 @RequestMapping("/tour")
 public class TourController extends BaseController {
+	protected final int commentPageCount = 15;
 	@Resource(name = ILeaderService.SERVICE_NAME)
 	private ILeaderService leaderService;
 	@Resource(name = TourService.SERVICE_NAME)
 	private TourService tourService;
 	@Resource(name = ICustomService.SERVICE_NAME)
 	protected ICustomService customService;
+	@Resource(name = CommentsService.SERVICE_NAME)
+	protected CommentsService commentsService;
+
+	@RequestMapping(value = { "comment/more" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String commentMore(
+			@RequestParam(value = "id", required = true) String id,
+			@RequestParam(value = "startKey", required = true) String startKey)
+			throws UnsupportedEncodingException {
+		List<TourComments> tcs = this.commentsService.search(id, startKey,
+				commentPageCount + 1);
+		for (TourComments t : tcs) {
+			t.setNickName(java.net.URLEncoder.encode(t.getNickName(), "UTF-8"));
+			t.setContext(java.net.URLEncoder.encode(t.getContext(), "UTF-8"));
+		}
+		Gson g = new Gson();
+		return g.toJson(tcs);
+	}
 
 	@RequestMapping(value = { "detail" }, method = RequestMethod.GET)
 	public ModelAndView leaderDetail(HttpServletRequest request,
-			@RequestParam(value = "id", required = true) String id) throws ParseException {
+			@RequestParam(value = "id", required = true) String id)
+			throws ParseException {
 		this.getMav(request);
 		this.mav.setViewName(this.preMobile(request) + "leader/detail");
 		TourInfo tour = this.tourService.takeTour(id);
@@ -43,24 +66,53 @@ public class TourController extends BaseController {
 		tour.setFeeExcept(tour.getFeeExcept().replace("\n", "<br/>"));
 		tour.setSupplement(tour.getSupplement().replace("\n", "<br/>"));
 		this.mav.addObject("tour", tour);
-		
-		List<GroupMonth> gms = customService.makeGroupCalendar(tour.getId(), tour.getNickName(), tour.getPrice());
+
+		List<GroupMonth> gms = customService.makeGroupCalendar(tour.getId(),
+				tour.getNickName(), tour.getPrice());
 
 		this.mav.addObject("groupCanlendars", gms);
-//		this.mav.addObject("commentsList",
-//				this.leaderService.findComments(Integer.parseInt(custId), 0));
+		List<TourComments> tcs = this.commentsService.search(id, null,
+				commentPageCount + 1);
+		if (tcs.size() == commentPageCount + 1) {
+			TourComments last = tcs.get(commentPageCount);
+			this.mav.addObject("nextKey", last.getId());
+			tcs.remove(commentPageCount);
+		} else
+			this.mav.addObject("nextKey", "");
+		this.mav.addObject("commentsList", tcs);
+		this.mav.addObject("pageCount", commentPageCount);
+		this.mav.addObject("commentCount",
+				this.commentsService.commentsCount(id));
 		return this.mav;
 	}
 
 	@RequestMapping(value = { "addComments" }, method = RequestMethod.POST)
 	@ResponseBody
 	public String addComments(HttpServletRequest request,
-			@RequestParam(value = "custId", required = true) int custId,
-			@RequestParam(value = "nick", required = true) String nick,
+			@RequestParam(value = "username", required = true) String username,
+			@RequestParam(value = "tourKey", required = true) String tourKey,
 			@RequestParam(value = "context", required = true) String context) {
-		int ret = this.leaderService.addComments(getIpAddr(request), custId,
-				nick, context);
-		return String.valueOf(ret);
+		TourComments c = this.commentsService.newComment();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		c.setCommentDate(sdf.format(new Date()));
+		c.setCommentIP(getIpAddr(request));
+		c.setContext(context);
+		Traveler t = this.travelerService.findTravelerByUname(username);
+		if (t != null) {
+			c.setCustId(Integer.parseInt(t.getTravelerId()));
+			c.setHeadImg("");
+			c.setNickName(t.getLoginName());
+		} else {
+			c.setCustId(0);
+			c.setHeadImg("");
+			c.setNickName("匿名");
+		}
+		c.setTourKey(tourKey);
+		c.Add();
+		// int ret = this.leaderService.addComments(getIpAddr(request), custId,
+		// nick, context);
+		return c.getId();
 	}
 
 	@RequestMapping(value = { "approve" }, method = RequestMethod.POST)

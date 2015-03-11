@@ -206,9 +206,9 @@
 									</div>
 									<div class="glist-b">
 										<div class="l">
-											<span>￥${product.lowPrice }</span>/人
+											<span>￥${product.lowPrice }</span>/人起
 										</div>
-										<div class="r">56</div>
+										<div class="r" style="display:none;">56</div>
 									</div>
 								</div>
 							</li>

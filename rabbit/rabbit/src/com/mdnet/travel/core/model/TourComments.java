@@ -9,12 +9,7 @@ public class TourComments extends BaseModel{
 	private int custId;// 关联到客户表（customer_table）中的id字段
 	private String commentDate;// 评论日期
 	private String commentIP;// 评论者IP地址
-	public String getCommentIP() {
-		return commentIP;
-	}
-	public void setCommentIP(String commentIP) {
-		this.commentIP = commentIP;
-	}
+	
 
 	private String nickName;
 	
@@ -64,5 +59,11 @@ public class TourComments extends BaseModel{
 	}
 	public void setCriticizeCount(int criticizeCount) {
 		this.criticizeCount = criticizeCount;
+	}
+	public String getCommentIP() {
+		return commentIP;
+	}
+	public void setCommentIP(String commentIP) {
+		this.commentIP = commentIP;
 	}
 }

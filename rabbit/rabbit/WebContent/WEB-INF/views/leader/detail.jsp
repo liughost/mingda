@@ -3,6 +3,11 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication var="username" property="principal.username" />
+</sec:authorize>
 <div class="maink">
 	<div class="main">
 		<div class="guide-t">
@@ -37,7 +42,7 @@
 				<ul id="guide" class="guide">
 					<li class="guTag"><a onClick="guTag('guideCont0',this)"
 						href="javascript:;">导游简介</a></li>
-					<!-- <li><a onClick="guTag('guideCont1',this)" href="javascript:;">评论</a></li> -->
+					<li><a onClick="guTag('guideCont1',this)" href="javascript:;">评论</a></li>
 				</ul>
 				<div id="guideCont">
 					<div id="guideCont0" class="guideCont guTag">
@@ -111,198 +116,189 @@
 					</div>
 					<div id="guideCont1" class="guideCont">
 						<div class="view-t">
-							<div id="briefInfo">
-								<ul>
-									<li>
-										<div class="view-tl">
-											<a href="#"><img src="http://guantravel.com:5984/tours/${tour.id}/head.jpg" alt="" /></a>
-										</div>
-										<div class="view-tr">
-											<div class="view-trt">
-												<a href="#">Mariano张</a><span>2014-11-28 16:34</span>
+							<div id="briefInfo" style="height: auto;">
+								<ul id="commentList">
+
+									<c:forEach var="comment" items="${commentsList}"
+										varStatus="inx">
+										<li>
+											<div class="view-tl">
+												<c:choose>
+													<c:when test="${not empty comment.headImg }">
+														<img src="${comment.headImg}" alt="" />
+													</c:when>
+													<c:otherwise>
+														<img
+															src="${context }/resources/rabbit/images/head22-22.jpg"
+															alt="" />
+													</c:otherwise>
+												</c:choose>
+
 											</div>
-											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的</div>
-										</div>
-									</li>
-									<li>
-										<div class="view-tl">
-											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
-										</div>
-										<div class="view-tr">
-											<div class="view-trt">
-												<a href="#">王卯卯</a><span>2014-11-28 16:34</span>
+											<div class="view-tr">
+												<div class="view-trt">
+													<a href="#">${comment.nickName }</a><span>${comment.commentDate}</span>
+												</div>
+												<div class="view-trb">${comment.context }</div>
 											</div>
-											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕</div>
-										</div>
-									</li>
-									<li>
-										<div class="view-tl">
-											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
-										</div>
-										<div class="view-tr active">
-											<div class="view-trt">
-												<a href="#">刘志军</a><span>2014-11-28 16:34</span>
-											</div>
-											<div class="view-trb">
-												<a href="#">@Mariano张</a>旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="view-tl">
-											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
-										</div>
-										<div class="view-tr">
-											<div class="view-trt">
-												<a href="#">Dana Parvan</a><span>2014-11-28 16:34</span>
-											</div>
-											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的</div>
-										</div>
-									</li>
-									<li>
-										<div class="view-tl">
-											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
-										</div>
-										<div class="view-tr">
-											<div class="view-trt">
-												<a href="#">Dana Parvan</a><span>2014-11-28 16:34</span>
-											</div>
-											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的</div>
-										</div>
-									</li>
-									<li>
-										<div class="view-tl">
-											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
-										</div>
-										<div class="view-tr">
-											<div class="view-trt">
-												<a href="#">Dana Parvan</a><span>2014-11-28 16:34</span>
-											</div>
-											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的</div>
-										</div>
-									</li>
-									<li>
-										<div class="view-tl">
-											<a href="#"><img src="images/head56-56.gif" alt="" /></a>
-										</div>
-										<div class="view-tr">
-											<div class="view-trt">
-												<a href="#">Dana Parvan</a><span>2014-11-28 16:34</span>
-											</div>
-											<div class="view-trb">旅行跟对的人一起很重要。本次在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的大火炕在雪乡我们一起包饺子，一起围着篝火唱歌跳舞，睡暖暖的</div>
-										</div>
-									</li>
+										</li>
+									</c:forEach>
+
 								</ul>
 							</div>
-							<div class="open" id="expandMore">
-								<a href="javascript:;">展开</a>（234 条评论）
-							</div>
-							<script type="text/javascript">
-								$('#expandMore').click(function() {
-									$('#briefInfo').css({
-										'height' : 'auto',
-										'overflow' : 'none'
+							<div class="open" id="expandMore"
+								<c:if test="${empty nextKey }">style="display:none;"</c:if></div>
+							<a href="javascript:;">更多</a>（${commentCount} 条评论）
+						</div>
+						<script type="text/javascript">
+								var nextKey = "${nextKey}";
+								var pageCount = "${pageCount}";
+								function addComment(headImg, nickName, context, commentDate)
+								{
+									var liNode = document.createElement("li");
+									if(headImg.length == 0) headImg="${context }/resources/rabbit/images/head22-22.jpg";
+									liNode.innerHTML = '<div class="view-tl"><img src="'+headImg+'" alt="" /> </div>'
+								+ '<div class="view-tr"> <div class="view-trt"> <a href="#">'+nickName+'</a><span>'+commentDate+'</span>	</div>'
+								+ '<div class="view-trb">'+context +'</div></div>';
+									commentList.appendChild(liNode);
+								}
+								function loadMore()
+								{
+									var url = "${context}/tour/comment/more";
+									
+									$.post(url, {
+										id: '${tour.id}',
+										startKey: nextKey
+										
+									}, function(result, status) {
+										debugger;
+										
+										if (status == 'success') {
+											
+											var comments = eval(result);
+											for(var i=0; i<comments.length; i++){
+												if(i==comments.length-1){
+													//最后一个不显示，作为下一页的索引
+													if(comments.length>=pageCount)
+														nextKey = comments[i].id;
+													else{
+														nextKey = "";
+														expandMore.style.display = "none";
+													}
+												}
+												
+												//不是最后一个 或者 总数小于pageCount
+												if(i!=comments.length-1 || comments.length<pageCount){
+													addComment(comments[i].headImg, decodeURIComponent(comments[i].nickName), decodeURIComponent(comments[i].context), comments[i].commentDate);
+												}
+												
+												
+											}	
+										} else {
+											msg += '网络异常，或者未登录，请重试。';
+										}
+									
 									});
-									$('#expandMore').toggle();
+								}
+								$('#expandMore').click(function() {
+									loadMore();
 								});
 							</script>
-						</div>
-						<div class="view-b">
-							<textarea value="发表留言"
-								onfocus="if(this.value=='发表留言'){this.value=''}"
-								onblur="if(this.value==''){this.value='发表留言'}">发表留言</textarea>
-							<div class="view-bb">
-								<div class="l">注册登录后才可发表留言哦</div>
-								<div class="r">
-									<input type="button" class="inputbg2" value="确定" /> <input
-										type="button" class="inputbg3" value="去注册" />
-								</div>
+					</div>
+					<div class="view-b">
+						<textarea placeholder="发表留言" id="commentText"></textarea>
+						<div class="view-bb">
+							<div class="l" id="send_error" style="color: red;">别忘了发表留言哦</div>
+							<div class="r">
+								<input type="button" class="inputbg2" value="确定"
+									onclick="javascript:sendComment();" /> <a href="#modal2"
+									class="modalLink inputbg3">去注册</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="guide-br">
-				<div class="guide-brt">
-					<div class="guide-brtitle">
-						<div class="l">服务日历</div>
-					</div>
-					<div class="route-tr">
-						<c:forEach var="groupCanlendar" items="${groupCanlendars}"
-							varStatus="g">
-							<c:choose>
-								<c:when test="${g.index==0}">
-									<s:url var="show" value="" />
-								</c:when>
-								<c:otherwise>
-									<s:url var="show" value="none" />
-								</c:otherwise>
-							</c:choose>
-							<table width="100%" cellpadding="0" cellspacing="0" border="0"
-								id="can-${g.index}" style="display: ${show};">
-								<tbody>
-									<tr style="background: #f9e509;">
-										<td colspan="7">
-											<table class="line-table" width="100%" cellpadding="0"
-												cellspacing="0" border="0">
-												<tbody>
-													<tr>
-														<td class="last_mon" style="width: 56px;"
-															onclick="getGroup(0,${g.index})"></td>
-														<td>${groupCanlendar.year
+		</div>
+		<div class="guide-br">
+			<div class="guide-brt">
+				<div class="guide-brtitle">
+					<div class="l">服务日历</div>
+				</div>
+				<div class="route-tr">
+					<c:forEach var="groupCanlendar" items="${groupCanlendars}"
+						varStatus="g">
+						<c:choose>
+							<c:when test="${g.index==0}">
+								<s:url var="show" value="" />
+							</c:when>
+							<c:otherwise>
+								<s:url var="show" value="none" />
+							</c:otherwise>
+						</c:choose>
+						<table width="100%" cellpadding="0" cellspacing="0" border="0"
+							id="can-${g.index}" style="display: ${show};">
+							<tbody>
+								<tr style="background: #f9e509;">
+									<td colspan="7">
+										<table class="line-table" width="100%" cellpadding="0"
+											cellspacing="0" border="0">
+											<tbody>
+												<tr>
+													<td class="last_mon" style="width: 56px;"
+														onclick="getGroup(0,${g.index})"></td>
+													<td>${groupCanlendar.year
 											}年${groupCanlendar.month }月</td>
-														<td class="next_mon" style="width: 56px;"
-															onclick="getGroup(1,${g.index})"></td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
-									</tr>
-									<tr class="tdword">
-										<td width="14.2%" class="weekend">日</td>
-										<td width="14.2%">一</td>
-										<td width="14.2%">二</td>
-										<td width="14.2%">三</td>
-										<td width="14.2%">四</td>
-										<td width="14.2%">五</td>
-										<td class="weekend">六</td>
-									</tr>
-									<tr>
-										<c:forEach var="items" items="${groupCanlendar.days}"
-											varStatus="status">
+													<td class="next_mon" style="width: 56px;"
+														onclick="getGroup(1,${g.index})"></td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr class="tdword">
+									<td width="14.2%" class="weekend">日</td>
+									<td width="14.2%">一</td>
+									<td width="14.2%">二</td>
+									<td width="14.2%">三</td>
+									<td width="14.2%">四</td>
+									<td width="14.2%">五</td>
+									<td class="weekend">六</td>
+								</tr>
+								<tr>
+									<c:forEach var="items" items="${groupCanlendar.days}"
+										varStatus="status">
 
-											<c:choose>
-												<c:when test="${items.price != 0 }">
-													<td class="group_date" onmouseover="onPriceMouse('${items.date}',${items.price })"><a class="modalLink"
-														href="#modal9">${items.day}<br /> <span>￥${items.price }</span></a>
-													</td>
-												</c:when>
-												<c:otherwise>
-													<c:if test="${items.localMon }">
-														<td class="thismon">${items.day }</td>
-													</c:if>
-													<c:if test="${items.localMon == false }">
-														<td class="non_thismon">${items.day }</td>
-													</c:if>
-												</c:otherwise>
-											</c:choose>
+										<c:choose>
+											<c:when test="${items.price != 0 }">
+												<td class="group_date"
+													onmouseover="onPriceMouse('${items.date}',${items.price })"><a
+													class="modalLink" href="#modal9">${items.day}<br /> <span>￥${items.price }</span></a>
+												</td>
+											</c:when>
+											<c:otherwise>
+												<c:if test="${items.localMon }">
+													<td class="thismon">${items.day }</td>
+												</c:if>
+												<c:if test="${items.localMon == false }">
+													<td class="non_thismon">${items.day }</td>
+												</c:if>
+											</c:otherwise>
+										</c:choose>
 
-											<c:if test="${(status.index+1)%7==0 }">
-									</tr>
-									<tr>
-										</c:if>
-
-
-										</c:forEach>
-									</tr>
-									<tr></tr>
-								</tbody>
-							</table>
-						</c:forEach>
-
+										<c:if test="${(status.index+1)%7==0 }">
+								</tr>
+								<tr>
+								</c:if>
+					</c:forEach>
+					</tr>
+					<tr></tr>
+					</tbody>
+					</table>
+					</c:forEach>
 
 
-						<script type="text/javascript">
+
+					<script type="text/javascript">
 							function getGroup(t, inx) {
 								var oInx = inx;
 								if (t == 0) {
@@ -329,29 +325,29 @@
 								canObj.style.display = "none";
 							}
 						</script>
-					</div>
 				</div>
-				<div class="guide-brb">
-					<div class="guide-brtitle">
-						<div class="l">联系方式</div>
-					</div>
-					<div class="guide-brcont">
-						<ul class="guide-brcont-l">
-							<li class="gu1">${tour.mobile }</li>
-							<li class="gu2">${tour.QQ }</li>
-							<li class="gu3">${tour.EMail }</li>
-							<li class="gu4">${tour.weixinId }</li>
-						</ul>
-						<div class="guide-brcont-r">
-							<img
-								src="http://guantravel.com:5984/tours/${tour.id}/weixinQR.jpg"
-								alt="" />
-						</div>
+			</div>
+			<div class="guide-brb">
+				<div class="guide-brtitle">
+					<div class="l">联系方式</div>
+				</div>
+				<div class="guide-brcont">
+					<ul class="guide-brcont-l">
+						<li class="gu1">${tour.mobile }</li>
+						<li class="gu2">${tour.QQ }</li>
+						<li class="gu3">${tour.EMail }</li>
+						<li class="gu4">${tour.weixinId }</li>
+					</ul>
+					<div class="guide-brcont-r">
+						<img
+							src="http://guantravel.com:5984/tours/${tour.id}/weixinQR.jpg"
+							alt="" />
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 <!-- 预约弹框 STA -->
 <link rel="stylesheet"
@@ -384,13 +380,14 @@
 			<ul class="make-li">
 				<li>
 					<div class="l">
-						<!--  input type="radio" name="pick" value="pick"> --> <c:if test="${fn:length(tour.carType)==0 }">不</c:if>带车，最多6人
-					</div>
-					<!-- 
+						<!--  input type="radio" name="pick" value="pick"> -->
+						<c:if test="${fn:length(tour.carType)==0 }">不</c:if>
+						带车，最多6人
+					</div> <!-- 
 					<div class="r">￥10880</div>
 					 -->
 				</li>
-				
+
 			</ul>
 			<div class="make-date">
 				<div class="date-zi">预约日期</div>
@@ -424,7 +421,7 @@
 					</select>
 					<div class="on"></div>
 				</div>
-				<div class="l" style="float:right;">
+				<div class="l" style="float: right;">
 					<div class="date-zi">预约天数（每天10小时）</div>
 					<select id="selDays" onchange="calTotal()">
 						<option value="1">1天</option>
@@ -450,7 +447,8 @@
 				<div class="btn1">
 					费用总计：<br> <em>￥<span id="totalPrice">10880</span></em>
 				</div>
-				<em> <input type="button" onclick="order();" class="inputbg4" value="立即预定">
+				<em> <input type="button" onclick="order();" class="inputbg4"
+					value="立即预定">
 				</em>
 			</div>
 			<em> </em>
@@ -465,7 +463,7 @@
 	src="${context }/resources/rabbit/js/Validate.js"></script>
 <script type="text/javascript"
 	src="${context }/resources/rabbit/js/Validate.form.js"></script>
- -->	
+ -->
 <script type="text/javascript">
 var unitPrice = 0;
 function onPriceMouse(day, price)
@@ -489,5 +487,41 @@ function order()
 	//判断是否登录
 	//下单
 	//支付
+}
+
+function sendComment()
+{
+	
+	debugger;
+	if($("#commentText").val().length==0)
+		{
+		$("#send_error").text('请输入评论的内容。');
+		commentText.focus();
+		return;
+		}
+	var url = "${context}/tour/addComments";
+		
+	$.post(url, {
+		username: '${username}',
+		tourKey: '${tour.id}',
+		context: $("#commentText").val()
+		
+	}, function(result, status) {
+		debugger;
+		
+		if (status == 'success') {
+			
+			if (result.length>0) {
+
+				$("#send_error").text('评论发送成功');
+				$("#commentText").text("");
+			} else {
+				$("#send_error").text('评论发送失败！');
+			}
+		} else {
+			msg += '网络异常，或者未登录，请重试。';
+		}
+	});
+	
 }
 </script>

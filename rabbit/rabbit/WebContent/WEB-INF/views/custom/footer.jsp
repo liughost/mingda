@@ -2,6 +2,24 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<style>
+.closeModal {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	z-index: 20;
+	/*background-color: blue;*/
+	background: url(${context}/resources/rabbit/images/delete.png) no-repeat;
+	background-position: 0 0px;
+	/* left: 100%; */
+	/* top: 0; */
+	right: 0;
+	margin: 15px auto;
+	float: right;
+	/* bottom: 0; */
+	cursor: pointer;
+}
+</style>
 <!-- 公用底部 STA -->
 <div class="footerk">
 	<div class="footerk-t">
@@ -323,6 +341,11 @@
 		/**忘记密码相关函数 end */
 
 	};//end for window.onload
+
+	function closeModal(modal) {
+		$(modal).modal('hide');
+		//$(".overlay").css('display','none');
+	}
 </script>
 <!-- 返回顶部 End -->
 
@@ -396,9 +419,9 @@
 					</li>
 					<li><input type="submit" class="loginBtn1" value="登录" /></li>
 
-					<li style="display: none;"><input type="button"
-						onclick='javascript:$("#modal2").modal();$("#modal2").show();'
-						class="loginBtn2" value="注册" /></li>
+					<li style=""><input type="button"
+						onclick='javascript:closeModal("#modal1")' class="loginBtn2"
+						value="关闭" /></li>
 
 				</ul>
 			</div>
@@ -408,6 +431,7 @@
 <!-- 登录弹框 End -->
 <!-- 注册弹框 Begin -->
 <div id="modal2" class="modal">
+
 	<div class="login">
 		<ul class="login-t">
 			<li><a class="modalLink" href="#modal1">登录</a></li>
@@ -419,11 +443,11 @@
 					placeholder="登录名" id="realname" name="realname" tabindex="3" /> <label
 					id="realname_succeed" class="blank"></label> <label
 					id="realname_error" style="color: red;"></label></li>
-				<li><input type="password" id="pwd2" name="pwd2" class="loginTxt"
-					value="" placeholder="登录密码" tabindex="4" /> <label
+				<li><input type="password" id="pwd2" name="pwd2"
+					class="loginTxt" value="" placeholder="登录密码" tabindex="4" /> <label
 					id="pwd2_succeed" class="blank"></label> <label id="pwd2_error"></label></li>
-				<li><input type="password" id="pwd3" name="pwd3" class="loginTxt"
-					value="" placeholder="确认密码" tabindex="5" /> <label
+				<li><input type="password" id="pwd3" name="pwd3"
+					class="loginTxt" value="" placeholder="确认密码" tabindex="5" /> <label
 					id="pwd3_succeed" class="blank"></label> <label id="pwd3_error"></label></li>
 				<li><input type="text" id="mobile" name="mobile"
 					class="loginTxt2" value="" placeholder="有效手机号" tabindex="6" /> <input
@@ -436,8 +460,9 @@
 					id="authcode_succeed" class="blank invisible"></label> <label
 					id="authcode_error"></label></li>
 				<li class="btny"><input type="button" class="loginBtn1"
-					onclick="registerUser();" value="注册" style="width: 100%" /> <!--  <input type="button"
-					class="loginBtn2" value="登录" onclick=""/> --></li>
+					onclick="registerUser();" value="注册" style="" /> <input
+					type="button" class="loginBtn2" value="关闭"
+					onclick="javascript:closeModal('#modal2');" /></li>
 			</ul>
 		</div>
 	</div>
@@ -446,6 +471,7 @@
 <!-- 忘记密码 STA -->
 <div id="modal4" class="modal">
 	<div class="login">
+		<div class="closeModal" onclick="closeModal('#modal4')"></div>
 		<div class="forget-t">找回密码</div>
 		<div class="loginCont loginTag">
 			<ul class="login-b">
@@ -454,12 +480,10 @@
 					<label id="mobile1_succeed" class="blank"></label> <label
 					id="mobile1_error" style="color: red;"></label></li>
 				<li><input type="text" id="authcode1" name="authcode1"
-					class="loginTxt2" value="" placeholder="输入验证码"
-					 tabindex="8" />
-					<input type="button" class="loginBtn3" value="获取验证码"
-					id="getvalidcode" /> <label id="authcode1_succeed"
-					class="blank invisible"></label> <label id="authcode1_error"
-					style="color: red;"></label></li>
+					class="loginTxt2" value="" placeholder="输入验证码" tabindex="8" /> <input
+					type="button" class="loginBtn3" value="获取验证码" id="getvalidcode" />
+					<label id="authcode1_succeed" class="blank invisible"></label> <label
+					id="authcode1_error" style="color: red;"></label></li>
 				<li><input type="password" id="pwd4" name="pwd4"
 					class="loginTxt" value="" placeholder="输入新密码" tabindex="9" /> <label
 					id="pwd4_succeed" class="blank"></label> <label id="pwd4_error"

@@ -5,6 +5,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+	<style>
+.maink {
+	background-color: #f1f4f6;
+}
+
+.footerk {
+	background-color: #f1f4f6;
+}
+</style>
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication var="username" property="principal.username" />
 </sec:authorize>

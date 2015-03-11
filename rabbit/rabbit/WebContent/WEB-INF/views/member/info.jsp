@@ -8,13 +8,23 @@
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication var="username" property="principal.username" />
 </sec:authorize>
+<style>
+.maink {
+	background-color: #f1f4f6;
+}
+
+.footerk {
+	background-color: #f1f4f6;
+}
+</style>
 <!-- 主体内容区 STA -->
 <div class="maink">
 	<div class="main">
 		<div class="use">
 			<div class="use-l">
 				<div class="use-lhead">
-					<img src="${context }/resources/rabbit/images/head166-166.jpg" alt="" />
+					<img src="${context }/resources/rabbit/images/head166-166.jpg"
+						alt="" />
 				</div>
 				<div class="use-lname">${username }</div>
 				<ul class="use-lul">
@@ -69,9 +79,9 @@
 						<li>
 							<div class="use-info-l">&nbsp;</div>
 							<div class="use-info-r">
-								<label style="color: red" id="update_error"></label> <br/><input
-									onclick="javascript:updateUserInfo(${info.travelerId})" style="margin:0;"
-									type="button" class="u-btn1" value="更新" />
+								<label style="color: red" id="update_error"></label> <br />
+								<input onclick="javascript:updateUserInfo(${info.travelerId})"
+									style="margin: 0;" type="button" class="u-btn1" value="更新" />
 							</div>
 						</li>
 					</ul>

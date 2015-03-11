@@ -8,6 +8,15 @@
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication var="username" property="principal.username" />
 </sec:authorize>
+<style>
+.maink {
+	background-color: #f1f4f6;
+}
+
+.footerk {
+	background-color: #f1f4f6;
+}
+</style>
 <!-- 主体内容区 STA -->
 <div class="maink">
 	<div class="main">
