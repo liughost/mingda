@@ -62,5 +62,15 @@
 				<comment>用户登录时token</comment>
 			</column>
 		</property>
+		<property name="headImg" type="string">
+			<column name="head_img" not-null="false" length="64">
+				<comment>用户头像的key，默认文件名为head.jpg</comment>
+			</column>
+		</property>
+		<property name="tourKey" type="string">
+			<column name="tour_key" not-null="false" length="64">
+				<comment>对应的导游信息结构的ID</comment>
+			</column>
+		</property>
 	</class>
 </hibernate-mapping>

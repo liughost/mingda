@@ -55,6 +55,7 @@ public class TourController extends BaseController {
 		return g.toJson(tcs);
 	}
 
+
 	@RequestMapping(value = { "detail" }, method = RequestMethod.GET)
 	public ModelAndView leaderDetail(HttpServletRequest request,
 			@RequestParam(value = "id", required = true) String id)

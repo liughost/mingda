@@ -35,6 +35,14 @@
 	<definition name="member/info" extends="custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/member/info.jsp" />
 	</definition>
+	<definition name="member/tour/info" extends="custom_template">
+		<put-attribute name="content"
+			value="/WEB-INF/views/member/tour_info.jsp" />
+	</definition>
+	<definition name="member/tour/images" extends="custom_template">
+		<put-attribute name="content"
+			value="/WEB-INF/views/member/tour_images.jsp" />
+	</definition>
 	<definition name="mobile/member/info" extends="mobile_custom_template">
 		<put-attribute name="content" value="/WEB-INF/views/member/info.jsp" />
 	</definition>

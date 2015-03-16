@@ -24,7 +24,7 @@
                     </c:forEach>
                 	
                 </ul>
-                <div class="page"><a href="#">&lt;</a><a href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#" class="on">4</a><a href="#">5</a><a href="#">6</a><a href="#">…</a><a href="#">&gt;</a></div>
+                <div style="display:none;" class="page"><a href="#">&lt;</a><a href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#" class="on">4</a><a href="#">5</a><a href="#">6</a><a href="#">…</a><a href="#">&gt;</a></div>
             </div>
         </div>
     </div>

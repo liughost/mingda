@@ -7,8 +7,12 @@ import java.util.Map;
 
 import org.jcouchdb.db.Database;
 import org.jcouchdb.db.Options;
+import org.jcouchdb.document.Attachment;
 import org.jcouchdb.document.ValueRow;
 import org.jcouchdb.document.ViewResult;
+import org.springframework.http.MediaType;
+
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class TourInfo extends MyBaseDocument {
 	// protected static TourInfo _tourInfo = null;
@@ -45,6 +49,26 @@ public class TourInfo extends MyBaseDocument {
 	protected String feeDesc;// 费用包含
 	protected String feeExcept;// 费用不包含
 	protected String supplement;// 其他说明
+
+	// 管理字段
+	protected boolean commend = false;// 是否推荐，true为推荐
+	protected boolean online = false;// 是否上线，true为上线，其他为草稿
+
+	public boolean isCommend() {
+		return commend;
+	}
+
+	public void setCommend(boolean commend) {
+		this.commend = commend;
+	}
+
+	public boolean isOnline() {
+		return online;
+	}
+
+	public void setOnline(boolean online) {
+		this.online = online;
+	}
 
 	protected List<String> serviceItem = new ArrayList<String>();
 
@@ -286,6 +310,16 @@ public class TourInfo extends MyBaseDocument {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			} else if (field.getType() == boolean.class) {
+				try {
+					field.set(this, Boolean.parseBoolean(value));
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else if (field.getType() == int.class) {
 				try {
 					field.setInt(this, Integer.parseInt(value));
@@ -351,6 +385,16 @@ public class TourInfo extends MyBaseDocument {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			} else if (field.getType() == boolean.class) {
+				try {
+					field.set(this, Boolean.parseBoolean(value));
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else if (field.getType() == int.class) {
 				try {
 					field.setInt(this, Integer.parseInt(value));
@@ -401,9 +445,51 @@ public class TourInfo extends MyBaseDocument {
 			this.setId(id);
 			String rev = result.getRows().get(0).getKey().toString();
 			this.setRevision(rev);
-			db.updateDocument(this);
+			// db.updateDocument(this);
+
+			updateTour(id);
 		}
 		return 0;
+	}
+
+	public void updateTour(String id) {
+		// 获取原来微信
+		try {
+			byte[] bb = this.takeDbObj().getAttachment(id, "weixinQR.jpg");
+			if (bb != null) {
+				Attachment att0 = new Attachment(MediaType.IMAGE_JPEG_VALUE, bb);
+				this.addAttachment("weixinQR.jpg", att0);
+			}
+		} catch (Exception e) {
+		}
+		// 获取原来宣传照
+		try {
+			byte[] bb = this.takeDbObj().getAttachment(id, "intro.jpg");
+			if (bb != null) {
+				Attachment att0 = new Attachment(MediaType.IMAGE_JPEG_VALUE, bb);
+				this.addAttachment("intro.jpg", att0);
+			}
+		} catch (Exception e) {
+		}
+		// 获取原来头像
+		try {
+			byte[] bb = this.takeDbObj().getAttachment(id, "head.jpg");
+			if (bb != null) {
+				Attachment att0 = new Attachment(MediaType.IMAGE_JPEG_VALUE, bb);
+				this.addAttachment("head.jpg", att0);
+			}
+		} catch (Exception e) {
+		}
+		this.updateAttachment();
+	}
+
+	public void updateAttachment() {
+		db.updateDocument(this);
+	}
+
+	public void chageOnlineState(boolean b) {
+		this.setOnline(b);
+		this.updateTour(this.getId());
 	}
 
 }

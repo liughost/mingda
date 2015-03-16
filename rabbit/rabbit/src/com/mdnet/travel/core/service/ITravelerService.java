@@ -90,6 +90,5 @@ public interface ITravelerService {
 
 	void updateTraveler(Traveler traveler);
 
-	
 
 }

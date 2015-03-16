@@ -19,6 +19,15 @@ public class Constant {
 	protected String MobileHomePage;
 	protected String PCHomePage;
 	protected String customerServicePhone="";
+	protected String companyName = "";
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 
 	public String getCustomerServicePhone() {
 		return customerServicePhone;

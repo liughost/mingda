@@ -120,6 +120,9 @@
 		<property name="PAY_WEB">
 			<value>http://www.xdujia.com/zfbweb/alipayapi.jsp</value>
 		</property>
+		<property name="companyName">
+		<value>兔子旅行</value>
+		</property>
 		<property name="WX_MSGSOURCE">
 			<value>weixin123</value>
 		</property>

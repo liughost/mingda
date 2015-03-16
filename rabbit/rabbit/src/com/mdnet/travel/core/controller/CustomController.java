@@ -674,8 +674,9 @@ public class CustomController extends BaseController {
 		this.mav.setViewName(this.preMobile(request) + "custom/book");
 		this.mav.addObject("isMobile", CommonUtils.IsMobile(request));
 		// 导游列表
-		List<TourInfo> tours = this.tourService.search(null, null, null, null,
-				false, false, null, 6);
+		List<TourInfo> tours = this.tourService.commend();
+		// this.tourService.search(null, null, null, null, false, false, null,
+		// 6);
 		this.mav.addObject("tourLlist", tours);
 		// List<GroupDate> gs = this.customService.getGroupList("", 10, 0);
 		// for (int i = 0; gs != null && i < gs.size(); i++) {
@@ -871,11 +872,13 @@ public class CustomController extends BaseController {
 					"客户：%s；联系电话：%s，预订了产品：%s,报名团期：%s.请及时联系客户。", userName,
 					userMobile, productName, selGroupDate);
 			// 给客户发送短信
-			String smsText = "感谢您预订了冠行旅游的产品，订单号：" + orderId;
+			String smsText = "感谢您预订了" + this.myConstant.getCompanyName()
+					+ "的产品，订单号：" + orderId;
 			if (offPrice > 0) {
 				smsText += ",本次预订优惠" + offPrice + "元，使用的优惠码：" + inviteCode;
 			}
-			smsText += ",冠行的客服人员将在1小时内与您电话联系，请注意保持通信畅通。";
+			smsText += "," + this.myConstant.getCompanyName()
+					+ "的客服人员将在1小时内与您电话联系，请注意保持通信畅通。";
 
 			try {
 				this.getProxy().sendSMS(smsText, userMobile);
@@ -883,8 +886,10 @@ public class CustomController extends BaseController {
 						this.myConstant.getCustomerServicePhone());
 				if (isNew)// 会员信息
 				{
-					smsText = "您已经成为冠行会员，请使用姓名:" + userName
-							+ "登录，默认密码为手机后六位，冠行会员可以给朋友发送优惠码，凭优惠码报名参团享受500元优惠。";
+					smsText = "您已经成为" + this.myConstant.getCompanyName()
+							+ "会员，请使用姓名:" + userName + "登录，默认密码为手机后六位，"
+							+ this.myConstant.getCompanyName()
+							+ "会员可以给朋友发送优惠码，凭优惠码报名参团享受500元优惠。";
 					this.getProxy().sendSMS(smsText, userMobile);
 				}
 			} catch (RemoteException e) {

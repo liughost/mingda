@@ -13,6 +13,15 @@ import org.jcouchdb.document.ViewResult;
 
 public class MyBaseDocument extends BaseDocument{
 	protected Database db;
+	
+	public Database takeDbObj() {
+		return db;
+	}
+
+	public void setDb(Database db) {
+		this.db = db;
+	}
+
 	@SuppressWarnings("rawtypes")
 	public List<KeyValue> dataStatic (String methodName)
 	{

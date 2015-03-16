@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.activiti.engine.ProcessEngine;
 import org.jcouchdb.db.Database;
 import org.jcouchdb.db.Options;
+import org.jcouchdb.document.ValueRow;
 import org.jcouchdb.document.ViewResult;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class TourService extends BaseCouchService {
 		 * 因此目前carType排序和startkey不能同时生效。
 		 * 也就是说不能解决专车和导游混合排列的问题，目前的办法就是要么显示专车，要么显示导游
 		 */
-		String mapFunc = "{\"map\":\"function(doc) {" + "if(doc.mobile != null";
+		String mapFunc = "{\"map\":\"function(doc) {" + "if(doc.online == true ";
 		if (isAuto) {
 			mapFunc += "&& doc.carType!=null && doc.carType.length>0";
 		}
@@ -114,12 +115,25 @@ public class TourService extends BaseCouchService {
 
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List<TourInfo> commend() {
+		List<TourInfo> tourList = new ArrayList<TourInfo>();
+		ViewResult<Map> result = this.db.queryView("list/commend", Map.class,
+				null, null);
+		for (ValueRow vr : result.getRows()) {
+			TourInfo ti = new TourInfo();
+			ti.Unseriable(vr);
+			tourList.add(ti);
+		}
+		return tourList;
+	}
+
 	@SuppressWarnings("rawtypes")
 	public TourInfo takeTour(String id) {
 		Map result = db.getDocument(Map.class, id);
 		TourInfo ti = new TourInfo();
 		// result.getProperty("price");
-
+		ti.setDb(this.db);
 		return ti.Unseriable(result);
 	}
 
@@ -141,6 +155,7 @@ public class TourService extends BaseCouchService {
 	public static void main(String[] args) {
 
 		TourService tour = new TourService();
+	//	tour.commend();
 		// t.test();
 		// tour.dataStatic("static/city");
 		// TourInfo pppp = tour.takeTour("618c84ab493269bc0ac54fa0c700cd4d");
@@ -169,7 +184,7 @@ public class TourService extends BaseCouchService {
 		TourInfo t = tour.newTour();
 		t.setHeadImg("head.jpg");// 头像图片名称
 		t.setIntroImg("intro.jpg");// 领队介绍的大图;
-																										// 基本信息
+									// 基本信息
 		t.setNickName("李世涛");// 领队的昵称
 		t.setGender(1);// 性别，0：保密，1：男性；2：女性
 		t.setLocation("北京");// 所在地，常驻城市

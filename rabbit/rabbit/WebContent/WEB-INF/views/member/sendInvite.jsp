@@ -32,7 +32,7 @@
 					<li class="active"><a href="#">我的邀请</a></li>
 					<!-- active为当前状态 -->
 					<li><a href="${context }/member/order/list">我的订单</a></li>
-					<li><a href="#">我的旅伴</a></li>
+					<li><a href="${context}/member/tour/info">导游信息</a></li>
 					<li><a class="modalLink" href="#modal4">修改密码</a></li>
 				</ul>
 			</div>

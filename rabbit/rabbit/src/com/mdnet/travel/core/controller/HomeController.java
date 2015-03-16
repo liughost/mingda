@@ -182,7 +182,7 @@ public class HomeController extends BaseController {
 			Boolean flag = (this.travelerService.saveTraveler(username, pass,
 					mobile, "", Traveler.ROLE_MEM, "", null) > 0 ? true : false);
 			if (flag) {
-				message = "注册成功,请登入冠行旅游网!";
+				message = "注册成功,请登入"+this.myConstant.getCompanyName()+"!";
 				code.setStatus(1);
 				this.travelerService.update(code);
 			} else {
@@ -215,7 +215,7 @@ public class HomeController extends BaseController {
 			@RequestParam(value = "mobile", required = true) String userMobile) {
 
 		String validCode = CommonUtils.getRandomSixNum();
-		String validContent = "用户您好。冠行旅游的验证码为:" + validCode
+		String validContent = "用户您好。"+this.myConstant.getCompanyName()+"的验证码为:" + validCode
 				+ ",此验证码2小时内有效，请妥善保管!";
 
 		this.travelerService.saveValidCode(userMobile, validCode);

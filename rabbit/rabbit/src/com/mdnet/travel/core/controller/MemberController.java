@@ -1,33 +1,42 @@
 package com.mdnet.travel.core.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.jcouchdb.document.Attachment;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.mdnet.travel.core.dao.LangCapability;
 import com.mdnet.travel.core.dao.ProductAllDetail;
+import com.mdnet.travel.core.dao.TourInfo;
 import com.mdnet.travel.core.model.GroupDate;
 import com.mdnet.travel.core.model.GroupMonth;
 import com.mdnet.travel.core.model.InviteCode;
 import com.mdnet.travel.core.model.TourOrder;
 import com.mdnet.travel.core.model.Traveler;
+import com.mdnet.travel.core.model.WeixinAccount;
 import com.mdnet.travel.core.service.ICustomService;
 import com.mdnet.travel.core.service.ILeaderService;
 import com.mdnet.travel.core.service.IOrderMgrService;
 import com.mdnet.travel.core.service.impl.LineService;
+import com.mdnet.travel.core.service.impl.TourService;
 import com.mdnet.travel.core.vo.ShowProductInfo;
 import com.mdnet.travel.order.model.OrderInfo;
 
@@ -40,6 +49,8 @@ public class MemberController extends BaseController {
 	private IOrderMgrService orderMgrService;
 	@Resource(name = LineService.SERVICE_NAME)
 	private LineService lineService;
+	@Resource(name = TourService.SERVICE_NAME)
+	private TourService tourService;
 
 	/**
 	 * 显示会员列表界面
@@ -77,6 +88,8 @@ public class MemberController extends BaseController {
 			pageNo = Integer.parseInt(page);
 		List<OrderInfo> orders = this.orderMgrService.getOrders(1,
 				traveler.getMobile(), pageNo);
+
+		this.mav.addObject("tourKey", traveler.getTourKey());
 		this.mav.addObject("orderList", orders);
 		this.doPager(pageNo, orders == null ? 0 : orders.size());
 		return this.mav;
@@ -101,8 +114,9 @@ public class MemberController extends BaseController {
 	protected int sendInviteSMS(String uname, String isBind, String inviteCode,
 			String invitedMobile, int offPrice) {
 
-		String smsText = uname + "给您发送冠行旅游邀请码：" + inviteCode
-				+ ",凭此码到冠行旅游报名参团，优惠" + offPrice + "元";
+		String smsText = uname + "给您发送" + this.myConstant.getCompanyName()
+				+ "邀请码：" + inviteCode + ",凭此码到"
+				+ this.myConstant.getCompanyName() + "报名参团，优惠" + offPrice + "元";
 		if (isBind != null && isBind.compareTo("true") == 0) {
 			smsText += "，转赠无效。";
 		} else
@@ -165,6 +179,9 @@ public class MemberController extends BaseController {
 
 		List<InviteCode> codes = this.travelerService.getInviteList(sType,
 				sText, traveler.getMobile(), page, 20);
+
+		this.mav.addObject("tourKey", traveler.getTourKey());
+
 		this.mav.addObject("inviteList", codes);
 		this.mav.addObject("sType", sType == null ? 0 : sType);
 		this.mav.addObject("sText", sText);
@@ -290,6 +307,9 @@ public class MemberController extends BaseController {
 				.getName();
 		// this.mav.addObject("invite", this.travelerService.getInviteList(-1,
 		// "", page, count));
+		Traveler t = this.travelerService.findTravelerByUname(uname);
+		if (t != null)
+			this.mav.addObject("tourKey", t.getTourKey());
 		this.mav.addObject("info",
 				this.travelerService.findTravelerByUname(uname));
 		return this.mav;
@@ -310,6 +330,191 @@ public class MemberController extends BaseController {
 		ShowProductInfo[] ps = this.lineService.getProductList(3, 0);// .orderMgrService.getProductList(3,
 		this.mav.addObject("productList", ps);
 		return this.mav;
+	}
+
+	@RequestMapping(value = { "tour/images" }, method = RequestMethod.GET)
+	public ModelAndView tourImages(HttpServletRequest request) {
+		this.getMav(request);
+		this.mav.setViewName(this.preMobile(request) + "member/tour/images");
+		String uname = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+
+		Traveler traveler = this.travelerService.findTravelerByUname(uname);
+
+		this.mav.addObject("tourKey", traveler.getTourKey());
+		return this.mav;
+	}
+
+	@RequestMapping(value = { "tour/online" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String tourOnline(HttpServletRequest request,
+			@RequestParam(value = "tourKey", required = false) String tourKey,
+			@RequestParam(value = "online", required = false) String online)
+			throws UnsupportedEncodingException {
+		String uname = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+
+		Traveler traveler = this.travelerService.findTravelerByUname(uname);
+		if (traveler != null && traveler.getTourKey() != null
+				&& traveler.getTourKey().length() > 0) {
+			String id = traveler.getTourKey();
+			// String id = "65ee0915c289090bd637c421a200c1bc";
+			TourInfo ti = this.tourService.takeTour(id);
+
+			if (online.compareTo("online") == 0)
+				ti.chageOnlineState(true);
+			else
+				ti.chageOnlineState(false);
+
+			return java.net.URLEncoder.encode("导游状态改为:"
+					+ (ti.isOnline() ? "上线" : "草稿"), "UTF-8");
+		} else
+			return java.net.URLEncoder.encode("导游资料为找到", "UTF-8");
+	}
+
+	@RequestMapping(value = { "tour/info" }, method = RequestMethod.GET)
+	public ModelAndView tourInfo(HttpServletRequest request) {
+		this.getMav(request);
+		this.mav.setViewName(this.preMobile(request) + "member/tour/info");
+		String uname = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+
+		Traveler traveler = this.travelerService.findTravelerByUname(uname);
+		if (traveler != null && traveler.getTourKey() != null
+				&& traveler.getTourKey().length() > 0) {
+			String id = traveler.getTourKey();
+			// String id = "65ee0915c289090bd637c421a200c1bc";
+			TourInfo ti = this.tourService.takeTour(id);
+			this.mav.addObject("tour", ti);
+		}
+		return this.mav;
+	}
+
+	@RequestMapping(value = { "tour/info/update" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String tourInfoUpdate(
+			HttpServletRequest request,
+			@RequestParam(value = "tourKey", required = false) String tourKey,
+			@RequestParam(value = "nickName", required = false) String nickName,
+			@RequestParam(value = "weixinId", required = false) String weixinId,
+			@RequestParam(value = "mobile", required = false) String mobile,
+			@RequestParam(value = "EMail", required = false) String EMail,
+			@RequestParam(value = "QQ", required = false) String QQ,
+			@RequestParam(value = "carType", required = false) String carType,
+			@RequestParam(value = "career", required = false) String career,
+			@RequestParam(value = "feeDesc", required = false) String feeDesc,
+			@RequestParam(value = "feeExcept", required = false) String feeExcept,
+			@RequestParam(value = "gender", required = false) int gender,
+			@RequestParam(value = "introduce", required = false) String introduce,
+			@RequestParam(value = "foreignLang", required = false) String foreign,
+			@RequestParam(value = "motherLang", required = false) String motherLang,
+			@RequestParam(value = "location", required = false) String location,
+			@RequestParam(value = "planning", required = false) int planning,
+			@RequestParam(value = "scenic", required = false) String scenic,
+			@RequestParam(value = "serviceCities", required = false) String serviceCities,
+			@RequestParam(value = "serviceItem", required = false) String serviceItem,
+			@RequestParam(value = "supplement", required = false) String supplement,
+			@RequestParam(value = "unitPrice", required = false) int unitPrice) {
+		TourInfo ti = this.tourService.newTour();
+		ti.setCareer(career);
+		ti.setCarType(carType);
+		ti.setEMail(EMail);
+		ti.setFeeDesc(feeDesc);
+		ti.setFeeExcept(feeExcept);
+		ti.setGender(gender);
+		ti.setHeadImg("");
+		ti.setIntroduce(introduce);
+		ti.setIntroImg("");
+		LangCapability lang = new LangCapability();
+		lang.setMotherLang(motherLang);
+		lang.setForeignLang(foreign);
+		ti.setLanguage(lang);
+		ti.setLocation(location);
+		ti.setMobile(mobile);
+		ti.setNickName(nickName);
+		ti.setPlanning(planning);
+		ti.setQQ(QQ);
+		ti.setScenic(scenic);
+		ti.setWeixinId(weixinId);
+		ti.setServiceCities(serviceCities);
+		List<String> item = new ArrayList<String>();
+		String[] strItem = serviceItem.split("\n");
+		for (String str : strItem) {
+			item.add(str);
+		}
+		ti.setServiceItem(item);
+		ti.setServiceLevel(3);
+		ti.setSupplement(supplement);
+		ti.setUnitPrice(unitPrice);
+		ti.Add();
+		// 关联导游库和登录信息表
+		String uname = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+		Traveler traveler = this.travelerService.findTravelerByUname(uname);
+		traveler.setTourKey(ti.getId());
+		this.travelerService.updateTraveler(traveler);
+		return ti.getId();
+	}
+
+	@RequestMapping(value = "/upload/head", method = RequestMethod.POST)
+	// @ResponseBody
+	public String uploadHeadFile(@RequestParam("tourKey") String tourKey,
+			@RequestParam("uploadImg") String imgType,
+			HttpServletRequest request) throws IOException {
+
+		TourInfo ti = this.tourService.takeTour(tourKey);
+		MultipartHttpServletRequest mhs = (MultipartHttpServletRequest) request;
+		List<MultipartFile> fileHead = mhs.getFiles("headImg");
+		Attachment attHead = new Attachment(MediaType.IMAGE_JPEG_VALUE,
+				fileHead.get(0).getBytes());
+		List<MultipartFile> fileIntro = mhs.getFiles("introImg");
+		Attachment attIntro = new Attachment(MediaType.IMAGE_JPEG_VALUE,
+				fileIntro.get(0).getBytes());
+		List<MultipartFile> fileWeixin = mhs.getFiles("weixinImg");
+		Attachment attWeixin = new Attachment(MediaType.IMAGE_JPEG_VALUE,
+				fileWeixin.get(0).getBytes());
+
+		// 获取原来微信
+		try {
+			byte[] bb = ti.takeDbObj().getAttachment(tourKey, "weixinQR.jpg");
+			if (bb != null) {
+				Attachment att0 = new Attachment(MediaType.IMAGE_JPEG_VALUE, bb);
+				ti.addAttachment("weixinQR.jpg", att0);
+			}
+		} catch (Exception e) {
+		}
+		// 获取原来宣传照
+		try {
+			byte[] bb = ti.takeDbObj().getAttachment(tourKey, "intro.jpg");
+			if (bb != null) {
+				Attachment att0 = new Attachment(MediaType.IMAGE_JPEG_VALUE, bb);
+				ti.addAttachment("intro.jpg", att0);
+			}
+		} catch (Exception e) {
+		}
+		// 获取原来头像
+		try {
+			byte[] bb = ti.takeDbObj().getAttachment(tourKey, "head.jpg");
+			if (bb != null) {
+				Attachment att0 = new Attachment(MediaType.IMAGE_JPEG_VALUE, bb);
+				ti.addAttachment("head.jpg", att0);
+			}
+		} catch (Exception e) {
+		}
+
+		if (attHead.getData().length() > 0) {
+			ti.addAttachment("head.jpg", attHead);
+		}
+		if (attWeixin.getData().length() > 0) {
+			ti.addAttachment("weixinQR.jpg", attWeixin);
+		}
+		if (attIntro.getData().length() > 0) {
+			ti.addAttachment("intro.jpg", attIntro);
+		}
+		ti.updateAttachment();
+		// this.tourService;
+		return this.REDIRECT + "../tour/images";
+		// return String.valueOf(files.get(0).getSize());
 	}
 
 	/**

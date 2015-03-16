@@ -11,6 +11,21 @@ public class Traveler extends BaseModel{
 	private String inviteCode;
 	private int totalScore;
 	private String passText;
+	private String headImg;//用户头像的key，默认文件名为head.jpg
+	private String tourKey;//对应的导游信息结构的ID
+
+	public String getHeadImg() {
+		return headImg;
+	}
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
+	}
+	public String getTourKey() {
+		return tourKey;
+	}
+	public void setTourKey(String tourKey) {
+		this.tourKey = tourKey;
+	}
 	public String getPassText() {
 		return passText;
 	}
